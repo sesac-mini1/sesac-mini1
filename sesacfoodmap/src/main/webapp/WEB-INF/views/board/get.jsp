@@ -16,6 +16,7 @@
 </head>
 
 <body>
+<%@ include file="../includes/header.jsp" %>
     <!-- Page content-->
     <div class="container mt-5">
         <div class="row">
@@ -152,6 +153,7 @@
             </div>
         </div>
     </div>
+<%@ include file="../includes/footer.jsp" %>
 </body>
 
 </html>
