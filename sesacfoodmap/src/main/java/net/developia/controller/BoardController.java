@@ -15,4 +15,6 @@ public class BoardController {
 	public void list() {
 		log.info("list");
 	}
+	@GetMapping("/get")
+	public void get() {}
 }
