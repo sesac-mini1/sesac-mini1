@@ -26,15 +26,15 @@
                     <!-- Post header-->
                     <header class="mb-4">
                         <!-- Post title-->
-                        <h1 class="fw-bolder mb-1">제목<c:out value="${board.title}" /></h1>
+                        <h1 class="fw-bolder mb-1"><c:out value="${board.title}" /></h1>
                         <!-- Post meta content-->
                         <div class="text-muted mb-2">
-	                        <span class="fst-italic">Posted on January 1, 2023 <c:out value="${board.regDate}" /></span>
-			                <span class="float-end ms-4">❤️ 3432<c:out value="${board.recommend}" /></span>
-	                        <span class="float-end">⭐ 3<c:out value="${board.stars}" /></span>
+	                        <span class="fst-italic"><c:out value="${board.regDate}" /></span>
+			                <span class="float-end ms-4">❤️ <c:out value="${board.recommend}" /></span>
+	                        <span class="float-end">⭐ <c:out value="${board.stars}" /></span>
                         </div>
                         <!-- Post categories-->
-                        <a class="badge bg-sesac text-decoration-none link-light" href="#!">음식분류<c:out value="${board.type}" /></a>
+                        <a class="badge bg-sesac text-decoration-none link-light" href="#!"><c:out value="${board.type}" /></a>
                         <%-- <c:if test="${board.ticket} == true"> --%><a class="badge bg-sesac text-decoration-none link-light" href="#!">식권대장</a><%-- </c:if> --%>
                 		<a class="badge bg-secondary text-decoration-none link-light float-end ms-1" type="submit">삭제</a>
                         <a class="badge bg-secondary text-decoration-none link-light float-end" type="submit">수정</a>
