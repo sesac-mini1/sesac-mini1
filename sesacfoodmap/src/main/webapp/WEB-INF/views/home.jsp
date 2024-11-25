@@ -17,7 +17,7 @@
     <title>홈 페이지</title>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 	<%@ include file="includes/header.jsp" %>
     <!-- Page Content-->
     <div class="container px-4 px-lg-5">
@@ -42,7 +42,7 @@
                         <h4 class="card-title">내가 제일 좋아하는 청마루 !!</h4>
                         <p class="card-text">내가 제일 좋아하는 청마루 !! 여기는 특히 육회비빔밥이랑 뚝배기 불고기가 가장 맛있었당 !! 다른 것도 다 맛있당 ~~ 육회비빔밥은 13,000원 뚝배기 불고기는 12,000원인가?? 암튼 ~~</p>
                     </div>
-                    <div class="card-footer"><a id="home_card" class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    <div class="card-footer"><a id="home_card" class="btn btn-primary btn-sm" href="#!">더 보러가기</a></div>
                 </div>
             </div>
             <div class="col-md-4 mb-5">
@@ -51,7 +51,7 @@
                         <h4 class="card-title">내가 제일 좋아하는 청마루 !!</h4>
                         <p class="card-text">내가 제일 좋아하는 청마루 !! 여기는 특히 육회비빔밥이랑 뚝배기 불고기가 가장 맛있었당 !! 다른 것도 다 맛있당 ~~ 육회비빔밥은 13,000원 뚝배기 불고기는 12,000원인가?? 암튼 ~~</p>
                     </div>
-                    <div class="card-footer"><a id="home_card" class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    <div class="card-footer"><a id="home_card" class="btn btn-primary btn-sm" href="#!">더 보러가기</a></div>
                 </div>
             </div>
             <div class="col-md-4 mb-5">
@@ -60,7 +60,7 @@
                         <h4 class="card-title">내가 제일 좋아하는 청마루 !!</h4>
                         <p class="card-text">내가 제일 좋아하는 청마루 !! 여기는 특히 육회비빔밥이랑 뚝배기 불고기가 가장 맛있었당 !! 다른 것도 다 맛있당 ~~ 육회비빔밥은 13,000원 뚝배기 불고기는 12,000원인가?? 암튼 ~~내가 제일 좋아하는 청마루 !! 여기는 특히 육회비빔밥이랑 뚝배기 불고기가 가장 맛있었당 !! 다른 것도 다 맛있당 ~~ 육회비빔밥은 13,000원 뚝배기 불고기는 12,000원인가??</p>
                     </div>
-                    <div class="card-footer"><a id="home_card" class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    <div class="card-footer"><a id="home_card" class="btn btn-primary btn-sm" href="#!">더 보러가기</a></div>
                 </div>
             </div>
         </div>
