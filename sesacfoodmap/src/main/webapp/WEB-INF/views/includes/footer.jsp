@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <link href="../resources/css/footer.css" rel="stylesheet" />
 <!-- Footer-->
-<footer class="py-5 bg-dark">
+<footer id="footer_color" class="py-5 mt-auto">
     <div class="container">
-        <p class="m-0 text-center text-white">팀3 딸기퓨레: 이유진 이지윤 이재혁 조용기</p>
+        <p class="m-0 text-center text-white">Team 딸기퓨레<br> Member 이유진 이지윤 이재혁 조용기</p>
     </div>
 </footer>
 <!-- Bootstrap core JS-->
