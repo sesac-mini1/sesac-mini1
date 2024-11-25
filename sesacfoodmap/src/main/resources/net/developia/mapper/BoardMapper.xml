@@ -13,28 +13,26 @@
 		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
 			select seq_board.nextval from dual
 		</selectKey>
-		insert into tbl_board (bno, title, content, writer)
-		values (#{bno}, #{title}, #{content}, #{writer})
+		insert into board (bno, title, content, writer, password, ticket, type, filename, stars)
+		values (#{bno}, #{title}, #{content}, #{writer}, #{password}, #{ticket}, #{type}, #{filename}, #{stars})
 	</insert>
 	
 	<select id="get" resultType="BoardVO">
-		select * from tbl_board where bno = #{bno}
+		select * from board where bno = #{bno}
 	</select>
 	
 	<delete id="delete">
-		delete from tbl_board where bno = #{bno}
+		delete from board where bno = #{bno}
 	</delete>
 	
 	<update id="update">
-		update tbl_board
-		set title = #{title},
-		content = #{content},
-		writer = #{writer},
-		updateDate = sysdate
-		where bno = #{bno}
+		update	board
+		set 	title = #{title},
+				content = #{content}
+		where 	bno = #{bno}
 	</update>
 	
-	<sql id="criteria">
+	<!-- <sql id="criteria">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach item='type' collection="typeArr">
 				<trim prefix="OR">
@@ -58,7 +56,7 @@
 	<![CDATA[
 		select 
     			bno, title, content,
-   				writer, regdate, updatedate
+   				writer, regdate
 		from (
 			select /*+INDEX_DESC(tbl_board pk_board) */
     			rownum rn, bno, title, content,	writer, regdate, updatedate
@@ -77,6 +75,6 @@
 		select count(*) from tbl_board where
 		<include refid="criteria"></include>
 		bno > 0
-	</select>
+	</select> -->
 </mapper>
 <!-- CDATA 사용하여 >가 태그가 아닌 부등호임을 알림 -->
