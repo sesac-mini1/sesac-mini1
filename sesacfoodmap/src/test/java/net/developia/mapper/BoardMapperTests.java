@@ -1,5 +1,7 @@
 package net.developia.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,14 @@ public class BoardMapperTests {
 
 	@Test
 	public void testGet() {
-		//Á¸ÀçÇÏ´Â °Ô½Ã¹° ¹øÈ£·Î Å×½ºÆ®
+		//ì¡´ìž¬í•˜ëŠ” ê²Œì‹œë¬¼ ë²ˆí˜¸ë¡œ í…ŒìŠ¤íŠ¸
 		BoardVO board = mapper.get(1L);
 		log.info(board);
+	}
+
+	@Test
+	public void testGetList() {
+		List<BoardVO> boardList = mapper.getList();
+		log.info(boardList);
 	}
 }
