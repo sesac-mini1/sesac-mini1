@@ -3,7 +3,7 @@
 <!-- Footer-->
 <footer class="py-5 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
+        <p class="m-0 text-center text-white">팀3 딸기퓨레: 이유진 이지윤 이재혁 조용기</p>
     </div>
 </footer>
 <!-- Bootstrap core JS-->
