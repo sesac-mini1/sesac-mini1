@@ -1,0 +1,43 @@
+#btn_green {
+  color: white; /* 텍스트 색상 */
+  background-color: #57DD79; /* 배경 색상 */
+  font-weight: 600; /* 텍스트 볼드 */
+  border: none; /* 버튼의 테두리 제거 (원하는 경우) */
+  padding: 10px 20px; /* 상하 10px, 좌우 20px 패딩 */
+  font-size: 14px; /* 글자 크기 조금 줄이기 */
+}
+
+#home_title {
+  font-weight: 700;
+}
+
+#centered-image {
+  display: flex; /* Flexbox 활성화 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+.highlight_box {
+  background-color: #E4F2B6; /* 박스 배경색 */
+  border-radius: 10px;       /* 둥근 모서리 */
+  padding: 20px 40px;        /* 내부 여백 */
+  font-size: 1.5rem;         /* 텍스트 크기 */
+  color: #000000;            /* 텍스트 색상 */
+  font-weight: bold;         /* 텍스트 굵기 */
+  text-align: left;          /* 텍스트 정렬 (왼쪽) */
+  display: flex;             /* 내부 정렬 설정 */
+  justify-content: flex-start; /* 가로 정렬 (왼쪽) */
+  align-items: center;       /* 세로 정렬 (중간) */
+  margin-bottom: 20px;
+}
+
+#home_card {
+	background-color: #57DD79;
+	border: none;
+}
+
+#home_card_body {
+	padding: 25px;
+	max-height: 200px; /* 최대 높이 지정 */
+    overflow-y: auto; /* 긴 텍스트는 스크롤로 처리 */
+}
