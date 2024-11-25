@@ -12,7 +12,7 @@ import net.developia.service.BoardService;
 
 @Controller
 @Log4j
-@RequestMapping("/board/")
+@RequestMapping("board/*")
 @AllArgsConstructor
 public class BoardController {
 	private BoardService service;
@@ -25,5 +25,9 @@ public class BoardController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	@GetMapping("list") 
+	public void list() {
+		log.info("list");
 	}
 }

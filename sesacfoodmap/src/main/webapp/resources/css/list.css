@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+.panel-heading {
+    position: relative; /* 부모 요소를 기준으로 위치 설정 */
+}
+
+#ticket-span {
+	margin-right: 10px;
+}
+
+#table-row-top {
+	max-width: 1200px;
+   	margin: auto;
+}
+
+#table-row {
+	height: 500px;
+	max-width: 1200px;
+   	margin: auto;
+}
+
+img#ticketImg {
+	margin-left: -10px;
+}
+
+#regBtn {
+	background-color: #6ec173;
+	color: white;
+	
+	padding: 5px 10px;
+    position: absolute;
+    right: 20px; /* 오른쪽 끝으로 이동 */
+    top: 50%; /* 세로 중앙 정렬 */
+    transform: translateY(-50%); /* 정확한 중앙 정렬 */
+}
+
+#type-span {
+	position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.table-top {
+	vertical-align: middle;
+}
