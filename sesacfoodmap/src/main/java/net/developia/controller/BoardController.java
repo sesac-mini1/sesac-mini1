@@ -8,8 +8,13 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/board/")
+@RequestMapping("board/*")
 public class BoardController {
+	
+	@GetMapping("list") 
+	public void list() {
+		log.info("list");
+	}
 	@GetMapping("/get")
 	public void get() {}
 }
