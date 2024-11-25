@@ -34,8 +34,8 @@
 	                        <span class="float-end">⭐ 3<c:out value="${board.stars}" /></span>
                         </div>
                         <!-- Post categories-->
-                        <a class="badge bg-success text-decoration-none link-light" href="#!">음식분류<c:out value="${board.type}" /></a>
-                        <%-- <c:if test="${board.ticket} == true"> --%><a class="badge bg-success text-decoration-none link-light" href="#!">식권대장</a><%-- </c:if> --%>
+                        <a class="badge bg-sesac text-decoration-none link-light" href="#!">음식분류<c:out value="${board.type}" /></a>
+                        <%-- <c:if test="${board.ticket} == true"> --%><a class="badge bg-sesac text-decoration-none link-light" href="#!">식권대장</a><%-- </c:if> --%>
                 		<a class="badge bg-secondary text-decoration-none link-light float-end ms-1" type="submit">삭제</a>
                         <a class="badge bg-secondary text-decoration-none link-light float-end" type="submit">수정</a>
                     </header>
@@ -54,10 +54,10 @@
                             <!-- Comment form-->
                             <form class="d-flex mb-4">
                             	<div class="flex-shrink-0"><img class="rounded-circle"
-                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                        src=`resources/imgs/${board.filename}` alt="..." /></div>
                             	<textarea class="form-control ms-3" rows="3"
                                     placeholder="Join the discussion and leave a comment!"></textarea>
-                                <button class="btn btn-success" type="submit">등록</button>    
+                                <button class="btn btn-sesac" type="submit">등록</button>    
                             </form>
                             <!-- Comment with nested comments-->
                             <div class="d-flex mb-4">
