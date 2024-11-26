@@ -18,4 +18,5 @@ public class BoardVO {
 	private int stars;
 	private int recommend;
 	private int comments;
+	private String rname;
 }
