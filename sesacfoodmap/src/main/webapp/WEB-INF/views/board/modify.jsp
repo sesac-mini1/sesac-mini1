@@ -70,7 +70,7 @@
             		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'/>
             		
             		<div class="form-group">
-	            		<label>음식점 이름</label> <input class="form-control" name='title' value='<c:out value="${board.title}"/>' >
+	            		<label>음식점 이름</label> <input class="form-control" name='title' value='<c:out value="${board.rname}"/>' >
 	            	</div>
 	            	
 	            	<div class="form-group">
