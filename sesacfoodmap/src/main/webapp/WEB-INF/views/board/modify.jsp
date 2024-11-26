@@ -83,10 +83,11 @@
 	            	</div>
 	            	
 	            	<div class="form-group">
-							    <label>
+							    <label id="ticket_flex">
 							        <input type="checkbox" name="isPublic" value="yes">
-							        식권대장
-							    </label>
+								    <img id="ticketImg" src="/resources/assets/ticket-image.png" height="30px" />
+								
+								  </label>
 							</div>
 					
 					<div class="form-group">

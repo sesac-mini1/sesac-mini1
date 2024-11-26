@@ -33,7 +33,7 @@
     <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
  
-    <link href="/resources/css/list.css" rel="stylesheet">
+    <link href="/resources/css/write.css" rel="stylesheet">
 </head>
 
 <body>
@@ -71,12 +71,12 @@
                   			<textarea class="form-control rows="3" name='content'></textarea>
                     		</div>
                     		
-                    		<!-- 체크박스 추가 -->
-							<div class="form-group">
-							    <label>
+                    		<div class="form-group">
+							    <label id="ticket_flex">
 							        <input type="checkbox" name="isPublic" value="yes">
-							        식권대장
-							    </label>
+								    <img id="ticketImg" src="/resources/assets/ticket-image.png" height="30px" />
+								
+								  </label>
 							</div>
                     		
                     		<div class="form-group">

@@ -1,0 +1,10 @@
+#ticket_flex {
+  display: flex; /* Flexbox 활성화 */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+#ticketImg {
+  margin-left: -5px; /* 체크박스와 이미지 간 간격 */
+  height: 30px; /* 이미지 높이 유지 */
+  width: auto; /* 이미지 비율 유지 */
+}
