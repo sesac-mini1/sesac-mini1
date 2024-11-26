@@ -34,27 +34,34 @@ public class BoardController {
 //		log.info("list");
 //	}
 	
-	@GetMapping("/list")
-	public String list(Model model) {
-		
-		try {
-			log.info("list: ");
-			model.addAttribute("list", service.getList());
+//	@GetMapping("/list")
+//	public String list(Model model) {
+//		
+//		try {
+//			log.info("list: ");
+//			model.addAttribute("list", service.getList());
 //			model.addAttribute("pageMaker", new PageDTO(cri, 123));
-			
-			//int total = service.getTotal();
-			
-			//log.info("total: " + total);
-			
-			//model.addAttribute("pageMaker", new PageDTO(cri, total));
-			
-			return "board/list";
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		
+//			
+//			int total = service.getTotal();
+//			
+//			log.info("total: " + total);
+//			
+//			model.addAttribute("pageMaker", new PageDTO(cri, total));
+//			
+//			return "board/list";
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//		
+//	}
+	
+	@GetMapping("/list")
+	public void list(Criteria cri, Model model) throws Exception {
+		log.info("list: " + cri);
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri,123));
 	}
 	
 	
