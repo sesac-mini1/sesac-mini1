@@ -36,8 +36,8 @@
 	                        <span class="float-end">⭐ <c:out value="${board.stars}" /></span>
                         </div>
                         <!-- Post categories-->
-                        <a class="badge bg-sesac text-decoration-none link-light" href="#!"><c:out value="${board.type}" /></a>
-                        <%-- <c:if test="${board.ticket} == true"> --%><a class="badge bg-sesac text-decoration-none link-light" href="#!">식권대장</a><%-- </c:if> --%>
+                        <a class="badge bg-sesac text-decoration-none link-light"><c:out value="${board.type}" /></a>
+                        <c:if test="${board.ticket}"><a class="badge bg-sesac text-decoration-none link-light">식권대장</a></c:if>
                 		<a class="badge bg-secondary text-decoration-none link-light float-end ms-1" type="submit">삭제</a>
                         <a class="badge bg-secondary text-decoration-none link-light float-end" type="submit">수정</a>
                     </header>
@@ -54,13 +54,14 @@
                     <div class="card bg-light">
                         <div class="card-body">
                             <!-- Comment form-->
-                            <form class="flex-wrap d-flex mb-4">
+                            <form class="chat flex-wrap d-flex mb-4">
                             	<div class="flex-shrink-0"><img class="rounded-circle"
                                         src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                            	<span class="w-90">
-                            	<input class="" placeholder="작성자 이름" value="익명이" type="text" name="writer"/>
-                            	<input class="" placeholder="비밀번호" type="password" name="password"/>
-                                <button class="btn btn-sesac" type="submit">등록</button>    
+                            	<span class="ms-3 w-85">
+                            	<input class="h-85 br-10" placeholder="작성자 이름" name="writer" value="익명이" type="text"/>
+                            	<input class="h-85 br-10" placeholder="비밀번호" name="password" type="password"/>
+                                <input value="등록" type="button" id="addReplyBtn" class="h-85 mb-1 me-auto btn btn-sesac" />
+                                <input type="hidden" name='bno' value="${board.bno}" />  
                             	<textarea class="form-control" rows="3" name="content"
                                     placeholder="Join the discussion and leave a comment!"></textarea>
                             	</span>
@@ -72,13 +73,13 @@
 	                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
 	                                <div class="ms-3">
 	                                    <div class="fw-bold">
-	                                    	<c:out value="${comments.writer}"/>Commenter Name
-	                                    	<a class="badge bg-secondary text-decoration-none link-light ms-2" href="#">수정</a>
-	                                    	<a class="badge bg-secondary text-decoration-none link-light" href="#">삭제</a>
+	                                    	작성자
+	                                    	날짜
+	                                    	<a id="updateReplyBtn" class="badge bg-secondary text-decoration-none link-light ms-2" href="#">수정</a>
+                							<a id="removeReplyBtn" class="badge bg-secondary text-decoration-none link-light" href="#">삭제</a>
 	                                    </div>
 	                                     When I look at the universe and all the ways the universe wants to kill us, I find
 	                                    it hard to reconcile that with statements of beneficence.
-	                                    <c:out value="${comments.content}" />
 	                                </div>
 	                            </div>
 	                   		</div>
@@ -90,5 +91,63 @@
     </div>
 <%@ include file="../includes/footer.jsp" %>
 </body>
-
+<script type="text/javascript" src="/resources/js/reply.js"></script>
+<script type="text/javascript">
+$(function(){
+	let bnoValue = `<c:out value="${board.bno}" />`;
+	let replyUL = $(".chat");
+	
+	showList(1);
+	
+	function showList(page) {
+		replyService.getList({bno:bnoValue,page:page||1}, function(list) {
+			let str = "";
+			if (list == null || list.length == 0) {
+				replyUL.html("");
+				
+				return;
+			}
+			for (let i = 0, len = list.length || 0; i < len; i++) {
+				str += `<div class="d-flex mb-4" data-cno='\${list[i].cno}'>
+                    		<div class="flex-shrink-0"><img class="rounded-circle"
+                    		src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+            				<div class="ms-3">
+                				<div class="fw-bold">
+                					\${list[i].writer}
+                					<small class="text-muted">\${replyService.displayTime(list[i].regDate)}</small>
+                					<a id="updateReplyBtn" class="badge bg-secondary text-decoration-none link-light ms-2" href="#">수정</a>
+                					<a id="removeReplyBtn" class="badge bg-secondary text-decoration-none link-light" href="#">삭제</a>
+               					</div>
+               					\${list[i].content}
+               				</div>
+               			</div>`;
+			}
+			replyUL.html(str);
+		});
+	}
+		
+	let chat = ${".chat"};
+	let inputContent = chat.find("textarea[name='content']")
+	let inputWriter = chat.find("input[name='writer']")
+	let inputPassword = chat.find("input[name='password']")
+	
+	let addReplyBtn = ${"#addReplyBtn"};
+	let updateReplyBtn = $("#updateReplyBtn");
+	let removeReplyBtn = $("#removeReplyBtn");
+	
+	addReplyBtn.on("click", function(e){
+		let reply = {
+			content: inputContent.val(),
+			writer: inputWriter.val(),
+			password: inputPassword.val(),
+			bno: bnoValue 
+		};
+		replyService.add(reply, function(result) {
+			alert(result);
+			
+			showList(1);
+		});
+	});
+});
+</script>
 </html>

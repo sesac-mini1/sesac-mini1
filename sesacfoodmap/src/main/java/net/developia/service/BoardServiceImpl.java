@@ -26,7 +26,7 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVO get(Long bno) throws Exception {
 			log.info("get........" + bno);
 			BoardVO board = mapper.get(bno);
-			if (board == null ) 
+			if (board == null )
 				throw new RuntimeException(bno + "번 게시물이 존재하지 않음");
 			return board;
 	}
@@ -34,25 +34,25 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean modify(BoardVO board) throws Exception {
 			log.info("modify........."+board);
-			if (mapper.update(board) == 0) 
-				throw new RuntimeException(board.getBno() + "번 게시물이 수정되지 않음"); 
+			if (mapper.update(board) == 0)
+				throw new RuntimeException(board.getBno() + "번 게시물이 수정되지 않음");
 			return true;
 	}
 
 	@Override
 	public boolean remove(Long bno) throws Exception {
 			log.info("remove........"+bno);
-			if (mapper.delete(bno) == 0) 
-				throw new RuntimeException(bno + "번 게시물이 삭제되지 않음"); 
+			if (mapper.delete(bno) == 0)
+				throw new RuntimeException(bno + "번 게시물이 삭제되지 않음");
 			return true;
 	}
-	
-	
+
+
 	@Override
 	public List<BoardVO> getList() throws Exception {
 			return mapper.getList();
 	}
-	
+
 	@Override
 	public List<BoardVO> getList(Criteria cri) throws Exception {
 		log.info("get List with criteria: " + cri);

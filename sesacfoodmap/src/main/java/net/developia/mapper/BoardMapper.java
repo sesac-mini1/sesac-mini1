@@ -1,6 +1,7 @@
 package net.developia.mapper;
 
 import java.util.List;
+
 import net.developia.domain.BoardVO;
 import net.developia.domain.Criteria;
 
