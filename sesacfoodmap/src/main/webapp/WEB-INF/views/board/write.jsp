@@ -32,7 +32,7 @@
     <!-- Custom Fonts -->
     <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- List page CSS -->
+ 
     <link href="/resources/css/list.css" rel="stylesheet">
 </head>
 
