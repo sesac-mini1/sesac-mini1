@@ -51,11 +51,16 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             
-            <div class="panel-heading">음식점 이름</div>
+            <div class="panel-heading">Board Register</div>
             <!-- /.panel-heading -->
             <div class="panel-body">
                 
                 <form role="form" action="/board/register" method="post">
+                <div class="form-group">
+                  		<label>음식점 이름</label> <input class="form-control"
+                  			name='title'>
+                  				</div>
+                
                 	<div class="form-group">
                   		<label>글 제목</label> <input class="form-control"
                   			name='title'>
@@ -107,8 +112,8 @@
 							    <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력하세요">
 							</div>
                     		
-                    		<button type="summit" class="btn btn-default">Summit Button</button>
-                    		<button type="reset" class="btn btn-default"> Reset Button</button>
+                    		<button type="summit" class="btn btn-default">등록하기</button>
+                    		<button type="reset" class="btn btn-default">되돌리기</button>
                     		</form>  
                 </div>
                 <!-- end panel-body -->
