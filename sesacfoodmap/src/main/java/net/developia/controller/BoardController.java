@@ -21,7 +21,7 @@ import net.developia.service.BoardService;
 @AllArgsConstructor
 public class BoardController {
 	private BoardService service;
-	
+
 	@GetMapping("/get")
 	public void get(@RequestParam("bno") Long bno, Model model) {
 		try {
@@ -31,46 +31,30 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
-	
-//	@GetMapping("list") 
+
+//	@GetMapping("list")
 //	public void list() {
 //		log.info("list");
 //	}
-	
+
 	@GetMapping("/list")
-	public String list(Model model) {
-		
-		try {
-			log.info("list: ");
-			model.addAttribute("list", service.getList());
-//			model.addAttribute("pageMaker", new PageDTO(cri, 123));
-			
-			//int total = service.getTotal();
-			
-			//log.info("total: " + total);
-			
-			//model.addAttribute("pageMaker", new PageDTO(cri, total));
-			
-			return "board/list";
-			
-		} catch (Exception e) {
-			log.error("Error occurred while fetching the list.", e);
-		    model.addAttribute("error", "°Ô½Ã¹° ¸ñ·ÏÀ» °¡Á®¿À´Â Áß ¹®Á¦°¡ ¹ß»ýÇß½À´Ï´Ù.");
-			return null;
-		}
-		
+
+	public void list(Criteria cri, Model model) throws Exception {
+		log.info("list: " + cri);
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri,123));
 	}
-	
-	
-	
-	@GetMapping("/modify") 
+
+
+
+	@GetMapping("/modify")
 	public void modify() {
-	
+
 	}
-	
-	@GetMapping("/write") 
+
+	@GetMapping("/write")
 	public void write() {
-	
+
 	}
 	
 	@PostMapping("/write")
@@ -78,7 +62,7 @@ public class BoardController {
 		try {
 			log.info("register:" + board);
 			service.register(board);
-			rttr.addFlashAttribute("result", "°Ô½Ã¹°ÀÌ ¼º°øÀûÀ¸·Î µî·ÏµÇ¾ú½À´Ï´Ù. (¹øÈ£: " + board.getBno() + ")");
+			rttr.addFlashAttribute("result", "ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ÏµÇ¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. (ï¿½ï¿½È£: " + board.getBno() + ")");
 			return "redirect:/board/list";
 		} catch (Exception e) {
 			e.printStackTrace();
