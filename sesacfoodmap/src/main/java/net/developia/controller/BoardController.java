@@ -3,11 +3,14 @@ package net.developia.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import net.developia.domain.BoardVO;
 import net.developia.domain.Criteria;
 import net.developia.domain.PageDTO;
 import net.developia.service.BoardService;
@@ -51,7 +54,8 @@ public class BoardController {
 			return "board/list";
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Error occurred while fetching the list.", e);
+		    model.addAttribute("error", "게시물 목록을 가져오는 중 문제가 발생했습니다.");
 			return null;
 		}
 		
@@ -68,4 +72,18 @@ public class BoardController {
 	public void write() {
 	
 	}
+	
+	@PostMapping("/write")
+	public String register(BoardVO board, RedirectAttributes rttr) {
+		try {
+			log.info("register:" + board);
+			service.register(board);
+			rttr.addFlashAttribute("result", "게시물이 성공적으로 등록되었습니다. (번호: " + board.getBno() + ")");
+			return "redirect:/board/list";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }
