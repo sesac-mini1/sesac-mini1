@@ -55,10 +55,10 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 
-                <form role="form" action="/board/register" method="post">
+                <form role="form" action="/board/write" method="post">
                 <div class="form-group">
                   		<label>음식점 이름</label> <input class="form-control"
-                  			name='title'>
+                  			name='rname'>
                   				</div>
                 
                 	<div class="form-group">
@@ -73,7 +73,7 @@
                     		
                     		<div class="form-group">
 							    <label id="ticket_flex">
-							        <input type="checkbox" name="isPublic" value="yes">
+							        <input type="checkbox" name="ticket" value="yes">
 								    <img id="ticketImg" src="/resources/assets/ticket-image.png" height="30px" />
 								
 								  </label>
@@ -86,25 +86,24 @@
                     		<!-- 분류 select box 추가 -->
                     		<div class="form-group">
                         		<label>분류</label>
-                        			<select class="form-control" name="category">
-			                            <option value="koreanfood">한식</option>
-			                            <option value="japanessfood">일식</option>
-			                            <option value="chinesefood">중식</option>
-			                            <option value="westernfood">양식</option>
-			                            <option value="asianfood">아시안푸드</option>
-			                            <option value="cafefood">카페</option>
-			                            <option value="snackfood">분식</option>
-			                            <option value="etc">기타</option>
+                        			<select class="form-control" name="type">
+			                            <option value="한식">한식</option>
+			                            <option value="일식">일식</option>
+			                            <option value="중식">중식</option>
+			                            <option value="양식">양식</option>
+			                            <option value="아시안">아시안푸드</option>
+			                            <option value="카페">카페</option>
+			                            <option value="분식">분식</option>
+			                            <option value="기타">기타</option>
 			                     	</select>
 			                </div>
 			                
 			                <!-- 파일 업로드 -->
-							<form action="/upload" method="post" enctype="multipart/form-data">
 							    <div class="form-group">
 							        <label>파일 업로드</label>
-							        <input type="file" class="form-control" name="fileUpload" multiple> 
+							        <input type="file" class="form-control" name="filename"> 
 							    </div>
-							</form>
+							
 							
 							<!-- 비밀번호 입력 -->
 							<div class="form-group">
@@ -112,7 +111,7 @@
 							    <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력하세요">
 							</div>
                     		
-                    		<button type="summit" class="btn btn-default">등록하기</button>
+                    		<button type="submit" class="btn btn-default">등록하기</button>
                     		<button type="reset" class="btn btn-default">되돌리기</button>
                     		</form>  
                 </div>

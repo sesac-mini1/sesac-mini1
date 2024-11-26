@@ -3,11 +3,14 @@ package net.developia.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import net.developia.domain.BoardVO;
 import net.developia.domain.Criteria;
 import net.developia.domain.PageDTO;
 import net.developia.service.BoardService;
@@ -35,6 +38,7 @@ public class BoardController {
 //	}
 
 	@GetMapping("/list")
+
 	public void list(Criteria cri, Model model) throws Exception {
 		log.info("list: " + cri);
 		model.addAttribute("list", service.getList(cri));
@@ -52,4 +56,18 @@ public class BoardController {
 	public void write() {
 
 	}
+	
+	@PostMapping("/write")
+	public String register(BoardVO board, RedirectAttributes rttr) {
+		try {
+			log.info("register:" + board);
+			service.register(board);
+			rttr.addFlashAttribute("result", "�Խù��� ���������� ��ϵǾ����ϴ�. (��ȣ: " + board.getBno() + ")");
+			return "redirect:/board/list";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }
