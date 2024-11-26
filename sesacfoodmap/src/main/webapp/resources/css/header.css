@@ -1,3 +1,26 @@
 #header_color{
 	background-color: #0F2514;
 }
+
+#navbar-logo {
+  width: 40px; /* 로고 너비 */
+  height: 40px; /* 로고 높이 */
+  object-fit: cover; /* 로고 크기 비율 유지 */
+  margin-right: 3px; /* 로고와 텍스트 간 간격 */
+  vertical-align: middle; /* 텍스트와 수직 정렬 */
+}
+
+#navbar-brand {
+  display: inline-flex; /* 로고와 텍스트를 같은 줄에 배치 */
+  align-items: center; /* 수직 가운데 정렬 */
+  text-decoration: none; /* 링크의 밑줄 제거 */
+  color: white; /* 텍스트 색상 */
+  font-weight: bold; /* 텍스트 강조 */
+  font-size: 20px;
+}
+
+#navbar-menu {
+  text-decoration: none; /* 링크의 밑줄 제거 */
+  color: white; /* 텍스트 색상 */
+  font-weight: bold; /* 텍스트 강조 */
+}
