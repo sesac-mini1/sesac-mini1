@@ -38,16 +38,17 @@
     <link href="/resources/css/list.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 <%@ include file="../includes/header.jsp" %>
-<div id="table-row-top" class="row">
+<div class="container px-4 px-lg-5">
+<div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">🌱 새싹이들 맛집 게시판</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-<div id="table-row">
+<div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -151,6 +152,7 @@
             <!-- end panel-body -->
         </div>
         <!-- end panel -->
+    </div>
     </div>
     <form id='actionForm' action="/board/list" method='get'>
 		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
