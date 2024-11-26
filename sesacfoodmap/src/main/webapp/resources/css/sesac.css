@@ -22,3 +22,13 @@
   --bs-btn-disabled-bg: #7ed982;
   --bs-btn-disabled-border-color: #7ed982;
 }
+.w-85 {
+  width: 85% !important;
+}
+.h-85 {
+  height: 35px !important;
+}
+.br-10 {
+  border-radius: 10px;
+}
+}

@@ -1,10 +1,13 @@
 package net.developia.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import net.developia.domain.BoardVO;
+import net.developia.domain.Criteria;
 import net.developia.mapper.BoardMapper;
 
 @Log4j
@@ -24,7 +27,7 @@ public class BoardServiceImpl implements BoardService {
 			log.info("get........" + bno);
 			BoardVO board = mapper.get(bno);
 			if (board == null ) 
-				throw new RuntimeException(bno + "¹ø °Ô½Ã¹°ÀÌ ¾øÀ½");
+				throw new RuntimeException(bno + "ë²ˆ ê²Œì‹œë¬¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŒ");
 			return board;
 	}
 
@@ -32,7 +35,7 @@ public class BoardServiceImpl implements BoardService {
 	public boolean modify(BoardVO board) throws Exception {
 			log.info("modify........."+board);
 			if (mapper.update(board) == 0) 
-				throw new RuntimeException(board.getBno() + "¹ø °Ô½Ã¹°ÀÌ ¼öÁ¤µÇÁö ¾ÊÀ½"); 
+				throw new RuntimeException(board.getBno() + "ë²ˆ ê²Œì‹œë¬¼ì´ ìˆ˜ì •ë˜ì§€ ì•ŠìŒ"); 
 			return true;
 	}
 
@@ -40,7 +43,7 @@ public class BoardServiceImpl implements BoardService {
 	public boolean remove(Long bno) throws Exception {
 			log.info("remove........"+bno);
 			if (mapper.delete(bno) == 0) 
-				throw new RuntimeException(bno + "¹ø °Ô½Ã¹°ÀÌ »èÁ¦µÇÁö ¾ÊÀ½"); 
+				throw new RuntimeException(bno + "ë²ˆ ê²Œì‹œë¬¼ì´ ì‚­ì œë˜ì§€ ì•ŠìŒ"); 
 			return true;
 	}
 	
@@ -50,15 +53,15 @@ public class BoardServiceImpl implements BoardService {
 			return mapper.getList();
 	}*/
 	
-//	@Override
-//	public List<BoardVO> getList(Criteria cri) throws Exception {
-//		log.info("get List with criteria: " + cri);
-//		return mapper.getListWithPaging(cri);
-//	}
-//
-//	@Override
-//	public int getTotal(Criteria cri) throws Exception {
-//		log.info("get total count");
-//		return mapper.getTotalCount(cri);
-//	}
+	@Override
+	public List<BoardVO> getList(Criteria cri) throws Exception {
+		log.info("get List with criteria: " + cri);
+		return mapper.getListWithPaging(cri);
+	}
+
+	@Override
+	public int getTotal(Criteria cri) throws Exception {
+		log.info("get total count");
+		return mapper.getTotalCount(cri);
+	}
 }
