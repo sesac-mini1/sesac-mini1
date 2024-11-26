@@ -5,7 +5,7 @@ import net.developia.domain.BoardVO;
 import net.developia.domain.Criteria;
 
 public interface BoardMapper {
-//	public List<BoardVO> getList();
+	public List<BoardVO> getList();
 	public void insert(BoardVO board);
 	public BoardVO get(Long bno);
 	public int delete(Long bno);
