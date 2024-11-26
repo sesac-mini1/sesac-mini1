@@ -28,7 +28,7 @@
             <div class="col-lg-5">
                 <h2 id="home_title" class="font-weight-light">새싹 맛지도에 오신 걸 환영합니다!</h2>
                 <p>새싹 동대문 캠퍼스 주변의 숨겨진 맛집을 함께 찾아봐요! <br>여러분이 사랑하는 맛집을 리뷰와 사진으로 공유하고,<br> 캠퍼스 생활을 더 맛있게 즐겨보세요! 🌱</p>
-                 <a id="btn_green" class= "btn btn-primary" href="#!">맛집 공유하러 가기!</a>
+                 <a id="btn_green" class= "btn btn-primary" href="/board/write">맛집 공유하러 가기!</a>
             </div>
         </div>  
         <!-- Call to Action-->
