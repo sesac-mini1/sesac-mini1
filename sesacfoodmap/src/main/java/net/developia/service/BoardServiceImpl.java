@@ -46,13 +46,7 @@ public class BoardServiceImpl implements BoardService {
 				throw new RuntimeException(bno + "번 게시물이 삭제되지 않음");
 			return true;
 	}
-
-
-	@Override
-	public List<BoardVO> getList() throws Exception {
-			return mapper.getList();
-	}
-
+	
 	@Override
 	public List<BoardVO> getList(Criteria cri) throws Exception {
 		log.info("get List with criteria: " + cri);

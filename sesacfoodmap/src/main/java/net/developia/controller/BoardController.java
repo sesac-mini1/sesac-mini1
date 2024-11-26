@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import net.developia.domain.Criteria;
+import net.developia.domain.PageDTO;
 import net.developia.service.BoardService;
 
 @Controller
@@ -33,26 +35,10 @@ public class BoardController {
 //	}
 
 	@GetMapping("/list")
-	public String list(Model model) {
-
-		try {
-			log.info("list: ");
-			model.addAttribute("list", service.getList());
-//			model.addAttribute("pageMaker", new PageDTO(cri, 123));
-
-			//int total = service.getTotal();
-
-			//log.info("total: " + total);
-
-			//model.addAttribute("pageMaker", new PageDTO(cri, total));
-
-			return "board/list";
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-
+	public void list(Criteria cri, Model model) throws Exception {
+		log.info("list: " + cri);
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri,123));
 	}
 
 
