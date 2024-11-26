@@ -1,4 +1,6 @@
 <%@	taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>   
+
 <%@ page session="false" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -12,7 +14,7 @@
     <link rel="icon" type="image/x-icon" href="/resources/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/resources/css/styles.css" rel="stylesheet" />
-    <title>글 읽기 페이지</title>
+    <title>글 목록 페이지</title>
    
     <!-- Bootstrap Core CSS -->
     <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -40,7 +42,7 @@
 <%@ include file="../includes/header.jsp" %>
 <div id="table-row-top" class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Tables</h1>
+        <h1 class="page-header">🌱 새싹이들 맛집 게시판</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -89,11 +91,11 @@
                     	<c:forEach items="${list}" var="board">
                     	<tr>
                     		<td><c:out value="${board.type}" /></td>
-                    		<td><c:out value="${board.rating}" /></td>
+                    		<td><c:out value="${board.stars}" /></td>
                     		<td><a class='move' href='<c:out value="${board.bno}" />'>
                     			<c:out value="${board.title}" /></a></td>
                     		<td><c:out value="${board.writer}" /></td>
-                    		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
+                    		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regDate}" /></td>
                     	</tr>
                     	</c:forEach>
                     </tbody>
@@ -156,106 +158,8 @@
 		<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type }"/>'>
 		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword }"/>'>
 	</form>
-</div>
-<!-- /.row -->
-<script>
-	$().ready(() => {
-		let replyUL = $(".chat");
-
-		showList(1);
-
-		function showList(page) {
-			replyService.getList({ bno: bnoValue, page: page || 1 }, function (list) {
-				let str = "";
-				console.log(list);
-				if (list == null || list.length == 0) {
-					replyUL.html("");
-					return;
-				}
-				list = list.map(item => ({
-					...item,
-					replyDate: replyService.displayTime(item.replyDate)
-				}));
-				for (let i = 0, len = list.length || 0; i < len; i++) {
-					str += `                    	<tr>
-                    		<td><c:out value="\${board.type}" /></td>
-                    		<td><c:out value="\${board.rating}" /></td>
-                    		<td><a class='move' href='<c:out value="\${board.bno}" />'>
-                    			<c:out value="\${board.title}" /></a></td>
-                    		<td><c:out value="\${board.writer}" /></td>
-                    		<td><fmt:formatDate pattern="yyyy-MM-dd" value="\${board.regdate}" /></td>
-                    	</tr>`;
-				}
-				replyUL.html(str);
-				console.log(str);
-			}) // end function
-		} // end showList
-	});
-	$(()=> {
-		let result = '<c:out value="${result}"/>';
-
-		checkModal(result);
-		
-		history.replaceState({}, null, null);
-		
-		function checkModal() {
-			if (result === '' || history.state) return;
-			if (parseInt(result) > 0) {
-				$('.modal-body').html('게시물 ' + parseInt(result) + '번이 등록되었습니다.');
-			}
-			else if (result == 'modify-success') {
-				$('.modal-body').html('수정되었습니다.');
-			}
-			else if (result == 'remove-success') {
-				$('.modal-body').html('삭제되었습니다.');
-			}
-			$('#myModal').modal("show");
-		}
-		
-		$('#regBtn').on("click", () => {
-			self.location = "/board/register";
-		});
-		
-		let actionForm = $("#actionForm");
-		
-		$(".paginate_button a").on("click", function(e) {
-			e.preventDefault();
-			console.log('click');
-			actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-			actionForm.submit();
-		});
-		
-		$(".move").on("click", function(e){
-			e.preventDefault();
-			
-			actionForm.find("input[name='bno']").remove();
-			actionForm.append("<input type='hidden' name='bno' value='"+$(this).attr("href") + "'>");
-			
-			actionForm.attr("action", "/board/get");
-			actionForm.submit();
-		});
-		
-		let searchForm = $("#searchForm");
-		
-		$("#searchForm button").on("click", function(e){
-			if (!searchForm.find("option:selected").val()){
-				alert("검색 종류를 선택하세요.");
-				return false;
-			}
-			
-			if (!searchForm.find("input[name='keyword']").val()) {
-				alert("키워드를 입력하세요.");
-				return false;
-			}
-			
-			searchForm.find("input[name='pageNum']").val("1");
-			e.preventDefault();
-			
-			searchForm.submit();
-		});
-	});
-</script>
-<!-- Modal -->
+	
+	<!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -266,7 +170,6 @@
             <div class="modal-body">
                 
             </div>
-            <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -275,6 +178,85 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+</div>
+<!-- /.row -->
+<script type="text/javascript">
+
+$(function() {	<!-- $(document).ready(function())을  -->
+
+	var result = '<c:out value="${result}"/>';
+	
+	checkModal(result);
+	
+	history.replaceState({},null,null);
+	
+	function checkModal(result) {
+		
+		if (result === '' || history.state) {
+			return;
+		}
+		
+		if (parseInt(result) > 0) {
+			$(".modal-body").html("게시글 " + parseInt(result) + "번이 등록되었습니다.");
+		}
+		
+		$("#myModal").modal("show");
+	}
+	
+	$("#regBtn").on("click", function() {
+		
+		self.location = "/board/write";
+		
+	});
+	
+ 	var actionForm = $("#actionForm");
+	
+ 	$(".paginate_button a").on("click", function(e) {
+		
+		e.preventDefault();
+		
+		console.log('click');
+		
+		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+		actionForm.attr("action", "/board/list");
+		actionForm.submit();
+	});
+ 	
+ 	$(".move").on("click", function(e){
+ 		
+ 		e.preventDefault();
+ 		actionForm.find("input[name='bno']").remove();
+ 		actionForm.append("<input type='hidden' name='bno' value='"+$(this).attr("href")+"'>");
+ 		actionForm.attr("action", "/board/get");
+ 		actionForm.submit();
+ 		
+ 	});
+ 	
+ 	var searchForm = $("#searchForm");
+ 	
+ 	$("#searchForm button").on("click", function(e){
+ 		
+ 		if(!searchForm.find("option:selected").val()){
+ 			alert("검색종류를 선택하세요");
+ 			return false;
+ 		}
+ 		
+ 		if(!searchForm.find("input[name='keyword']").val()){
+ 			alert("키워드를 입력하세요");
+ 			return false;
+ 		}
+ 		
+ 		searchForm.find("input[name='pageNum']").val("1");
+ 		e.preventDefault();
+ 		
+ 		searchForm.submit();
+ 		
+ 	});
+	
+});
+
+</script>
+
 <%@ include file="../includes/footer.jsp" %>
     <!-- Bootstrap Core JavaScript -->
     <script src="/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
