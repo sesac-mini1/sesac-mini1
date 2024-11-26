@@ -47,7 +47,7 @@
     <div id="modify_body" class="container px-4 px-lg-5">
         <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">게시글 수정하기</h1>
+        <h1 class="page-header">게시글 수정</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -57,7 +57,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
         
-            <div id="board_green" class="panel-heading">Board Read Page</div>
+            <div class="panel-heading">Board Read Page</div>
             <!-- /.panel-heading -->
             <div class="panel-body">
             
@@ -82,9 +82,42 @@
 	            		<textarea class="form-control" rows="3" name='content' ><c:out value="${board.content}"/></textarea>
 	            	</div>
 	            	
-	            	<button id="btn_green" type="submit" data-oper='modify' class="btn btn-default">수정</button>
-	            	<button id="btn_green" type="submit" data-oper='remove' class="btn btn-default">삭제</button>
-	            	<button id="btn_green" type="submit" data-oper='list' class="btn btn-default">글 목록</button>
+	            	<div class="form-group">
+							    <label>
+							        <input type="checkbox" name="isPublic" value="yes">
+							        식권대장
+							    </label>
+							</div>
+					
+					<div class="form-group">
+                        		<label>분류</label>
+                        			<select class="form-control" name="category">
+			                            <option value="koreanfood">한식</option>
+			                            <option value="japanessfood">일식</option>
+			                            <option value="chinesefood">중식</option>
+			                            <option value="westernfood">양식</option>
+			                            <option value="asianfood">아시안푸드</option>
+			                            <option value="cafefood">카페</option>
+			                            <option value="snackfood">분식</option>
+			                            <option value="etc">기타</option>
+			                     	</select>
+			        </div>
+			        
+			        <form action="/upload" method="post" enctype="multipart/form-data">
+							    <div class="form-group">
+							        <label>파일 업로드</label>
+							        <input type="file" class="form-control" name="fileUpload" multiple> 
+							    </div>
+					</form>
+					
+					<div class="form-group">
+							    <label>비밀번호 입력</label>
+							    <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력하세요">
+					</div>
+	            	
+	            	<button type="submit" data-oper='modify' class="btn btn-default">수정하기</button>
+	            	<button type="submit" data-oper='remove' class="btn btn-default">삭제하기</button>
+	            	<button type="submit" data-oper='list' class="btn btn-default">글 목록</button>
             
             	</form>
             	
