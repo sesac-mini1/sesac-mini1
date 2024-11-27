@@ -42,10 +42,10 @@
  		});	
  	}
  	
- 	function remove(rno, callback, error) {
+ 	function remove(cno, callback, error) {
  		$.ajax({
  			type : 'delete',
- 			url : '/replies/' + rno,
+ 			url : '/replies/' + cno,
  			success : function(deleteResult, status, xhr) {
  				if (callback) {
  					callback(deleteResult);
@@ -60,11 +60,11 @@
  	}
  	
  	function update(reply, callback, error) {
- 		console.log("RNO: " + reply.rno);
+ 		console.log("cno: " + reply.cno);
  		
  		$.ajax({
  			type : 'put',
- 			url : '/replies/' + reply.rno,
+ 			url : '/replies/' + reply.cno,
  			data : JSON.stringify(reply),
  			contentType : "application/json; charset=utf-8",
  			success : function(result, status, xhr) {
@@ -80,8 +80,8 @@
  		});
  	}
  	
- 	function get(rno, callback, error) {
- 		$.get(`/replies/${rno}.json`, function(result) {
+ 	function get(cno, callback, error) {
+ 		$.get(`/replies/${cno}.json`, function(result) {
  			if (callback) {
  				callback(result);
  			}

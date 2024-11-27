@@ -39,11 +39,11 @@
                         <a class="badge bg-sesac text-decoration-none link-light"><c:out value="${board.type}" /></a>
                         <c:if test="${board.ticket}"><a class="badge bg-sesac text-decoration-none link-light">식권대장</a></c:if>
                 		<a class="badge bg-secondary text-decoration-none link-light float-end ms-1" type="submit">삭제</a>
-                        <a class="badge bg-secondary text-decoration-none link-light float-end" type="submit">수정</a>
+                        <a class="badge bg-secondary text-decoration-none link-light float-end" type="submit" href="/board/modify">수정</a>
                     </header>
                     <!-- Preview image figure-->
                     <figure class="mb-4"><img class="img-fluid rounded"
-                            src=`resources/imgs/${board.filename}` alt="이미지가 없음" /></figure>
+                            src="resources/imgs/${board.filename}" alt="이미지가 없음" /></figure>
                     <!-- Post content-->
                     <section class="mb-5">
                         <p class="fs-5 mb-4"><c:out value="${board.content}" /></p>
@@ -54,7 +54,7 @@
                     <div class="card bg-light">
                         <div class="card-body">
                             <!-- Comment form-->
-                            <form class="chat flex-wrap d-flex mb-4">
+                            <form class="addReply flex-wrap d-flex mb-4">
                             	<div class="flex-shrink-0"><img class="rounded-circle"
                                         src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                             	<span class="ms-3 w-85">
@@ -63,10 +63,10 @@
                                 <input value="등록" type="button" id="addReplyBtn" class="h-85 mb-1 me-auto btn btn-sesac" />
                                 <input type="hidden" name='bno' value="${board.bno}" />  
                             	<textarea class="form-control" rows="3" name="content"
-                                    placeholder="Join the discussion and leave a comment!"></textarea>
+                                    placeholder="게시글이 마음에 드셨나요? 멋진 댓글을 남겨보세요!"></textarea>
                             	</span>
                             </form>
-                            <div class="chat">
+                            <div class="reply">
                             	<!-- comments-->
 	                            <div class="d-flex mb-4">
 	                                <div class="flex-shrink-0"><img class="rounded-circle"
@@ -75,8 +75,8 @@
 	                                    <div class="fw-bold">
 	                                    	작성자
 	                                    	날짜
-	                                    	<a id="updateReplyBtn" class="badge bg-secondary text-decoration-none link-light ms-2" href="#">수정</a>
-                							<a id="removeReplyBtn" class="badge bg-secondary text-decoration-none link-light" href="#">삭제</a>
+	                                    	<a id="testUpdateReplyBtn" class="badge bg-secondary text-decoration-none link-light ms-2" href="#">수정</a>
+                							<a id="testRemoveReplyBtn" class="badge bg-secondary text-decoration-none link-light" href="#">삭제</a>
 	                                    </div>
 	                                     When I look at the universe and all the ways the universe wants to kill us, I find
 	                                    it hard to reconcile that with statements of beneficence.
@@ -89,6 +89,38 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Reply Modal</h4>
+                </div>
+					<div class="form-group">
+						<label>작성자</label>
+						<input class="form-control" name="writer">
+					</div>
+                <div class="modal-body">
+					<div class="form-group">
+						<label>비밀번호</label>
+						<input type="password" class="form-control" name="password">
+					</div>
+					<div class="form-group">
+						<label>내용</label>
+						<textarea rows="3" class="form-control" name="content"></textarea>
+					</div>
+				</div>
+                <div class="modal-footer">
+                    <button id="modalModBtn" type="button" class="btn btn-danger">수정</button>
+                    <button id="modalCloseBtn" type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- end modal -->
 <%@ include file="../includes/footer.jsp" %>
 </body>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
@@ -123,7 +155,13 @@ $(document).ready(()=>{
 
 $(function(){
 	let bnoValue = `<c:out value="${board.bno}" />`;
-	let replyUL = $(".chat");
+	let replyUL = $(".reply");
+	
+	let modalBtn = $("#modalBtn");
+	let modal = $(".modal");
+	let modalInputContent = modal.find("textarea[name='content']");
+	let modalInputWriter = modal.find("input[name='writer']");
+	let modalInputPassword = modal.find("input[name='password']");
 	
 	showList(1);
 	
@@ -136,15 +174,15 @@ $(function(){
 				return;
 			}
 			for (let i = 0, len = list.length || 0; i < len; i++) {
-				str += `<div class="d-flex mb-4" data-cno='\${list[i].cno}'>
+				str += `<div class="cnoCLass d-flex mb-4" data-cno='\${list[i].cno}'>
                     		<div class="flex-shrink-0"><img class="rounded-circle"
                     		src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
             				<div class="ms-3">
                 				<div class="fw-bold">
                 					\${list[i].writer}
                 					<small class="text-muted">\${replyService.displayTime(list[i].regDate)}</small>
-                					<a id="updateReplyBtn" class="badge bg-secondary text-decoration-none link-light ms-2" href="#">수정</a>
-                					<a id="removeReplyBtn" class="badge bg-secondary text-decoration-none link-light" href="#">삭제</a>
+                					<span class="updateReplyBtn badge bg-secondary text-decoration-none link-light ms-2">수정</span>
+                					<span class="removeReplyBtn badge bg-secondary text-decoration-none link-light">삭제</span>
                					</div>
                					\${list[i].content}
                				</div>
@@ -152,16 +190,14 @@ $(function(){
 			}
 			replyUL.html(str);
 		});
-	}
-		
-	let chat = $(".chat");
-	let inputContent = chat.find("textarea[name='content']")
-	let inputWriter = chat.find("input[name='writer']")
-	let inputPassword = chat.find("input[name='password']")
+	} //end showList
+	
+	let addReply = $(".addReply");
+	let inputContent = addReply.find("textarea[name='content']");
+	let inputWriter = addReply.find("input[name='writer']");
+	let inputPassword = addReply.find("input[name='password']");
 	
 	let addReplyBtn = $("#addReplyBtn");
-	let updateReplyBtn = $("#updateReplyBtn");
-	let removeReplyBtn = $("#removeReplyBtn");
 	
 	addReplyBtn.on("click", function(e){
 		let reply = {
@@ -171,11 +207,45 @@ $(function(){
 			bno: bnoValue 
 		};
 		replyService.add(reply, function(result) {
-			alert(result);
-			
+			alert("성공적으로 등록되었습니다!");
+			inputContent.val("");
+			inputWriter.val("익명이");
+			inputPassword.val("");
 			showList(1);
 		});
 	});
+	
+	$(document).on("click", ".updateReplyBtn", function (e) {
+		let cno = $(this).closest(".cnoCLass").data("cno");
+		//console.log(`log:\${cno}`);
+		replyService.get(cno, function(reply){
+			modalInputContent.val(reply.content);
+			modalInputWriter.val(reply.writer).attr("readonly", "readonly");
+			modalInputPassword.val("");
+			modal.data("cno", reply.cno);
+			
+			modal.modal("show");
+		});
+	});
+	
+	$('#modalModBtn').click(function(e) {
+		let reply = {cno: modal.data("cno"), content: modalInputContent.val(), 
+				password: modalInputPassword.val()};
+		replyService.update(reply, function(result) {
+            alert('성공적으로 수정하였습니다!'); // 성공 시 알림
+            modal.modal("hide");
+            showList(1);
+	    }, function(error) {
+	    	alert('비밀번호가 틀렸습니다! 다시 확인하세요!')
+	    });
+	});
+	
+	$('#modalCloseBtn').click(function(e) {
+		modal.modal("hide");
+		modalInputContent.val("");
+		modalInputWriter.val("");
+		modalInputPassword.val("");
+	})
 });
 </script>
 </html>
