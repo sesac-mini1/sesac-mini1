@@ -46,6 +46,12 @@
 		where rn > (#{pageNum} - 1) * #{amount}
 	]]>
 	</select> 
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from board where
+		<!-- <include refid="criteria"></include> -->
+		bno > 0
+	</select> 
 	<!--  <include refid="criteria"></include>
 	<![CDATA[ 
 			rownum <= #{pageNum} * #{amount}
@@ -76,10 +82,6 @@
 	
 	
 	
-	<select id="getTotalCount" resultType="int">
-		select count(*) from tbl_board where
-		<include refid="criteria"></include>
-		bno > 0
-	</select> -->
+	-->
 </mapper>
 <!-- CDATA 사용하여 >가 태그가 아닌 부등호임을 알림 -->
