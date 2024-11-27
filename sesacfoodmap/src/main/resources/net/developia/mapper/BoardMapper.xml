@@ -32,6 +32,14 @@
 		where 	bno = #{bno}
 	</update>
 	
+	<update id="likeUp">
+		update	board
+		set 	recommend = (SELECT recommend
+			FROM board
+			WHERE bno = #{bno}) + 1
+		where 	bno = #{bno}
+	</update>
+	
 	<select id="getListWithPaging" resultType="BoardVO">
 	<![CDATA[
 		select 

@@ -19,6 +19,7 @@
 	<delete id="delete">
 		delete from reply 
 		where cno = #{cno}
+		and	  password = #{password}
 	</delete>
 	
 	<update id="update">

@@ -24,9 +24,9 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public ReplyVO get(Long rno) {
-		log.info("get......" + rno);
-		return mapper.get(rno);
+	public ReplyVO get(Long cno) {
+		log.info("get......" + cno);
+		return mapper.get(cno);
 	}
 
 	@Override
@@ -36,9 +36,9 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public int remove(Long rno) {
-		log.info("remove.........." + rno);
-		return mapper.delete(rno);
+	public int remove(Long cno, String password) {
+		log.info("remove.........." + cno + password);
+		return mapper.delete(cno, password);
 	}
 
 	@Override

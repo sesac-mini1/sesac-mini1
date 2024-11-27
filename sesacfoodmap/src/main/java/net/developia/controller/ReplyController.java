@@ -60,10 +60,10 @@ public class ReplyController {
    }
 
    @DeleteMapping(value = "/{cno}", produces = {MediaType.TEXT_PLAIN_VALUE})
-   public ResponseEntity<String> remove(@PathVariable("cno") Long cno) {
-      log.info("remove: " + cno);
+   public ResponseEntity<String> remove(@PathVariable("cno") Long cno, @PathVariable("cno") String password) {
+      log.info("remove: " + cno + password);
 
-      return service.remove(cno) == 1
+      return service.remove(cno, password) == 1
             ? new ResponseEntity<>("success", HttpStatus.OK)
             : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
    }
