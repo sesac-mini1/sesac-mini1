@@ -150,9 +150,7 @@ function clickLike() {
 }
 
 $(document).ready(()=>{
-	let likeBtn = document.getElementById("likeSpan");
-	console.log(likeBtn);
-	likeBtn.addEventListener("click", clickLike);
+	document.getElementById("likeSpan").addEventListener("click", clickLike);
 });
 
 $(function(){
