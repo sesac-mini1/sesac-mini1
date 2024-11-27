@@ -1,9 +1,13 @@
 package net.developia.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -62,12 +66,25 @@ public class BoardController {
 		try {
 			log.info("register:" + board);
 			service.register(board);
-			rttr.addFlashAttribute("result", "�Խù��� ���������� ��ϵǾ����ϴ�. (��ȣ: " + board.getBno() + ")");
+			rttr.addFlashAttribute("result", "게시물이 성공적으로 등록되었습니다. (번호: " + board.getBno() + ")");
 			return "redirect:/board/list";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
+	
+	@PostMapping(value = "/likeup", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+    public ResponseEntity<String> likeUp(@RequestBody Long bno) {
+	log.info("likeup: " + bno);
+	int result;
+	try {
+		result = service.likeUp(bno);
+	} catch (Exception e) {
+		e.printStackTrace();
+		result = -1;
+	}
+    return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 	
 }
