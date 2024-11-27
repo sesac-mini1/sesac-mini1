@@ -226,12 +226,12 @@ $(function(){
 		let cno = $(this).closest(".cnoCLass").data("cno");
 		//console.log(`log:\${cno}`);
 		replyService.get(cno, function(reply){
-			modalInputContent.val(reply.content);
+			modalInputContent.val(reply.content).removeAttr("readonly");
 			modalInputWriter.val(reply.writer).attr("readonly", "readonly");
 			modalInputPassword.val("");
 			modal.data("cno", reply.cno);
 			
-			modal.find("button[i != 'modalCloseBtn']").hide();
+			modal.find("button[id != 'modalCloseBtn']").hide();
 			modalModifyBtn.show();
 			modal.modal("show");
 		});
@@ -269,14 +269,15 @@ $(function(){
 	});
 	
 	modalRemoveBtn.click(function(e) {
-		let cno = modal.data("cno");
-		replyService.remove(cno, function(result){
+		let param = {cno:modal.data("cno"),password:modalInputPassword.val()};
+		console.log(param.cno + ", " + param.password);
+		replyService.remove(param, function(result){
 			alert("성공적으로 삭제하였습니다.");
 			modal.modal("hide");
 			showList(1);
 		}, function(error) {
-			alert("삭제에 실패하였습니다. 비밀번호를 확인하세요.")
-		});
+			alert("삭제에 실패하였습니다. 비밀번호를 확인하세요")
+		});	
 	});
 	
 	$('#modalCloseBtn').click(function(e) {

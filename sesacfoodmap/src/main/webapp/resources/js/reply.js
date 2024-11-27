@@ -41,11 +41,15 @@
  			}
  		});	
  	}
- 	
- 	function remove(cno, callback, error) {
+
+ 	function remove(param, callback, error) {
+ 		let cno = param.cno;
+ 		console.log(cno + " " + param.password);
  		$.ajax({
  			type : 'delete',
  			url : '/replies/' + cno,
+ 			data : JSON.stringify(param),
+ 			contentType : "application/json; charset=utf-8",
  			success : function(deleteResult, status, xhr) {
  				if (callback) {
  					callback(deleteResult);
