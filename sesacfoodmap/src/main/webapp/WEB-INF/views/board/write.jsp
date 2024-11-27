@@ -61,27 +61,6 @@
                   			name='rname'>
                   				</div>
 							
-						<!-- 별점 추가 -->
-							<div class="form-group">
-								<label>별점</label>
-								<div class=" d-flex justify-content-center mt-5">
-									<div class=" text-center mb-5">
-										<div class="rating">
-											<input type="radio" name="rating" value="5" id="5">
-											<label for="5">☆</label> 
-											<input type="radio" name="rating" value="4" id="4">
-											<label for="4">☆</label> 
-											<input type="radio" name="rating" value="3" id="3">
-											<label for="3">☆</label> 
-											<input type="radio" name="rating" value="2" id="2">
-											<label for="2">☆</label> 
-											<input type="radio" name="rating" value="1" id="1">
-											<label for="1">☆</label>
-										</div>
-									</div>
-								</div>
-							</div>
-
 							<div class="form-group">
                   		<label>글 제목</label> <input class="form-control"
                   			name='title'>
@@ -120,11 +99,12 @@
 			                </div>
 			                
 			                <!-- 파일 업로드 -->
+							  
 							    <div class="form-group">
 							        <label>파일 업로드</label>
-							        <input type="file" class="form-control" name="filename"> 
+							        <input type="file" class="form-control" name="file"> 
 							    </div>
-							
+							 
 							
 							<!-- 비밀번호 입력 -->
 							<div class="form-group">

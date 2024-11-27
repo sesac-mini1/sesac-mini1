@@ -16,7 +16,8 @@ public class BoardVO {
 	private Date regDate;
 	private boolean ticket;
 	private String type;
-	private MultipartFile filename;
+	private String filename;
+	private MultipartFile file;
 	private int stars;
 	private int recommend;
 	private int comments;

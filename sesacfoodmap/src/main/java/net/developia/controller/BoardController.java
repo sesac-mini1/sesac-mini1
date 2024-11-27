@@ -62,9 +62,13 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write")
-	public String register(BoardVO board, MultipartFile fileName, RedirectAttributes rttr) {
+	public String register(BoardVO board, MultipartFile upfile, RedirectAttributes rttr) {
 		try {
 			log.info("register:" + board);
+//			String filename = upfile.getOriginalFilename();
+			log.info(board.getFile());
+			board.setFilename(board.getFile().getOriginalFilename());
+			log.info(board.getFilename());
 			service.register(board);
 			rttr.addFlashAttribute("result", "게시글이 성공적으로 등록되었습니다. :" + board.getBno() + ")");
 			return "redirect:/board/list";
