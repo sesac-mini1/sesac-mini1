@@ -1,8 +1,12 @@
 package net.developia.controller;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +30,8 @@ import net.developia.service.BoardService;
 public class BoardController {
 	private BoardService service;
 
-	@GetMapping("/get")
+
+	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("bno") Long bno, Model model) {
 		try {
 			log.info("/get");
@@ -35,11 +40,6 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
-
-//	@GetMapping("list")
-//	public void list() {
-//		log.info("list");
-//	}
 
 	@GetMapping("/list")
 
@@ -55,12 +55,6 @@ public class BoardController {
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 
-
-
-	@GetMapping("/modify")
-	public void modify() {
-
-	}
 
 	@GetMapping("/write")
 	public void write() {
@@ -80,6 +74,16 @@ public class BoardController {
 		}
 	}
 	
+
+	@PostMapping("/remove")
+	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) throws Exception {
+		log.info("remove... " + bno);
+		if(service.remove(bno)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/board/list";
+	}
+
 	@PostMapping(value = "/likeup", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<String> likeUp(@RequestBody Long bno) {
 	log.info("likeup: " + bno);
@@ -92,5 +96,6 @@ public class BoardController {
 	}
     return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 	
 }
