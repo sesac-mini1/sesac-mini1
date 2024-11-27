@@ -35,32 +35,45 @@ public class BoardMapperTests {
 //		//존재하는 게시물 번호로 테스트
 //		BoardVO board = mapper.get(1L);
 //		log.info(board);
-//	}ㅁ
+//	}
 //
-	@Test
-	public void testGetList() throws Exception {
+//	@Test
+//	public void testGetList() throws Exception {
 //		List<BoardVO> boardList = mapper.getList();
 //		log.info(boardList);
 //		
 //		service.getList(new Criteria(2,10)).forEach(board -> log.info(board));
-		
-		log.info(mockMvc.perform(
-				MockMvcRequestBuilders.get("/board/list")
-				.param("pageNum", "2")
-				.param("amount", "50")
-				)
-				.andReturn().getModelAndView().getModelMap());
-
-	}
+//		
+//		log.info(mockMvc.perform(
+//				MockMvcRequestBuilders.get("/board/list")
+//				.param("pageNum", "2")
+//				.param("amount", "50")
+//				)
+//				.andReturn().getModelAndView().getModelMap());
+//
+//	}
 	
-	@Test
-	public void testPaging() {
+//	@Test
+//	public void testPaging() {
 //		Criteria cri = new Criteria();
 //		cri.setPageNum(1);
 //		cri.setPageNum(10);
 //		
 //		List<BoardVO> list = mapper.getListWithPaging(cri);
-		
+//		
+//	}
+	
+	@Test
+	public void testDelete() {
+		log.info("DELETE COUNT: " + mapper.delete(4L));
 	}
+	
+//	@Test
+//	public void testRemove() throws Exception {
+//		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/board/remove")
+//				.param("bno", "10")
+//				).andReturn().getModelAndView().getViewName();
+//		log.info(resultPage);
+//	}
 	
 }

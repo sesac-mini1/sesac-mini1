@@ -202,6 +202,10 @@ $(function() {	<!-- $(document).ready(function())을  -->
 			$(".modal-body").html("게시글 " + parseInt(result) + "번이 등록되었습니다.");
 		}
 		
+		if (result === 'remove') {
+            $(".modal-body").html("삭제되었습니다.");
+        }
+		
 		$("#myModal").modal("show");
 	}
 	

@@ -1,5 +1,6 @@
 package net.developia.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,8 @@ import net.developia.service.BoardService;
 public class BoardController {
 	private BoardService service;
 
-	@GetMapping("/get")
+
+	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("bno") Long bno, Model model) {
 		try {
 			log.info("/get");
@@ -31,11 +33,6 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	}
-
-//	@GetMapping("list")
-//	public void list() {
-//		log.info("list");
-//	}
 
 	@GetMapping("/list")
 
@@ -51,12 +48,6 @@ public class BoardController {
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 
-
-
-	@GetMapping("/modify")
-	public void modify() {
-
-	}
 
 	@GetMapping("/write")
 	public void write() {
@@ -74,6 +65,15 @@ public class BoardController {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	@PostMapping("/remove")
+	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) throws Exception {
+		log.info("remove... " + bno);
+		if(service.remove(bno)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/board/list";
 	}
 	
 }
