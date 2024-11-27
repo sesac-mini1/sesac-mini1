@@ -18,7 +18,7 @@ import net.developia.mapper.BoardMapper;
 public class BoardServiceImpl implements BoardService {
 	private BoardMapper mapper;
 	
-	   private static final String BASE_UPLOAD_PATH = "C:\\dev\\sesac-mini1\\sesacfoodmap\\src\\main\\webapp\\resources\\uploadimg";
+	   private static final String BASE_UPLOAD_PATH = "C:\\Users\\irisj\\git\\sesac_mini_1\\sesacfoodmap\\src\\main\\webapp\\resources\\uploadImg\\";
 
 	    private String getFolder(BoardVO bvo) {
 	    	
@@ -52,7 +52,7 @@ public class BoardServiceImpl implements BoardService {
 	        String savefile = getFolder(board);
 			
 			
-			String uploadFolder = "C:\\dev\\sesac-mini1\\sesacfoodmap\\src\\main\\webapp\\resources\\uploadimg\\"  + board.getBno();
+			String uploadFolder = BASE_UPLOAD_PATH + board.getBno();
 			System.out.println("------------------------"+uploadFolder+"----------------------");
 			System.out.println("-------------------------------------");
 			System.out.println("Upload File getName: " + board.getFile().getOriginalFilename());
