@@ -3,6 +3,8 @@ package net.developia.service;
 import java.io.File;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,19 +20,16 @@ import net.developia.mapper.BoardMapper;
 public class BoardServiceImpl implements BoardService {
 	private BoardMapper mapper;
 	
-	   private static final String BASE_UPLOAD_PATH = "C:\\dev\\sesac-mini1\\sesacfoodmap\\src\\main\\webapp\\resources\\uploadimg";
-
-	    private String getFolder(BoardVO bvo) {
+//	   private static final String BASE_UPLOAD_PATH = "C:/dev/sesac-mini1/sesacfoodmap/src/main/webapp/resources/uploadimg";
+	   private final ServletContext servletContext; // ServletContext 주입
+	    
+	   private String getFolder(BoardVO bvo) {
 	    	
-	    	//게시글 저장 및 BNO 반환
-//	    	mapper.insertSelectKey(board);
-//	        Long bno = board.getBno();
-//	        log.info("Generated BNO: " + bno);
-	    	
-	    	
+		    String basePath = servletContext.getRealPath("/resources/uploadimg");
+		   
 	    	// 게시글 번호로 폴더 생성
 	    	String bnoFolder = String.valueOf(bvo.getBno());
-	        String folderPath = BASE_UPLOAD_PATH + File.separator + bnoFolder;
+	        String folderPath = basePath + File.separator + bnoFolder;
 	        
 	        // 폴더가 존재하지 않으면 생성
 	        File folder = new File(folderPath);
@@ -51,8 +50,9 @@ public class BoardServiceImpl implements BoardService {
 			// 게시글 번호 기반 폴더 생성
 	        String savefile = getFolder(board);
 			
-			
-			String uploadFolder = "C:\\dev\\sesac-mini1\\sesacfoodmap\\src\\main\\webapp\\resources\\uploadimg\\"  + board.getBno();
+	        String uploadFolder =getFolder(board);
+	        log.info("Upload Folder: " + uploadFolder);
+//			String uploadFolder = "C:/dev/sesac-mini1/sesacfoodmap/src/main/webapp/resources/uploadimg/"  + board.getBno();
 			System.out.println("------------------------"+uploadFolder+"----------------------");
 			System.out.println("-------------------------------------");
 			System.out.println("Upload File getName: " + board.getFile().getOriginalFilename());
