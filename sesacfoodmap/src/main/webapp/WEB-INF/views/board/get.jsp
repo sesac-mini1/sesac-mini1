@@ -43,7 +43,7 @@
                     </header>
                     <!-- Preview image figure-->
                     <figure class="mb-4"><img class="img-fluid rounded"
-                            src="resources/imgs/${board.filename}" alt="이미지가 없음" /></figure>
+                            src="resources/imgs/${board.filename}" /></figure>
                     <!-- Post content-->
                     <section class="mb-5">
                         <p class="fs-5 mb-4"><c:out value="${board.content}" /></p>
@@ -97,11 +97,11 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">Reply Modal</h4>
                 </div>
+                <div class="modal-body">
 					<div class="form-group">
 						<label>작성자</label>
-						<input class="form-control" name="writer">
+						<input type="text" class="form-control" name="writer">
 					</div>
-                <div class="modal-body">
 					<div class="form-group">
 						<label>비밀번호</label>
 						<input type="password" class="form-control" name="password">
@@ -112,7 +112,8 @@
 					</div>
 				</div>
                 <div class="modal-footer">
-                    <button id="modalModBtn" type="button" class="btn btn-danger">수정</button>
+                    <button id="modalModifyBtn" type="button" class="btn btn-danger">수정</button>
+                    <button id="modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
                     <button id="modalCloseBtn" type="button" class="btn btn-default" data-dismiss="modal">취소</button>
                 </div>
             </div>
@@ -129,7 +130,8 @@ $(function(){
 	let bnoValue = `<c:out value="${board.bno}" />`;
 	let replyUL = $(".reply");
 	
-	let modalBtn = $("#modalBtn");
+	let modalRemoveBtn = $("#modalRemoveBtn");
+	let modalModifyBtn = $("#modalModifyBtn");
 	let modal = $(".modal");
 	let modalInputContent = modal.find("textarea[name='content']");
 	let modalInputWriter = modal.find("input[name='writer']");
@@ -178,13 +180,17 @@ $(function(){
 			password: inputPassword.val(),
 			bno: bnoValue 
 		};
-		replyService.add(reply, function(result) {
-			alert("성공적으로 등록되었습니다!");
-			inputContent.val("");
-			inputWriter.val("익명이");
-			inputPassword.val("");
-			showList(1);
-		});
+		if(reply.content === null || reply.content === '') {
+			alert("댓글 내용이 없습니다. 댓글을 작성한 뒤 등록 버튼을 눌러주세요.")
+		} else {
+			replyService.add(reply, function(result) {
+				alert("성공적으로 등록되었습니다.");
+				inputContent.val("");
+				inputWriter.val("익명이");
+				inputPassword.val("");
+				showList(1);
+			});
+		}
 	});
 	
 	$(document).on("click", ".updateReplyBtn", function (e) {
@@ -196,20 +202,52 @@ $(function(){
 			modalInputPassword.val("");
 			modal.data("cno", reply.cno);
 			
+			modal.find("button[i != 'modalCloseBtn']").hide();
+			modalModifyBtn.show();
 			modal.modal("show");
 		});
 	});
 	
-	$('#modalModBtn').click(function(e) {
+	$(document).on("click", ".removeReplyBtn", function (e) {
+		let cno = $(this).closest(".cnoCLass").data("cno");
+		//console.log(`log:\${cno}`);
+		if(confirm("정말로 삭제하시겠습니까?")){
+			replyService.get(cno, function(reply){
+				modalInputContent.val(reply.content).attr("readonly", "readonly");
+				modalInputWriter.val(reply.writer).attr("readonly", "readonly");
+				modalInputPassword.val("");
+				modal.data("cno", reply.cno);
+				
+				modal.find("button[id != 'modalCloseBtn']").hide();
+				modalRemoveBtn.show();
+				modal.modal("show");
+			});
+		} else{
+			alert("삭제를 취소하였습니다.");
+		}
+	});
+	
+	modalModifyBtn.click(function(e) {
 		let reply = {cno: modal.data("cno"), content: modalInputContent.val(), 
 				password: modalInputPassword.val()};
 		replyService.update(reply, function(result) {
-            alert('성공적으로 수정하였습니다!'); // 성공 시 알림
+            alert('성공적으로 수정하였습니다.'); // 성공 시 알림
             modal.modal("hide");
             showList(1);
 	    }, function(error) {
-	    	alert('비밀번호가 틀렸습니다! 다시 확인하세요!')
+	    	alert('수정에 실패하였습니다. 비밀번호를 확인하세요.')
 	    });
+	});
+	
+	modalRemoveBtn.click(function(e) {
+		let cno = modal.data("cno");
+		replyService.remove(cno, function(result){
+			alert("성공적으로 삭제하였습니다.");
+			modal.modal("hide");
+			showList(1);
+		}, function(error) {
+			alert("삭제에 실패하였습니다. 비밀번호를 확인하세요.")
+		});
 	});
 	
 	$('#modalCloseBtn').click(function(e) {

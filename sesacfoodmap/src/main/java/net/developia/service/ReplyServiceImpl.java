@@ -36,9 +36,9 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public int remove(Long cno) {
-		log.info("remove.........." + cno);
-		return mapper.delete(cno);
+	public int remove(Long cno, String password) {
+		log.info("remove.........." + cno + password);
+		return mapper.delete(cno, password);
 	}
 
 	@Override
