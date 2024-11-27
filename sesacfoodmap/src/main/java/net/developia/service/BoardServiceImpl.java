@@ -1,5 +1,6 @@
 package net.developia.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -19,7 +20,23 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void register(BoardVO board) throws Exception {
 			log.info("register....." + board);
-			mapper.insert(board);
+			
+			
+			String uploadFolder = "C:\\dev\\sesac-mini1\\sesacfoodmap\\src\\main\\webapp\\resources\\uploadimg";
+			System.out.println("------------------------"+uploadFolder+"----------------------");
+			System.out.println("-------------------------------------");
+			System.out.println("Upload File getName: " + board.getFilename().getOriginalFilename());
+			System.out.println("Upload File getSize: " + board.getFilename().getSize());
+			
+			File saveFile = new File(uploadFolder, board.getFilename().getOriginalFilename());
+
+	         try {
+	        	 board.getFilename().transferTo(saveFile);
+	         } catch (Exception e) {
+	            log.error(e.getMessage());
+	         }
+			
+//			mapper.insert(board);
 	}
 
 	@Override

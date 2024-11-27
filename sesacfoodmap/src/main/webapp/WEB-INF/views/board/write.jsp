@@ -55,20 +55,41 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 
-                <form role="form" action="/board/write" method="post">
+                <form role="form" action="/board/write" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                   		<label>음식점 이름</label> <input class="form-control"
                   			name='rname'>
                   				</div>
-                
-                	<div class="form-group">
+							
+						<!-- 별점 추가 -->
+							<div class="form-group">
+								<label>별점</label>
+								<div class=" d-flex justify-content-center mt-5">
+									<div class=" text-center mb-5">
+										<div class="rating">
+											<input type="radio" name="rating" value="5" id="5">
+											<label for="5">☆</label> 
+											<input type="radio" name="rating" value="4" id="4">
+											<label for="4">☆</label> 
+											<input type="radio" name="rating" value="3" id="3">
+											<label for="3">☆</label> 
+											<input type="radio" name="rating" value="2" id="2">
+											<label for="2">☆</label> 
+											<input type="radio" name="rating" value="1" id="1">
+											<label for="1">☆</label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
                   		<label>글 제목</label> <input class="form-control"
                   			name='title'>
                   				</div>
                   			
                   			<div class="form-group">
                   			<label>내용</label>
-                  			<textarea class="form-control rows="3" name='content'></textarea>
+                  			<textarea class="form-control" rows="3" name='content'></textarea>
                     		</div>
                     		
                     		<div class="form-group">
@@ -124,7 +145,6 @@
    </div>
 <!-- /.row -->
 <%@ include file="../includes/footer.jsp" %>
-
 </body>
 
 </html>

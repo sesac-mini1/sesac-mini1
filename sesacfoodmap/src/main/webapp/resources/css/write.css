@@ -1,10 +1,55 @@
 #ticket_flex {
-  display: flex; /* Flexbox 활성화 */
-  align-items: center; /* 세로 중앙 정렬 */
+  display: flex; /* Flexbox �솢�꽦�솕 */
+  align-items: center; /* �꽭濡� 以묒븰 �젙�젹 */
 }
 
 #ticketImg {
-  margin-left: -5px; /* 체크박스와 이미지 간 간격 */
-  height: 30px; /* 이미지 높이 유지 */
-  width: auto; /* 이미지 비율 유지 */
+  margin-left: -5px; /* 泥댄겕諛뺤뒪�� �씠誘몄� 媛� 媛꾧꺽 */
+  height: 30px; /* �씠誘몄� �넂�씠 �쑀吏� */
+  width: auto; /* �씠誘몄� 鍮꾩쑉 �쑀吏� */
 }
+
+
+.rate {
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center
+}
+
+.rating>input {
+    display: none
+}
+
+.rating>label {
+    position: relative;
+    width: 1em;
+    font-size: 30px;
+    font-weight: 300;
+    color: #FFD600;
+    cursor: pointer
+}
+
+.rating>label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+    opacity: 1 !important
+}
+
+.rating>input:checked~label:before {
+    opacity: 1
+}
+
+.rating:hover>input:checked~label:before {
+    opacity: 0.4
+}
+
