@@ -40,11 +40,11 @@
                         <a class="badge bg-sesac text-decoration-none link-light"><c:out value="${board.type}" /></a>
                         <c:if test="${board.ticket}"><a class="badge bg-sesac text-decoration-none link-light">식권대장</a></c:if>
                 		<a class="badge bg-secondary text-decoration-none link-light float-end ms-1" type="submit">삭제</a>
-                        <a class="badge bg-secondary text-decoration-none link-light float-end" type="submit" href="/board/modify">수정</a>
+                        <a class="badge bg-secondary text-decoration-none link-light float-end" type="submit" href="/board/modify?bno=${board.bno}">수정</a>
                     </header>
                     <!-- Preview image figure-->
-                    <figure class="mb-4"><img class="img-fluid rounded"
-                            src="resources/imgs/${board.filename}" /></figure>
+                    <figure class="mb-4"><img class="img-fluid rounded" name="fileUpload"
+                            src="/resources/uploadImg/${board.bno}/${board.filename}" /></figure>
                     <!-- Post content-->
                     <section class="mb-5">
                         <p class="fs-5 mb-4"><c:out value="${board.content}" /></p>
@@ -150,9 +150,7 @@ function clickLike() {
 }
 
 $(document).ready(()=>{
-	let likeBtn = document.getElementById("likeSpan");
-	console.log(likeBtn);
-	likeBtn.addEventListener("click", clickLike);
+	document.getElementById("likeSpan").addEventListener("click", clickLike);
 });
 
 $(function(){
@@ -226,12 +224,12 @@ $(function(){
 		let cno = $(this).closest(".cnoCLass").data("cno");
 		//console.log(`log:\${cno}`);
 		replyService.get(cno, function(reply){
-			modalInputContent.val(reply.content);
+			modalInputContent.val(reply.content).removeAttr("readonly");
 			modalInputWriter.val(reply.writer).attr("readonly", "readonly");
 			modalInputPassword.val("");
 			modal.data("cno", reply.cno);
 			
-			modal.find("button[i != 'modalCloseBtn']").hide();
+			modal.find("button[id != 'modalCloseBtn']").hide();
 			modalModifyBtn.show();
 			modal.modal("show");
 		});
@@ -269,14 +267,15 @@ $(function(){
 	});
 	
 	modalRemoveBtn.click(function(e) {
-		let cno = modal.data("cno");
-		replyService.remove(cno, function(result){
+		let param = {cno:modal.data("cno"),password:modalInputPassword.val()};
+		console.log(param.cno + ", " + param.password);
+		replyService.remove(param, function(result){
 			alert("성공적으로 삭제하였습니다.");
 			modal.modal("hide");
 			showList(1);
 		}, function(error) {
-			alert("삭제에 실패하였습니다. 비밀번호를 확인하세요.")
-		});
+			alert("삭제에 실패하였습니다. 비밀번호를 확인하세요")
+		});	
 	});
 	
 	$('#modalCloseBtn').click(function(e) {

@@ -17,7 +17,7 @@
 	</insert>
 	
 	<delete id="delete">
-		delete from reply 
+		delete reply 
 		where cno = #{cno}
 		and	  password = #{password}
 	</delete>

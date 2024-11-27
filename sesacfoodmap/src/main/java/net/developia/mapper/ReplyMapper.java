@@ -9,7 +9,7 @@ import net.developia.domain.ReplyVO;
 
 public interface ReplyMapper {
 	public String getPassword(Long cno);
-	public int delete(Long cno, String password);
+	public int delete(@Param("cno") Long cno, @Param("password") String password);
 	public int update(ReplyVO reply);
 	public int insert(ReplyVO reply);
 	public ReplyVO get(Long cno);

@@ -1,6 +1,7 @@
 package net.developia.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
@@ -60,8 +62,10 @@ public class ReplyController {
    }
 
    @DeleteMapping(value = "/{cno}", produces = {MediaType.TEXT_PLAIN_VALUE})
-   public ResponseEntity<String> remove(@PathVariable("cno") Long cno, @PathVariable("cno") String password) {
-      log.info("remove: " + cno + password);
+   public ResponseEntity<String> remove(@PathVariable("cno") Long cno, @RequestBody Map<String, String> body) {
+	    String password = body.get("password");
+
+      log.info("remove: " + cno + "," + password);
 
       return service.remove(cno, password) == 1
             ? new ResponseEntity<>("success", HttpStatus.OK)
