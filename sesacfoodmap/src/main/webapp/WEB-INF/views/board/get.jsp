@@ -126,12 +126,12 @@ $(function(){
 		});
 	}
 		
-	let chat = ${".chat"};
+	let chat = $(".chat");
 	let inputContent = chat.find("textarea[name='content']")
 	let inputWriter = chat.find("input[name='writer']")
 	let inputPassword = chat.find("input[name='password']")
 	
-	let addReplyBtn = ${"#addReplyBtn"};
+	let addReplyBtn = $("#addReplyBtn");
 	let updateReplyBtn = $("#updateReplyBtn");
 	let removeReplyBtn = $("#removeReplyBtn");
 	
