@@ -1,10 +1,16 @@
 package net.developia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +32,8 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 
-	@GetMapping("/get")
+
+	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("bno") Long bno, Model model) {
 		try {
 			log.info("/get");
@@ -36,25 +43,20 @@ public class BoardController {
 		}
 	}
 
-//	@GetMapping("list")
-//	public void list() {
-//		log.info("list");
-//	}
-
 	@GetMapping("/list")
 
 	public void list(Criteria cri, Model model) throws Exception {
 		log.info("list: " + cri);
 		model.addAttribute("list", service.getList(cri));
-		model.addAttribute("pageMaker", new PageDTO(cri,123));
+		//model.addAttribute("pageMaker", new PageDTO(cri,123));
+		
+		int total = service.getTotal(cri);
+		
+		log.info("total: " + total);
+		
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 
-
-
-	@GetMapping("/modify")
-	public void modify() {
-
-	}
 
 	@GetMapping("/write")
 	public void write() {
@@ -70,12 +72,36 @@ public class BoardController {
 			board.setFilename(board.getFile().getOriginalFilename());
 			log.info(board.getFilename());
 			service.register(board);
-			rttr.addFlashAttribute("result", "게시글이 성공적으로 등록되었습니다. :" + board.getBno() + ")");
+			rttr.addFlashAttribute("result", "게시물이 성공적으로 등록되었습니다. (번호: " + board.getBno() + ")");
 			return "redirect:/board/list";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
+	
+
+	@PostMapping("/remove")
+	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) throws Exception {
+		log.info("remove... " + bno);
+		if(service.remove(bno)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/board/list";
+	}
+
+	@PostMapping(value = "/likeup", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+    public ResponseEntity<String> likeUp(@RequestBody Long bno) {
+	log.info("likeup: " + bno);
+	int result;
+	try {
+		result = service.likeUp(bno);
+	} catch (Exception e) {
+		e.printStackTrace();
+		result = -1;
+	}
+    return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 	
 }

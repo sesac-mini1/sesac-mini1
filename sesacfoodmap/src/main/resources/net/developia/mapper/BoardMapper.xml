@@ -35,6 +35,14 @@
 		where 	bno = #{bno}
 	</update>
 	
+	<update id="likeUp">
+		update	board
+		set 	recommend = (SELECT recommend
+			FROM board
+			WHERE bno = #{bno}) + 1
+		where 	bno = #{bno}
+	</update>
+	
 	<select id="getListWithPaging" resultType="BoardVO">
 	<![CDATA[
 		select 
@@ -48,6 +56,12 @@
 		)
 		where rn > (#{pageNum} - 1) * #{amount}
 	]]>
+	</select> 
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from board where
+		<!-- <include refid="criteria"></include> -->
+		bno > 0
 	</select> 
 	<!--  <include refid="criteria"></include>
 	<![CDATA[ 
@@ -79,10 +93,6 @@
 	
 	
 	
-	<select id="getTotalCount" resultType="int">
-		select count(*) from tbl_board where
-		<include refid="criteria"></include>
-		bno > 0
-	</select> -->
+	-->
 </mapper>
 <!-- CDATA 사용하여 >가 태그가 아닌 부등호임을 알림 -->

@@ -111,4 +111,10 @@ public class BoardServiceImpl implements BoardService {
 		log.info("get total count");
 		return mapper.getTotalCount(cri);
 	}
+
+	@Override
+	public int likeUp(Long bno) throws Exception {
+		log.info("like up");
+		return mapper.likeUp(bno);
+	}
 }
