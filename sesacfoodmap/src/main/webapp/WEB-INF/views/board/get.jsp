@@ -13,6 +13,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/resources/css/styles.css" rel="stylesheet" />
     <link href="/resources/css/sesac.css" rel="stylesheet" />
+    <link href="/resources/css/get.css" rel="stylesheet" />
     <title>글 읽기 페이지</title>
 </head>
 
@@ -32,7 +33,7 @@
                         <div class="text-muted mb-2">
 	                        <span class="fst-italic"><c:out value="${board.regDate}" /></span>
 			                <span class="float-end ms-4"><c:out value="${board.writer}" /></span>
-			                <span class="float-end ms-4">❤️ <c:out value="${board.recommend}" /></span>
+			                <span class="float-end ms-4" id="likeSpan">❤️ <span id="likeNumber"><c:out value="${board.recommend}" /></span></span>
 	                        <span class="float-end">⭐ <c:out value="${board.stars}" /></span>
                         </div>
                         <!-- Post categories-->
@@ -126,6 +127,34 @@
 </body>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 <script type="text/javascript">
+function clickLike() {
+	let bnoValue = `<c:out value="${board.bno}" />`;
+	// like 버튼 중간 검증 과정이 있으면 좋음
+	$.ajax({
+		type: 'post',
+		url: `/board/likeup`,
+		data: JSON.stringify(bnoValue),
+		contentType: "application/json; charset=utf-8",
+		success: function (result, status, xhr) {
+			if (result = "success"){
+				let likeNum = parseInt(document.getElementById("likeNumber").innerHTML);
+				document.getElementById("likeNumber").innerHTML = likeNum + 1;
+			}
+		},
+		error: function (xhr, status, err) {
+			if (err) {
+				error(err);
+			}
+		}
+	});
+}
+
+$(document).ready(()=>{
+	let likeBtn = document.getElementById("likeSpan");
+	console.log(likeBtn);
+	likeBtn.addEventListener("click", clickLike);
+});
+
 $(function(){
 	let bnoValue = `<c:out value="${board.bno}" />`;
 	let replyUL = $(".reply");
