@@ -2,6 +2,8 @@ package net.developia.domain;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -15,6 +17,7 @@ public class BoardVO {
 	private boolean ticket;
 	private String type;
 	private String filename;
+	private MultipartFile file;
 	private int stars;
 	private int recommend;
 	private int comments;

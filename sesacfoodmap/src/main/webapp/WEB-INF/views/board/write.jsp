@@ -55,13 +55,13 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 
-                <form role="form" action="/board/write" method="post">
+                <form role="form" action="/board/write" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                   		<label>음식점 이름</label> <input class="form-control"
                   			name='rname'>
                   				</div>
-                
-                	<div class="form-group">
+							
+							<div class="form-group">
                   		<label>글 제목</label> <input class="form-control"
                   			name='title'>
                   				</div>
@@ -99,11 +99,12 @@
 			                </div>
 			                
 			                <!-- 파일 업로드 -->
+							  
 							    <div class="form-group">
 							        <label>파일 업로드</label>
-							        <input type="file" class="form-control" name="filename"> 
+							        <input type="file" class="form-control" name="file"> 
 							    </div>
-							
+							 
 							
 							<!-- 비밀번호 입력 -->
 							<div class="form-group">
@@ -124,7 +125,6 @@
    </div>
 <!-- /.row -->
 <%@ include file="../includes/footer.jsp" %>
-
 </body>
 
 </html>

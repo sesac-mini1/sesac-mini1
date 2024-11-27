@@ -1,6 +1,5 @@
 package net.developia.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
@@ -28,6 +28,8 @@ import net.developia.service.BoardService;
 @RequestMapping("board/*")
 @AllArgsConstructor
 public class BoardController {
+	
+	@Autowired
 	private BoardService service;
 
 
@@ -62,9 +64,13 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write")
-	public String register(BoardVO board, RedirectAttributes rttr) {
+	public String register(BoardVO board, MultipartFile upfile, RedirectAttributes rttr) {
 		try {
 			log.info("register:" + board);
+//			String filename = upfile.getOriginalFilename();
+			log.info(board.getFile());
+			board.setFilename(board.getFile().getOriginalFilename());
+			log.info(board.getFilename());
 			service.register(board);
 			rttr.addFlashAttribute("result", "게시물이 성공적으로 등록되었습니다. (번호: " + board.getBno() + ")");
 			return "redirect:/board/list";

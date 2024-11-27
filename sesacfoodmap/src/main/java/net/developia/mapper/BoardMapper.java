@@ -2,11 +2,14 @@ package net.developia.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import net.developia.domain.BoardVO;
 import net.developia.domain.Criteria;
 
 public interface BoardMapper {
 	public List<BoardVO> getList();
+	public Long getNextBno();
 	public void insert(BoardVO board);
 	public BoardVO get(Long bno);
 	public int delete(Long bno);

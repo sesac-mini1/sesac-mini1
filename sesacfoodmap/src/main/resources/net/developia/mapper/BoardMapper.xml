@@ -9,10 +9,12 @@
 		]]>
 	</select>
 	
+	
+	<select id="getNextBno" resultType="long">
+		select seq_board.nextval from dual
+	</select>
+	
 	<insert id="insert">
-		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
-			select seq_board.nextval from dual
-		</selectKey>
 		insert into board (bno, title, content, writer, password, ticket, type, filename, stars)
 		values (#{bno}, #{title}, #{content}, #{writer}, #{password}, #{ticket}, #{type}, #{filename}, #{stars})
 	</insert>
@@ -29,6 +31,7 @@
 		update	board
 		set 	title = #{title},
 				content = #{content}
+				filename = #{filename}
 		where 	bno = #{bno}
 	</update>
 	
