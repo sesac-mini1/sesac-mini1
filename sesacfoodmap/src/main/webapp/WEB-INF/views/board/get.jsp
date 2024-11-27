@@ -40,7 +40,7 @@
                         <a class="badge bg-sesac text-decoration-none link-light"><c:out value="${board.type}" /></a>
                         <c:if test="${board.ticket}"><a class="badge bg-sesac text-decoration-none link-light">식권대장</a></c:if>
                 		<a class="badge bg-secondary text-decoration-none link-light float-end ms-1" type="submit">삭제</a>
-                        <a class="badge bg-secondary text-decoration-none link-light float-end" type="submit" href="/board/modify?bno=${bno}">수정</a>
+                        <a class="badge bg-secondary text-decoration-none link-light float-end" type="submit" href="/board/modify?bno=${board.bno}">수정</a>
                     </header>
                     <!-- Preview image figure-->
                     <figure class="mb-4"><img class="img-fluid rounded"
