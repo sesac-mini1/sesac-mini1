@@ -43,7 +43,7 @@
                         <a class="badge bg-secondary text-decoration-none link-light float-end" type="submit" href="/board/modify?bno=${board.bno}">수정</a>
                     </header>
                     <!-- Preview image figure-->
-                    <figure class="mb-4"><img class="img-fluid rounded"
+                    <figure class="mb-4"><img class="img-fluid rounded" name="fileUpload"
                             src="/resources/uploadImg/${board.bno}/${board.filename}" /></figure>
                     <!-- Post content-->
                     <section class="mb-5">

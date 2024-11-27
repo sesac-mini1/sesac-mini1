@@ -15,8 +15,8 @@
 	</select>
 	
 	<insert id="insert">
-		insert into board (bno, title, content, writer, password, ticket, type, filename, stars)
-		values (#{bno}, #{title}, #{content}, #{writer}, #{password}, #{ticket}, #{type}, #{filename}, #{stars})
+		insert into board (bno, title, content, writer, password, ticket, type, filename, stars, rname)
+		values (#{bno}, #{title}, #{content}, #{writer}, #{password}, #{ticket}, #{type}, #{filename}, #{stars}, #{rname})
 	</insert>
 	
 	<select id="get" resultType="BoardVO">
