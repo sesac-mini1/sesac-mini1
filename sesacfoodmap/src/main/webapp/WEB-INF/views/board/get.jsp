@@ -13,6 +13,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/resources/css/styles.css" rel="stylesheet" />
     <link href="/resources/css/sesac.css" rel="stylesheet" />
+    <link href="/resources/css/get.css" rel="stylesheet" />
     <title>글 읽기 페이지</title>
 </head>
 

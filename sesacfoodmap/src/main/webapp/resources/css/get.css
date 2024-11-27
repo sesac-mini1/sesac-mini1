@@ -1,0 +1,6 @@
+#likeSpan {
+	cursor: pointer;
+}
+#likeSpan:hover {
+	background-color: #ffe3e3;
+}
