@@ -105,7 +105,11 @@
                     		<td><c:out value="${board.recommend}" /></td>
                     		<td><c:out value="${board.type}" /></td>
                     		<td><c:out value="${board.rname}" /></td>
-                    		<td><c:out value="${board.stars}" /></td>
+                    		<td>
+	                    		<c:forEach var="i" begin="1" end="${board.stars}">
+								    ⭐
+								</c:forEach>
+							</td>
                     		<td><a class='move' href='<c:out value="${board.bno}" />'>
                     			<c:out value="${board.title}" /></a></td>
                     		<td><c:out value="${board.writer}" /></td>
