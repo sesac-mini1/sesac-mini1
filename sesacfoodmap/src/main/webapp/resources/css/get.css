@@ -4,3 +4,7 @@
 #likeSpan:hover {
 	background-color: #ffe3e3;
 }
+
+#removeBoard {
+	cursor: pointer;
+}
