@@ -70,30 +70,6 @@
 								<label>음식점 이름</label> 
 								<input class="form-control" name='rname'>
 							</div>
-
-							<div class="form-group">
-								<label>글 제목</label> 
-								<input class="form-control" name='title'>
-							</div>
-
-							<div class="form-group">
-								<label>내용</label>
-								<textarea class="form-control" rows="3" name='content'></textarea>
-							</div>
-
-							<div class="form-group">
-								<label id="ticket_flex"> 
-								<input type="checkbox" name="ticket" value="yes"> 
-								<img id="ticketImg"
-									src="/resources/assets/ticket-image.png" height="30px" />
-								</label>
-							</div>
-
-							<div class="form-group">
-								<label>작성자</label>
-								<input class="form-control" name='writer'>
-							</div>
-
 							<!-- 분류 select box 추가 -->
 							<div class="form-group">
 								<label>분류</label> 
@@ -107,6 +83,49 @@
 									<option value="분식">분식</option>
 									<option value="기타">기타</option>
 								</select>
+							</div>
+							<!-- 식권대장 -->
+							<div class="form-group">
+								<label id="ticket_flex"> 
+								<input type="checkbox" name="ticket" value="yes"> 
+								<img id="ticketImg"
+									src="/resources/assets/ticket-image.png" height="30px" />
+								</label>
+							</div>
+							
+						<!-- 별점 추가 -->
+							<div class="form-group">
+								<label>별점</label>
+								<div class=" d-flex justify-content-center mt-5">
+									<div class=" text-center mb-5">
+										<div class="rating">
+											<input type="radio" name="stars" value="5" id="5">
+											<label for="5">☆</label> 
+											<input type="radio" name="stars" value="4" id="4">
+											<label for="4">☆</label> 
+											<input type="radio" name="stars" value="3" id="3">
+											<label for="3">☆</label> 
+											<input type="radio" name="stars" value="2" id="2">
+											<label for="2">☆</label> 
+											<input type="radio" name="stars" value="1" id="1">
+											<label for="1">☆</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>글 제목</label> 
+								<input class="form-control" name='title'>
+							</div>
+
+							<div class="form-group">
+								<label>내용</label>
+								<textarea class="form-control" rows="3" name='content'></textarea>
+							</div>
+
+							<div class="form-group">
+								<label>작성자</label>
+								<input class="form-control" name='writer'>
 							</div>
 
 							<!-- 파일 업로드 -->
