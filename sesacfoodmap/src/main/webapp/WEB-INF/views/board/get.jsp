@@ -93,8 +93,8 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <!-- Reply Modal -->
+    <div class="modal fade" id="replyModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -107,18 +107,17 @@
 						<input type="text" class="form-control" name="writer">
 					</div>
 					<div class="form-group">
-						<label>비밀번호</label>
-						<input type="password" class="form-control" name="password">
-					</div>
-					<div class="form-group">
 						<label>내용</label>
 						<textarea rows="3" class="form-control" name="content"></textarea>
+					</div>
+					<div class="form-group">
+						<label>비밀번호</label>
+						<input type="password" class="form-control" name="password">
 					</div>
 				</div>
                 <div class="modal-footer">
                     <button id="modalModifyBtn" type="button" class="btn btn-danger">수정</button>
                     <button id="modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
-                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
                     <button id="modalCloseBtn" type="button" class="btn btn-default" data-dismiss="modal">취소</button>
                 </div>
             </div>
@@ -126,7 +125,33 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- end modal -->
+    <!-- end reply modal -->
+    <!-- Password Modal -->
+    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">비밀번호 확인</h4>
+                </div>
+                <form id="modalForm">
+	                <div class="modal-body">
+						<div class="form-group">
+							<label>비밀번호</label>
+							<input type="password" class="form-control" name="password">
+						</div>
+						<input type="hidden" name="bno" value="${board.bno}">
+					</div>
+	                <div class="modal-footer">
+	                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
+	                    <button type="button" class="btn btn-default modalCloseBtn" data-dismiss="modal">취소</button>
+	                </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 <%@ include file="../includes/footer.jsp" %>
 </body>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
@@ -208,7 +233,7 @@ $(function(){
 			alert("댓글 내용이 없습니다. 댓글을 작성한 뒤 등록 버튼을 눌러주세요.")
 		} else {
 			replyService.add(reply, function(result) {
-				alert("성공적으로 등록되었습니다.");
+				alert("성공적으로 댓글이 등록되었습니다.");
 				inputContent.val("");
 				inputWriter.val("익명이");
 				inputPassword.val("");
@@ -218,6 +243,8 @@ $(function(){
 	});
 	
 	let modal = $(".modal");
+	let rmodal = $("#replyModal");
+	let pmodal = $("#passwordModal");
 	let modalRemoveBtn = $("#modalRemoveBtn");
 	let modalModifyBtn = $("#modalModifyBtn");
 	let modalSubmitBtn = $("#modalSubmitBtn");
@@ -226,15 +253,13 @@ $(function(){
 	let modalInputPassword = modal.find("input[name='password']");
 	
 	$("#removeBoard").on("click", function (e) {
-		if(confirm("정말로 삭제하시겠습니까?")){
+		if(confirm("정말로 글을 삭제하시겠습니까?")){
 			modalInputContent.val("").hide();
 			modalInputWriter.val("").hide();
 			modalInputPassword.val("");
-			modal.data("bno", bnoValue);
+			pmodal.data("bno", bnoValue);
 			
-			modal.find("button[id != 'modalCloseBtn']").hide();
-			modalSubmitBtn.show();
-			modal.modal("show");
+			pmodal.modal("show");
 		} else{
 			alert("삭제를 취소하였습니다.");
 		}
@@ -247,30 +272,30 @@ $(function(){
 			modalInputContent.val(reply.content).removeAttr("readonly");
 			modalInputWriter.val(reply.writer).attr("readonly", "readonly");
 			modalInputPassword.val("");
-			modal.data("cno", reply.cno);
+			rmodal.data("cno", reply.cno);
 			
-			modal.find("button[id != 'modalCloseBtn']").hide();
+			modalRemoveBtn.hide();
 			modalModifyBtn.show();
-			modal.modal("show");
+			rmodal.modal("show");
 		});
 	});
 	
 	$(document).on("click", ".removeReplyBtn", function (e) {
 		let cno = $(this).closest(".cnoCLass").data("cno");
 		//console.log(`log:\${cno}`);
-		if(confirm("정말로 삭제하시겠습니까?")){
+		if(confirm("정말로 댓글을 삭제하시겠습니까?")){
 			replyService.get(cno, function(reply){
 				modalInputContent.val(reply.content).attr("readonly", "readonly");
 				modalInputWriter.val(reply.writer).attr("readonly", "readonly");
 				modalInputPassword.val("");
-				modal.data("cno", reply.cno);
+				rmodal.data("cno", reply.cno);
 				
-				modal.find("button[id != 'modalCloseBtn']").hide();
+				modalModifyBtn.hide();
 				modalRemoveBtn.show();
-				modal.modal("show");
+				rmodal.modal("show");
 			});
 		} else{
-			alert("삭제를 취소하였습니다.");
+			alert("댓글 삭제를 취소하였습니다.");
 		}
 	});
 	
@@ -278,11 +303,11 @@ $(function(){
 		let reply = {cno: modal.data("cno"), content: modalInputContent.val(), 
 				password: modalInputPassword.val()};
 		replyService.update(reply, function(result) {
-            alert('성공적으로 수정하였습니다.'); // 성공 시 알림
-            modal.modal("hide");
+            alert('성공적으로 댓글을 수정하였습니다.'); // 성공 시 알림
+            rmodal.modal("hide");
             showList(1);
 	    }, function(error) {
-	    	alert('수정에 실패하였습니다. 비밀번호를 확인하세요.')
+	    	alert('댓글 수정에 실패하였습니다. 비밀번호를 다시 확인하세요.')
 	    });
 	});
 	
@@ -290,20 +315,26 @@ $(function(){
 		let param = {cno:modal.data("cno"),password:modalInputPassword.val()};
 		console.log(param.cno + ", " + param.password);
 		replyService.remove(param, function(result){
-			alert("성공적으로 삭제하였습니다.");
-			modal.modal("hide");
+			alert("성공적으로 댓글을 삭제하였습니다.");
+			rmodal.modal("hide");
 			showList(1);
 		}, function(error) {
-			alert("삭제에 실패하였습니다. 비밀번호를 확인하세요")
+			alert("댓글 삭제에 실패하였습니다. 비밀번호를 다시 확인하세요")
 		});	
 	});
 	
+	let modalForm = $("#modalForm");
 	modalSubmitBtn.click(function(e) {
-		
-        alert(message);
+		modalForm.attr("action", "/board/remove");  // 삭제 경로 설정
+		modalForm.attr("method", "post");  // 삭제 경로 설정
+		modalForm.submit();  // 폼 전송
+		let msg = '${result}';
+	    if(msg === 'fail') {
+	        alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
+	    }
 	});
 	
-	$('#modalCloseBtn').click(function(e) {
+	$('.modalCloseBtn').click(function(e) {
 		modal.modal("hide");
 		modalInputContent.val("");
 		modalInputWriter.val("");

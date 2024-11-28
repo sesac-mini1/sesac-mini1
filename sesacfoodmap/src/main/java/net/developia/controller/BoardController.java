@@ -81,32 +81,31 @@ public class BoardController {
 			return null;
 		}
 	}
-	
 
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr, HttpServletRequest request) throws Exception {
-		log.info("remove... " + bno);
-		if(service.remove(bno)) {
+	public String remove(@RequestParam("bno") Long bno, @RequestParam("password") String password,
+			RedirectAttributes rttr, HttpServletRequest request) throws Exception {
+		log.info("remove... " + bno + password);
+		if(service.remove(bno, password)) {
 			rttr.addFlashAttribute("result", "success");
+			return "redirect:/board/list";
 		} else {
-			rttr.addFlashAttribute("message", "fail to remove");
+			rttr.addFlashAttribute("result", "fail");
+			String referer = request.getHeader("Referer");
+			String redirectUrl;
+	        if (referer != null) {
+	            if (referer.contains("/board/get")) {
+	                redirectUrl = "/board/get?bno="+bno;
+	            } else if (referer.contains("/board/modify")) {
+	                redirectUrl = "/board/modify";
+	            } else {
+	                redirectUrl = "/board/list";
+	            }
+	        } else {
+	            redirectUrl = "/"; // Referer가 없을 경우 기본 경로
+	        }
+	        return "redirect:" + redirectUrl;
 		}
-		String referer = request.getHeader("Referer");
-		String redirectUrl;
-        if (referer != null) {
-            if (referer.contains("/board/get")) {
-                redirectUrl = "/board/get";
-            } else if (referer.contains("/board/modify")) {
-                redirectUrl = "/board/modify";
-            } else {
-                redirectUrl = "/board/list";
-            }
-        } else {
-            redirectUrl = "/"; // Referer가 없을 경우 기본 경로
-        }
-
-        // 리다이렉션 처리
-        return "redirect:" + redirectUrl;
 	}
 
 	@PostMapping(value = "/likeup", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})

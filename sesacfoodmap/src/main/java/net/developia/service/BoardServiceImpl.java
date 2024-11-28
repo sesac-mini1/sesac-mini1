@@ -93,11 +93,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public boolean remove(Long bno) throws Exception {
+	public boolean remove(Long bno, String password) throws Exception {
 			log.info("remove........"+bno);
-			if (mapper.delete(bno) == 0)
-				throw new RuntimeException(bno + "번 게시물이 삭제되지 않음");
-			return true;
+			if (mapper.delete(bno, password) == 0)
+				return false;
+			else
+				return true;
 	}
 	
 	@Override
