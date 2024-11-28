@@ -63,23 +63,23 @@
             <div class="panel-heading">
                 <span id="ticket-span">
                 	<label>
-                		<input type="checkbox" name="ticket" class="table-top">
+                		<input id="ticketCheckbox" type="checkbox" name="ticket" class="table-top" <c:out value="${pageMaker.cri.ticket == true ? 'checked':'' }" />>
                 		<img id="ticketImg" src="/resources/assets/ticket-image.png" height="30px"/>
                 	</label>
                 </span>
                 <span id="type-span">
                 	<label>
 	                	식당 종류 
-		                <select name="type">
-		                	<option value="">전체</option>
-		                	<option value="한식">한식</option>
-		                	<option value="중식">중식</option>
-		                	<option value="양식">양식</option>
-		                	<option value="일식">일식</option>
-		                	<option value="아시안">아시안</option>
-		                	<option value="카페">카페</option>
-		                	<option value="분식">분식</option>
-		                	<option value="기타">기타</option>
+		                <select id="typeSelect" name="type">
+		                	<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected':'' }" />>전체</option>
+		                	<option value="한식" <c:out value="${pageMaker.cri.type == '한식' ? 'selected':'' }" />>한식</option>
+		                	<option value="중식" <c:out value="${pageMaker.cri.type == '중식' ? 'selected':'' }" />>중식</option>
+		                	<option value="양식" <c:out value="${pageMaker.cri.type == '양식' ? 'selected':'' }" />>양식</option>
+		                	<option value="일식" <c:out value="${pageMaker.cri.type == '일식' ? 'selected':'' }" />>일식</option>
+		                	<option value="아시안" <c:out value="${pageMaker.cri.type == '아시안' ? 'selected':'' }" />>아시안</option>
+		                	<option value="카페" <c:out value="${pageMaker.cri.type == '카페' ? 'selected':'' }" />>카페</option>
+		                	<option value="분식" <c:out value="${pageMaker.cri.type == '분식' ? 'selected':'' }" />>분식</option>
+		                	<option value="기타" <c:out value="${pageMaker.cri.type == '기타' ? 'selected':'' }" />>기타</option>
 		                </select>
                 	</label>
                 </span>
@@ -121,24 +121,26 @@
                 		<form id='searchForm' action="/board/list" method='get'>
                 			<select name='searchType'>
                 				<option value=""
-                					<c:out value="${pageMaker.cri.type == null ? 'selected':'' }" />>--</option>
+                					<c:out value="${pageMaker.cri.searchType == null ? 'selected':'' }" />>--</option>
                 				<option value="T"
-                					<c:out value="${pageMaker.cri.type == 'T' ? 'selected':'' }" />>제목</option>
+                					<c:out value="${pageMaker.cri.searchType == 'T' ? 'selected':'' }" />>제목</option>
                 				<option value="R"
-                					<c:out value="${pageMaker.cri.type == 'R' ? 'selected':'' }" />>음식점</option>
+                					<c:out value="${pageMaker.cri.searchType == 'R' ? 'selected':'' }" />>음식점</option>
                 				<option value="W"
-                					<c:out value="${pageMaker.cri.type == 'W' ? 'selected':'' }" />>작성자</option>
+                					<c:out value="${pageMaker.cri.searchType == 'W' ? 'selected':'' }" />>작성자</option>
                 				<option value="TR"
-                					<c:out value="${pageMaker.cri.type == 'TR' ? 'selected':'' }" />>제목 or 음식점</option>
+                					<c:out value="${pageMaker.cri.searchType == 'TR' ? 'selected':'' }" />>제목 or 음식점</option>
                 				<option value="TW"
-                					<c:out value="${pageMaker.cri.type == 'TW' ? 'selected':'' }" />>제목 or 작성자</option>
+                					<c:out value="${pageMaker.cri.searchType == 'TW' ? 'selected':'' }" />>제목 or 작성자</option>
                 				<option value="TWR"
-                					<c:out value="${pageMaker.cri.type == 'TWR' ? 'selected':'' }" />>제목 or 음식점 or 작성자</option>
+                					<c:out value="${pageMaker.cri.searchType == 'TWR' ? 'selected':'' }" />>제목 or 음식점 or 작성자</option>
                 			</select>
                 			<input type="text" name="keyword" value='<c:out value="${pageMaker.cri.keyword }"/>'>
                 			<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum }"/>'>
                 			<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount }"/>'>
-                			<button class='btn btn-default'>검색</button>
+							<input type='hidden' name='ticket' value='${pageMaker.cri.ticket }'>
+							<input type='hidden' name='type' value='${pageMaker.cri.type }'>
+                			<button id="searchBtn" class='btn btn-default'>검색</button>
                 		</form>
                 	</div>
                 </div>
@@ -170,10 +172,10 @@
     <form id='actionForm' action="/board/list" method='get'>
 		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 		<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
-		<input type='hidden' name='searchType'
-			value='<c:out value="${pageMaker.cri.searchType }"/>'> <input
-			type='hidden' name='keyword'
-			value='<c:out value="${pageMaker.cri.keyword }"/>'>
+		<input type='hidden' name='searchType' value='<c:out value="${pageMaker.cri.searchType }"/>'> 
+		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword }"/>'>
+		<input type='hidden' name='ticket' value='${pageMaker.cri.ticket }'>
+		<input type='hidden' name='type' value='${pageMaker.cri.type }'>
 	</form>
 
 	<!-- Modal -->
@@ -235,7 +237,7 @@ $(document).ready(function() {	<!-- $(document).ready(function())을  -->
 		
 	});
 	
- 	var actionForm = $("#actionForm");
+ 	let actionForm = $("#actionForm");
 	
  	$(".paginate_button a").on("click", function(e) {
 		
@@ -258,26 +260,40 @@ $(document).ready(function() {	<!-- $(document).ready(function())을  -->
  		
  	});
  	
- 	var searchForm = $("#searchForm");
+ 	let searchForm = $("#searchForm");
+
+	$("#ticketCheckbox").on("change", function() {
+		searchForm.find("input[name='ticket']").val($("#ticketCheckbox").is(":checked"));
+		console.log("ticket changed");
+		invokeSearch();
+	});
+
+	$("#typeSelect").on("change", function() {
+		searchForm.find("input[name='type']").val($("#typeSelect").val());
+		console.log("type changed");
+		invokeSearch();
+	});
  	
  	$("#searchForm button").on("click", function(e){
- 		
- 		if(!searchForm.find("option:selected").val()){
- 			alert("검색종류를 선택하세요");
- 			return false;
- 		}
- 		
- 		if(!searchForm.find("input[name='keyword']").val()){
- 			alert("키워드를 입력하세요");
- 			return false;
- 		}
- 		
- 		searchForm.find("input[name='pageNum']").val("1");
- 		e.preventDefault();
- 		
- 		searchForm.submit();
- 		
+		if(!searchForm.find("option:selected").val()){
+			alert("검색종류를 선택하세요");
+			return false;
+		}
+		
+		if(!searchForm.find("input[name='keyword']").val()){
+			searchForm.find("select").val('').change();
+			// alert("키워드를 입력하세요");
+		}
+		
+		e.preventDefault();
+		invokeSearch();
  	});
+
+function invokeSearch() {
+	 searchForm.find("input[name='pageNum']").val("1");
+	 
+	 searchForm.submit();
+}
 	
 });
 

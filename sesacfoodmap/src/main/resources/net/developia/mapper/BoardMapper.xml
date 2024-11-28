@@ -8,7 +8,7 @@
 		<if test="ticket == true">
 			ticket = 1 AND
 		</if>
-		<if test="type != null">
+		<if test="type != null and type != ''">
 			type = #{type} AND 
 		</if>
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">

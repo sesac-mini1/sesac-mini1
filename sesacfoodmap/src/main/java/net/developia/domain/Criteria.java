@@ -29,8 +29,6 @@ public class Criteria {
 	}
 	
 	public String[] getSearchTypeArr() {
-		if (ticket) searchType += "C";
-		if (type != null) searchType += "Y";
 		return searchType == null ? new String[] {} : searchType.split("");
 	}
 	
