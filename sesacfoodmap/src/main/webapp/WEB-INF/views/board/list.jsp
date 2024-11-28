@@ -198,6 +198,7 @@
 			<!-- /.modal-dialog -->
 		</div>
 		<!-- /.modal -->
+	</div>	
 	<!-- /.container -->	
 	<script type="text/javascript">
 
