@@ -5,16 +5,12 @@
 <mapper namespace="net.developia.mapper.BoardMapper">
 
 	<sql id="criteria">
-   		<trim suffix="AND">
-   			<choose>
-   				<when test="ticket == true">
-   					ticket = 1
-   				</when>
-   				<when test="type != null">
-   					type = '#{type}'
-   				</when>
-   			</choose>
-   		</trim>
+		<if test="ticket == true">
+			ticket = 1 AND
+		</if>
+		<if test="type != null">
+			type = #{type} AND 
+		</if>
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 	    	<foreach item='searchType' collection="searchTypeArr">
 	    		<trim prefix="OR">
