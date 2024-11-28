@@ -109,15 +109,15 @@
 				    <div class="custom-item">
 				        <label>별점</label>
 				        <div class="rating">
-				            <input type="radio" name="stars" value="5" id="5">
+				            <input type="radio" name="stars" value="5" id="5" <c:if test="${board.stars == 5}">checked</c:if>>
 				            <label for="5">☆</label>
-				            <input type="radio" name="stars" value="4" id="4">
+				            <input type="radio" name="stars" value="4" id="4" <c:if test="${board.stars == 4}">checked</c:if>>
 				            <label for="4">☆</label>
-				            <input type="radio" name="stars" value="3" id="3">
+				            <input type="radio" name="stars" value="3" id="3" <c:if test="${board.stars == 3}">checked</c:if>>
 				            <label for="3">☆</label>
-				            <input type="radio" name="stars" value="2" id="2">
+				            <input type="radio" name="stars" value="2" id="2" <c:if test="${board.stars == 2}">checked</c:if>>
 				            <label for="2">☆</label>
-				            <input type="radio" name="stars" value="1" id="1">
+				            <input type="radio" name="stars" value="1" id="1" <c:if test="${board.stars == 1}">checked</c:if>>
 				            <label for="1">☆</label>
 				        </div>
 				    </div>
@@ -158,48 +158,6 @@
 
 <!-- /.row -->
 
-<%-- <div id="box">
-	<form id="modalForm">
-	                <div class="modal-body">
-						<div class="form-group">
-							<label>비밀번호</label>
-							<input type="password" class="form-control" name="password">
-						</div>
-						<input type="hidden" name="bno" value="${board.bno}">
-					</div>
-	                <div class="modal-footer">
-	                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
-	                    <button type="button" class="btn btn-default modalCloseBtn" data-dismiss="modal">취소</button>
-	                </div>
-                </form>
-</div> --%>
-            
-    <!-- Password Modal -->
-<%--   <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">비밀번호 확인</h4>
-                </div>
-                <form id="modalForm">
-	                <div class="modal-body">
-						<div class="form-group">
-							<label>비밀번호</label>
-							<input type="password" class="form-control" name="password">
-						</div>
-						<input type="hidden" name="bno" value="${board.bno}">
-					</div>
-	                <div class="modal-footer">
-	                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
-	                    <button type="button" class="btn btn-default modalCloseBtn" data-dismiss="modal">취소</button>
-	                </div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>  --%>
     
     <div class="modal" tabindex="-1">
          <div class="modal-dialog">
