@@ -14,6 +14,8 @@
     <link rel="icon" type="image/x-icon" href="/resources/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/resources/css/styles.css" rel="stylesheet" />
+    <link href="/resources/css/sesac.css" rel="stylesheet" />
+    <link href="/resources/css/get.css" rel="stylesheet" />
     <title>글 수정 페이지</title>
    
     <!-- Bootstrap Core CSS -->
@@ -52,137 +54,231 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
+</div>
 
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
-        
+
             <div class="panel-heading">Board Read Page</div>
             <!-- /.panel-heading -->
             <div class="panel-body">
             
-            	<form role="form" action="/board/modify" method="post">
-            
-            		<!-- 추가 -->
-            		<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
-            		<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-            		<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'/>
-            		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'/>
-            		<input type='hidden' name='bno' value='<c:out value="${board.bno}"/>'>
-            		<input type='hidden' id="boardPassword" name='boardPassword' value='<c:out value="${board.password}"/>'>
-            		
-            		<div class="form-group">
-	            		<label>음식점 이름</label> <input class="form-control" name='title' value='<c:out value="${board.rname}"/>' >
-	            	</div>
-	            	
-	            	<div class="form-group">
-	            		<label>글 제목</label> <input class="form-control" name='title' value='<c:out value="${board.title}"/>' >
-	            	</div>
-	            	
-	            	<div class="form-group">
-	            		<label>내용</label>
-	            		<textarea class="form-control" rows="3" name='content' ><c:out value="${board.content}"/></textarea>
-	            	</div>
-	            	
-	            	<div class="form-group">
-							    <label id="ticket_flex">
-							        <input type="checkbox" name="isPublic" value="yes">
-								    <img id="ticketImg" src="/resources/assets/ticket-image.png" height="30px" />
-								
-								  </label>
-							</div>
-					
-					<div class="form-group">
-                        		<label>분류</label>
-                        			<select class="form-control" name="category">
-			                            <option value="koreanfood">한식</option>
-			                            <option value="japanessfood">일식</option>
-			                            <option value="chinesefood">중식</option>
-			                            <option value="westernfood">양식</option>
-			                            <option value="asianfood">아시안푸드</option>
-			                            <option value="cafefood">카페</option>
-			                            <option value="snackfood">분식</option>
-			                            <option value="etc">기타</option>
-			                     	</select>
-			        </div>
-			        
-			        <form action="/upload" method="post" enctype="multipart/form-data">
-							    <div class="form-group">
-							        <label>파일 업로드</label>
-							        <input type="file" class="form-control" name="fileUpload" multiple> 
-							    </div>
-					</form>
-					
-					<div class="form-group">
-							    <label>비밀번호 입력</label>
-							    <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력하세요">
+                <!-- Main Form -->
+                <form role="form" action="/board/modify" method="post">
+                    <!-- Hidden Fields -->
+                    <input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum}'/>">
+                    <input type="hidden" name="amount" value="<c:out value='${cri.amount}'/>">
+                    <input type="hidden" name="type" value="<c:out value='${cri.type}'/>">
+                    <input type="hidden" name="keyword" value="<c:out value='${cri.keyword}'/>">
+                    <input type="hidden" name="bno" value="<c:out value='${board.bno}'/>">
+                    <input type="hidden" id="boardPassword" name="boardPassword" value="<c:out value='${board.password}'/>">
+                    
+                    <!-- 음식점 이름 -->
+                    <div class="form-group">
+                        <label>음식점 이름</label>
+                        <input class="form-control" name="rname" value="<c:out value='${board.rname}'/>">
+                    </div>
+                    
+                    <div class="form-group flex-container">
+                    
+                    <!-- 분류 -->
+                    <div class="custom-item">
+                        <label>분류</label>
+                        <select class="form-control" name="type">
+                            <option value="koreanfood" <c:if test="${board.type == '한식'}">selected</c:if>>한식</option>
+                            <option value="japanessfood" <c:if test="${board.type == '일식'}">selected</c:if>>일식</option>
+                            <option value="chinesefood" <c:if test="${board.type == '중식'}">selected</c:if>>중식</option>
+                            <option value="westernfood" <c:if test="${board.type == '양식'}">selected</c:if>>양식</option>
+                            <option value="asianfood" <c:if test="${board.type == '아시안'}">selected</c:if>>아시안푸드</option>
+                            <option value="cafefood" <c:if test="${board.type == '카페'}">selected</c:if>>카페</option>
+                            <option value="snackfood" <c:if test="${board.type == '분식'}">selected</c:if>>분식</option>
+                            <option value="etc" <c:if test="${board.type == '기타'}">selected</c:if>>기타</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 식권대장 -->
+				    <div class="custom-item">
+				        <label id="ticket_flex">
+				            <input type="checkbox" name="ticket" value="yes" ${board.ticket ? 'checked' : ''}>
+				            <img id="ticketImg" src="/resources/assets/ticket-image.png" alt="식권대장" />
+				        </label>
+				    </div>
+                    
+                     <!-- 별점 -->
+				    <div class="custom-item">
+				        <label>별점</label>
+				        <div class="rating">
+				            <input type="radio" name="stars" value="5" id="5">
+				            <label for="5">☆</label>
+				            <input type="radio" name="stars" value="4" id="4">
+				            <label for="4">☆</label>
+				            <input type="radio" name="stars" value="3" id="3">
+				            <label for="3">☆</label>
+				            <input type="radio" name="stars" value="2" id="2">
+				            <label for="2">☆</label>
+				            <input type="radio" name="stars" value="1" id="1">
+				            <label for="1">☆</label>
+				        </div>
+				    </div>
+				    </div>
+				    
+		
+							
+					<!-- 글 제목 -->
+                    <div class="form-group">
+                        <label>글 제목</label>
+                        <input class="form-control" name="title" value="<c:out value='${board.title}'/>">
+                    </div>
+                    
+                    <!-- 내용 -->
+                    <div class="form-group">
+                        <label>내용</label>
+                        <textarea class="form-control" rows="3" name="content"><c:out value="${board.content}"/></textarea>
+                    </div>
+                    
+
+                    <div class="form-group">
+						<label>파일 업로드</label> 
+						<input type="file" class="form-control" name="fileUpload" multiple>
 					</div>
-	            	
-	            	<button type="submit" data-oper='modify' class="btn btn-default">수정하기</button>
-	            	<button type="button" data-oper='remove' class="btn btn-default">삭제하기</button>
-	            	<button type="submit" data-oper='list' class="btn btn-default">글 목록</button>
-            
-            	</form>
-            	
+                    
+                    <!-- 버튼 -->
+                    <button type="submit" data-oper="modify" class="btn btn-default">수정하기</button>
+                    <button id="removeBoard" type="button" data-bno="${board.bno}" class="btn btn-default">삭제하기</button>
+                    <button id="listBoard" type="submit" data-oper="list" class="btn btn-default">글 목록</button>
+                </form>
+
             </div>
-            <!-- end panel-body -->
+            <!-- /.panel-body -->
         </div>
-        <!-- end panel -->
+        <!-- /.panel -->
     </div>
 </div>
+
 <!-- /.row -->
+
+<%-- <div id="box">
+	<form id="modalForm">
+	                <div class="modal-body">
+						<div class="form-group">
+							<label>비밀번호</label>
+							<input type="password" class="form-control" name="password">
+						</div>
+						<input type="hidden" name="bno" value="${board.bno}">
+					</div>
+	                <div class="modal-footer">
+	                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
+	                    <button type="button" class="btn btn-default modalCloseBtn" data-dismiss="modal">취소</button>
+	                </div>
+                </form>
+</div> --%>
             
+    <!-- Password Modal -->
+<%--   <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">비밀번호 확인</h4>
+                </div>
+                <form id="modalForm">
+	                <div class="modal-body">
+						<div class="form-group">
+							<label>비밀번호</label>
+							<input type="password" class="form-control" name="password">
+						</div>
+						<input type="hidden" name="bno" value="${board.bno}">
+					</div>
+	                <div class="modal-footer">
+	                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
+	                    <button type="button" class="btn btn-default modalCloseBtn" data-dismiss="modal">취소</button>
+	                </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>  --%>
+    
+    <div class="modal" tabindex="-1">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">비밀번호 확인</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                     aria-label="Close"></button>
+               </div>
+               <form id="modalForm">
+	                <div class="modal-body">
+						<div class="form-group">
+							<label>비밀번호</label>
+							<input type="password" class="form-control" name="password">
+						</div>
+						<input type="hidden" name="bno" value="${board.bno}">
+					</div>
+	                <div class="modal-footer">
+	                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
+	                    <button type="button" class="btn btn-default modalCloseBtn" data-dismiss="modal">취소</button>
+	                </div>
+                </form>
+            </div>
+         </div>
+      </div>
+      
+<%@ include file="../includes/footer.jsp" %>
+</body>
+
 <script type="text/javascript">
 $(document).ready(function() {
-    var formObj = $("form");
-    var boardPassword = $("#boardPassword").val(); // board.password 값을 가져옴
-    console.log(boardPassword);
+	let pmodal = $(".modal");
+	let modalInputPassword = pmodal.find("input[name='password']");
+	let bnoValue = `<c:out value="${board.bno}" />`;
+	let modalSubmitBtn = $("#modalSubmitBtn");
+	
+	$("#removeBoard").on("click", function (e) {
+		e.preventDefault(); // 기본 동작 방지
+		
+			// 초기화 작업
+			modalInputPassword.val(""); // 비밀번호 초기화
+			pmodal.data("bno", bnoValue); // 데이터 설정
+			
+			// 로그 확인
+			console.log("BNO value:", pmodal.data("bno"));
+			
+			// 모달 열기
+			pmodal.show();
+		    console.log("Modal opened.");
+	
+	});
 
-    $('button').on("click", function(e) {
-        e.preventDefault();  // 기본 동작 방지
+    
+	let modalForm = $("#modalForm");
+	modalSubmitBtn.click(function(e) {
+		modalForm.attr("action", "/board/remove");  // 삭제 경로 설정
+		modalForm.attr("method", "post");  // 삭제 경로 설정
+		modalForm.submit();  // 폼 전송
+		let msg = '${result}';
+	    if(msg === 'fail') {
+	        alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
+	    }
+	});
+   
 
-        var operation = $(this).data("oper");
-        console.log(operation);
-
-        if (operation === 'remove') {
-        	  var password = $("input[name='password']").val(); // 비밀번호 입력값 가져오기
-            console.log(password);
-            
-            // 비밀번호가 일치하지 않으면
-            if (password !== boardPassword) {
-                alert("비밀번호를 확인해주세요.");
-                return;
-            }
-
-            else if (confirm("정말 삭제하시겠습니까?")) {
-                formObj.attr("action", "/board/remove");  // 삭제 경로 설정
-                formObj.submit();  // 폼 전송
-                alert("삭제가 완료되었습니다.");
-            } else {
-                alert("삭제를 취소하였습니다.");
-            }
-        } else if (operation === 'modify') {
-            var password = $("input[name='password']").val(); // 비밀번호 입력값 가져오기
-
-            // 비밀번호가 일치하지 않으면
-            if (password !== boardPassword) {
-                alert("비밀번호를 확인해주세요.");
-                return;
-            }
-
-            formObj.submit();  // 수정 폼 전송
-        } else if (operation === 'list') {
-            self.location = "/board/list";  // 목록 페이지로 이동
-            return;
-        }
+	$('.modalCloseBtn').click(function(e) {
+	
+		modalInputPassword.val("");
+		pmodal.hide();
+		console.log("Modal closed.");
+	})
+    
+    //글 목록 
+    $("#listBoard").on("click", function (e) {
+    	 self.location = "/board/list";  // 목록 페이지로 이동
+         return;
     });
 });
 
 </script>
-
-
-    </div>
-<%@ include file="../includes/footer.jsp" %>
-</body>
 
 </html>
