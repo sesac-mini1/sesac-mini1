@@ -3,6 +3,7 @@ package net.developia.service;
 import java.util.List;
 
 import net.developia.domain.Criteria;
+import net.developia.domain.ReplyPageDTO;
 import net.developia.domain.ReplyVO;
 
 public interface ReplyService {
@@ -11,4 +12,5 @@ public interface ReplyService {
 	public int modify(ReplyVO vo);
 	public int remove(Long cno, String password);
 	public List<ReplyVO> getList(Criteria cri, Long bno);
+	public ReplyPageDTO getListPage(Criteria cri, Long bno);
 }

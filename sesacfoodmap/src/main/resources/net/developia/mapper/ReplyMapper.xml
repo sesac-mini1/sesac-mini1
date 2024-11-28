@@ -7,10 +7,6 @@
 		SELECT * FROM reply where cno = #{cno}
 	</select>
 	
-	<select id="getPassword" resultType="String">
-		SELECT password FROM reply where cno = #{cno}
-	</select>
-	
 	<insert id="insert">
 		insert into reply (cno, content, writer, password, bno)
 		values (seq_comment.nextval, #{content}, #{writer}, #{password}, #{bno})
@@ -30,9 +26,23 @@
 	</update>
 	
 	<select id="getListWithPaging" resultType="ReplyVO">
-		select *
-		from 	reply
-		where bno = #{bno}
-		order by cno asc
+		<![CDATA[
+		SELECT 	*
+		FROM	(
+					select /*+ INDEX_DESC (reply idx_reply) */ 
+							rownum rn, cno, content, writer, password, regDate, bno 
+							from reply
+							where bno = #{bno}
+							and cno > 0
+							and rownum <= #{cri.pageNum} * #{cri.amount}
+				)
+		WHERE	rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
+	
+	<select id="getCountByBno" resultType="int">
+		<![CDATA[
+		SELECT count(cno) from reply where bno = #{bno}
+		]]>
 	</select>
 </mapper>
