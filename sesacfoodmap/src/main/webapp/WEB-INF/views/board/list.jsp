@@ -208,6 +208,12 @@ $(function() {	<!-- $(document).ready(function())을  -->
 	
 	console.log("Result value: ", result);
 
+	console.log($("#myModal"));
+	console.log("Triggering modal...");
+    $("#myModal").on("show.bs.modal", function () {
+        console.log("Modal is about to be shown!");
+    });
+    
 	checkModal(result);
 	
 	history.replaceState({},null,null);

@@ -100,7 +100,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Reply Modal</h4>
+                    <h4 class="modal-title" id="replyModalLabel">Reply Modal</h4>
                 </div>
                 <div class="modal-body">
 					<div class="form-group">
@@ -133,7 +133,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">비밀번호 확인</h4>
+                    <h4 class="modal-title" id="passwordModalLabel">비밀번호 확인</h4>
                 </div>
                 <form id="modalForm">
 	                <div class="modal-body">
@@ -255,8 +255,6 @@ $(function(){ //이지윤
 	
 	$("#removeBoard").on("click", function (e) {
 		if(confirm("정말로 글을 삭제하시겠습니까?")){
-			modalInputContent.val("").hide();
-			modalInputWriter.val("").hide();
 			modalInputPassword.val("");
 			pmodal.data("bno", bnoValue);
 			
@@ -329,11 +327,11 @@ $(function(){ //이지윤
 		modalForm.attr("action", "/board/remove");  // 삭제 경로 설정
 		modalForm.attr("method", "post");  // 삭제 경로 설정
 		modalForm.submit();  // 폼 전송
-		let msg = '${result}';
-	    if(msg === 'fail') {
-	        alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
-	    }
 	});
+	let msg = '${result}';
+    if(msg === 'fail') {
+        alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
+    }
 	
 	$('.modalCloseBtn').click(function(e) {
 		modal.modal("hide");
