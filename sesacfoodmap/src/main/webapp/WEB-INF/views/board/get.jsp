@@ -72,21 +72,10 @@
                             	</span>
                             </form>
                             <div class="reply">
-                            	<!-- comments-->
-	                            <div class="d-flex mb-4">
-	                                <div class="flex-shrink-0"><img class="rounded-circle"
-	                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-	                                <div class="ms-3">
-	                                    <div class="fw-bold">
-	                                    	작성자
-	                                    	날짜
-	                                    	<a id="testUpdateReplyBtn" class="badge bg-secondary text-decoration-none link-light ms-2" href="#">수정</a>
-                							<a id="testRemoveReplyBtn" class="badge bg-secondary text-decoration-none link-light" href="#">삭제</a>
-	                                    </div>
-	                                     When I look at the universe and all the ways the universe wants to kill us, I find
-	                                    it hard to reconcile that with statements of beneficence.
-	                                </div>
-	                            </div>
+                            	<!-- comments 위치 -->
+	                   		</div>
+	                   		<div class="panel-footer">
+	                   			<!-- 페이징 자리 -->
 	                   		</div>
                         </div>
                     </div>
@@ -99,7 +88,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
                     <h4 class="modal-title" id="replyModalLabel">Reply Modal</h4>
                 </div>
                 <div class="modal-body">
@@ -119,7 +108,7 @@
                 <div class="modal-footer">
                     <button id="modalModifyBtn" type="button" class="btn btn-danger">수정</button>
                     <button id="modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
-                    <button id="modalCloseBtn" type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                    <button id="modalCloseBtn" type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -132,7 +121,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
                     <h4 class="modal-title" id="passwordModalLabel">비밀번호 확인</h4>
                 </div>
                 <form id="modalForm">
@@ -145,7 +134,7 @@
 					</div>
 	                <div class="modal-footer">
 	                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
-	                    <button type="button" class="btn btn-default modalCloseBtn" data-dismiss="modal">취소</button>
+	                    <button type="button" class="btn btn-default modalCloseBtn" data-bs-dismiss="modal">취소</button>
 	                </div>
                 </form>
             </div>
@@ -182,19 +171,31 @@ function clickLike() { //이재혁
 $(document).ready(()=>{
 	document.getElementById("likeSpan").addEventListener("click", clickLike);
 });
-
+</script>
+<script type="text/javascript">
 $(function(){ //이지윤
 	let bnoValue = `<c:out value="${board.bno}" />`;
 	let replyUL = $(".reply");
 	
+	let pageNum = 1;
+	let replyPageFooter = $(".panel-footer");
+	
 	showList(1);
 	
 	function showList(page) {
-		replyService.getList({bno:bnoValue,page:page||1}, function(list) {
+		console.log("show list: " + page);
+		replyService.getList({bno:bnoValue,page:page||1}, function(replyCnt, list) {
+			console.log("replyCnt: " + replyCnt);
+			console.log("list: " + list);
+			
+			if (page == -1) {
+				pageNum = Math.ceil(replyCnt/10.0);
+				showList(pageNum);
+				return;
+			}
+			
 			let str = "";
 			if (list == null || list.length == 0) {
-				replyUL.html("");
-				
 				return;
 			}
 			for (let i = 0, len = list.length || 0; i < len; i++) {
@@ -213,6 +214,7 @@ $(function(){ //이지윤
                			</div>`;
 			}
 			replyUL.html(str);
+			showReplyPage(replyCnt);
 		});
 	} //end showList
 	
@@ -304,7 +306,7 @@ $(function(){ //이지윤
 		replyService.update(reply, function(result) {
             alert('성공적으로 댓글을 수정하였습니다.'); // 성공 시 알림
             rmodal.modal("hide");
-            showList(1);
+            showList(pageNum);
 	    }, function(error) {
 	    	alert('댓글 수정에 실패하였습니다. 비밀번호를 다시 확인하세요.')
 	    });
@@ -316,7 +318,7 @@ $(function(){ //이지윤
 		replyService.remove(param, function(result){
 			alert("성공적으로 댓글을 삭제하였습니다.");
 			rmodal.modal("hide");
-			showList(1);
+			showList(pageNum);
 		}, function(error) {
 			alert("댓글 삭제에 실패하였습니다. 비밀번호를 다시 확인하세요")
 		});	
@@ -339,6 +341,56 @@ $(function(){ //이지윤
 		modalInputWriter.val("");
 		modalInputPassword.val("");
 	})
+	
+	function showReplyPage(replyCnt) {
+		let endNum = Math.ceil(pageNum / 10.0) * 10;
+		let startNum = endNum - 9;
+		
+		let prev = startNum != 1;
+		let next = false;
+		
+		if (endNum * 10 >= replyCnt) {
+			endNum = Math.ceil(replyCnt/10.0);
+		}
+		
+		if (endNum * 10 < replyCnt) {
+			next = true;
+		}
+		
+		let str = "<ul class='pagination pull-right'>";
+		
+		if (prev) {
+			str += `<li class='page-item'><a class='page-link'
+					href='(\${startNum} - 1)'>Previous</a></li>`;
+		}
+		
+		for (let i = startNum; i <= endNum; i++) {
+			let active = pageNum == i ? "active":"";
+			str += `<li class='page-item \${active}'><a class='page-link'
+					href='\${i}'>\${i}</a></li>`;
+		}
+		
+		if (next) {
+			str += `<li class='page-item'><a class='page-link' 
+					href='(\${endNum} + 1)'>Next</a></li>`;
+		}
+		str += "</ul></div>"
+		
+		console.log(str);
+		
+		replyPageFooter.html(str);
+	}
+	
+	replyPageFooter.on("click", "li a", function(e){
+		e.preventDefault();
+		console.log("page click");
+		
+		let targetPageNum = $(this).attr("href");
+		console.log("targetPageNum:" + targetPageNum);
+		pageNum = targetPageNum;
+		
+		showList(pageNum);
+	});
 });
 </script>
 </html>

@@ -2,9 +2,7 @@
  * reply module
  */
  
- console.log("Reply Module.......");
- 
- let replyService = (function(){
+let replyService = (function(){
  	function add(reply, callback, error) {
  		console.log("add reply.........");
  		$.ajax({
