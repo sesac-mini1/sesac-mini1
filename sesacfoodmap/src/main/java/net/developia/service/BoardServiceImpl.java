@@ -69,7 +69,7 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVO get(Long bno) throws Exception {
 			log.info("get........" + bno);
 			BoardVO board = mapper.get(bno);
-			if (board == null )
+			if (board == null)
 				throw new RuntimeException(bno + "번 게시물이 존재하지 않음");
 			return board;
 	}
