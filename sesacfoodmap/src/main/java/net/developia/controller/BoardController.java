@@ -1,5 +1,8 @@
 package net.developia.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +71,18 @@ public class BoardController {
 		try {
 			log.info("register:" + board);
 			board.setFilename(board.getFile().getOriginalFilename());
+			
+			File f = new File(board.getFilename());
+			String mimetype = Files.probeContentType(f.toPath());
+
+			if (mimetype != null && mimetype.split("/")[0].equals("image")) {
+			    System.out.println("it is an image");
+			}
+			else {
+			    System.out.println("it is not an image");
+				return "redirect:/board/list";
+			}
+	        
 			log.info(board.getFilename());
 			service.register(board);
 			rttr.addFlashAttribute("result", board.getBno());
