@@ -1,6 +1,6 @@
 package net.developia.controller;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,7 +34,6 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService service;
-
 
 	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("bno") Long bno, Model model) {
@@ -70,8 +69,6 @@ public class BoardController {
 	public String register(BoardVO board, MultipartFile upfile, RedirectAttributes rttr) {
 		try {
 			log.info("register:" + board);
-//			String filename = upfile.getOriginalFilename();
-			log.info(board.getFile());
 			board.setFilename(board.getFile().getOriginalFilename());
 			log.info(board.getFilename());
 			service.register(board);
@@ -82,15 +79,30 @@ public class BoardController {
 			return null;
 		}
 	}
-	
-
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) throws Exception {
-		log.info("remove... " + bno);
-		if(service.remove(bno)) {
+	public String remove(@RequestParam("bno") Long bno, @RequestParam("password") String password,
+			RedirectAttributes rttr, HttpServletRequest request) throws Exception {
+		log.info("remove... " + bno + password);
+		if(service.remove(bno, password)) {
 			rttr.addFlashAttribute("result", "success");
+			return "redirect:/board/list";
+		} else {
+			rttr.addFlashAttribute("result", "fail");
+			String referer = request.getHeader("Referer");
+			String redirectUrl;
+	        if (referer != null) {
+	            if (referer.contains("/board/get")) {
+	                redirectUrl = "/board/get?bno="+bno;
+	            } else if (referer.contains("/board/modify")) {
+	                redirectUrl = "/board/modify";
+	            } else {
+	                redirectUrl = "/board/list";
+	            }
+	        } else {
+	            redirectUrl = "/"; // Referer가 없을 경우 기본 경로
+	        }
+	        return "redirect:" + redirectUrl;
 		}
-		return "redirect:/board/list";
 	}
 
 	@PostMapping(value = "/likeup", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
@@ -105,8 +117,4 @@ public class BoardController {
 	}
     return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }
-
-		
-	
