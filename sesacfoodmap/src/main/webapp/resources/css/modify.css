@@ -19,13 +19,75 @@
 	background-color: #E4F2B6;
 }
 
+/* Flex 컨테이너 */
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px; /* 각 요소 간의 간격 */
+    margin-bottom: 15px;
+}
+
+/* Custom item 기본 스타일 */
+.custom-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* #ticket_flex 체크박스와 이미지 */
 #ticket_flex {
-  display: flex; /* Flexbox 활성화 */
-  align-items: center; /* 세로 중앙 정렬 */
+    display: flex;
+    align-items: center;
 }
 
 #ticketImg {
-  margin-left: -5px; /* 체크박스와 이미지 간 간격 */
-  height: 30px; /* 이미지 높이 유지 */
-  width: auto; /* 이미지 비율 유지 */
+    margin-left: 5px;
+    height: 30px;
+    width: auto;
+}
+
+/* 별점 스타일 */
+.rate {
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center
+}
+
+.rating>input {
+    display: none
+}
+
+.rating>label {
+    position: relative;
+    width: 1em;
+    font-size: 30px;
+    font-weight: 300;
+    color: #FFD600;
+    cursor: pointer
+}
+
+.rating>label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+    opacity: 1 !important
+}
+
+.rating>input:checked~label:before {
+    opacity: 1
+}
+
+.rating:hover>input:checked~label:before {
+    opacity: 0.4
 }
