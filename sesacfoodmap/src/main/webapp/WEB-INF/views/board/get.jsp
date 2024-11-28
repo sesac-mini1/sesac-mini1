@@ -19,6 +19,7 @@
 
 <body>
 <%@ include file="../includes/header.jsp" %>
+	<!-- get.jsp 화면: 이지윤 -->
     <!-- Page content-->
     <div class="container mt-5">
         <div class="row">
@@ -156,7 +157,7 @@
 </body>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 <script type="text/javascript">
-function clickLike() {
+function clickLike() { //이재혁
 	let bnoValue = `<c:out value="${board.bno}" />`;
 	// like 버튼 중간 검증 과정이 있으면 좋음
 	$.ajax({
@@ -182,7 +183,7 @@ $(document).ready(()=>{
 	document.getElementById("likeSpan").addEventListener("click", clickLike);
 });
 
-$(function(){
+$(function(){ //이지윤
 	let bnoValue = `<c:out value="${board.bno}" />`;
 	let replyUL = $(".reply");
 	
