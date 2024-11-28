@@ -198,7 +198,6 @@
 			<!-- /.modal-dialog -->
 		</div>
 		<!-- /.modal -->
-	</div>
 	<!-- /.container -->	
 	<script type="text/javascript">
 
@@ -206,6 +205,8 @@ $(function() {	<!-- $(document).ready(function())을  -->
 
 	var result = '<c:out value="${result}"/>';
 	
+	console.log("Result value: ", result);
+
 	checkModal(result);
 	
 	history.replaceState({},null,null);
@@ -223,6 +224,10 @@ $(function() {	<!-- $(document).ready(function())을  -->
 		if (result === 'remove') {
             $(".modal-body").html("삭제되었습니다.");
         }
+		
+		if (result === 'modify') {
+			$(".modal-body").html("수정되었습니다.");
+		}
 		
 		$("#myModal").modal("show");
 	}

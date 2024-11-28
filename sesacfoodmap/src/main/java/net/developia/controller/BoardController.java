@@ -71,7 +71,7 @@ public class BoardController {
 			board.setFilename(board.getFile().getOriginalFilename());
 			log.info(board.getFilename());
 			service.register(board);
-			rttr.addFlashAttribute("result", "게시물이 성공적으로 등록되었습니다. (번호: " + board.getBno() + ")");
+			rttr.addFlashAttribute("result", board.getBno());
 			return "redirect:/board/list";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class BoardController {
 			RedirectAttributes rttr, HttpServletRequest request) throws Exception {
 		log.info("remove... " + bno + password);
 		if(service.remove(bno, password)) {
-			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("result", "remove");
 			return "redirect:/board/list";
 		} else {
 			rttr.addFlashAttribute("result", "fail");
