@@ -25,6 +25,7 @@
             <div class="col-lg-8">
                 <!-- Post content-->
                 <article>
+                    <input type="hidden" name="bno" value="${board.bno}">
                     <!-- Post header-->
                     <header class="mb-4">
                         <!-- Post title-->
@@ -39,12 +40,14 @@
                         <!-- Post categories-->
                         <a class="badge bg-sesac text-decoration-none link-light"><c:out value="${board.type}" /></a>
                         <c:if test="${board.ticket}"><a class="badge bg-sesac text-decoration-none link-light">식권대장</a></c:if>
-                		<a class="badge bg-secondary text-decoration-none link-light float-end ms-1" type="submit">삭제</a>
-                        <a class="badge bg-secondary text-decoration-none link-light float-end" type="submit" href="/board/modify?bno=${board.bno}">수정</a>
+                		<a id="removeBoard" class="badge bg-secondary text-decoration-none link-light float-end ms-1">삭제</a>
+                        <a class="badge bg-secondary text-decoration-none link-light float-end" href="/board/modify?bno=${board.bno}">수정</a>
                     </header>
                     <!-- Preview image figure-->
+                    <c:if test="${not empty board.filename}">
                     <figure class="mb-4"><img class="img-fluid rounded" name="fileUpload"
                             src="/resources/uploadImg/${board.bno}/${board.filename}" /></figure>
+                    </c:if>
                     <!-- Post content-->
                     <section class="mb-5">
                         <p class="fs-5 mb-4"><c:out value="${board.content}" /></p>
@@ -115,6 +118,7 @@
                 <div class="modal-footer">
                     <button id="modalModifyBtn" type="button" class="btn btn-danger">수정</button>
                     <button id="modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
+                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
                     <button id="modalCloseBtn" type="button" class="btn btn-default" data-dismiss="modal">취소</button>
                 </div>
             </div>
@@ -156,13 +160,6 @@ $(document).ready(()=>{
 $(function(){
 	let bnoValue = `<c:out value="${board.bno}" />`;
 	let replyUL = $(".reply");
-	
-	let modalRemoveBtn = $("#modalRemoveBtn");
-	let modalModifyBtn = $("#modalModifyBtn");
-	let modal = $(".modal");
-	let modalInputContent = modal.find("textarea[name='content']");
-	let modalInputWriter = modal.find("input[name='writer']");
-	let modalInputPassword = modal.find("input[name='password']");
 	
 	showList(1);
 	
@@ -217,6 +214,29 @@ $(function(){
 				inputPassword.val("");
 				showList(1);
 			});
+		}
+	});
+	
+	let modal = $(".modal");
+	let modalRemoveBtn = $("#modalRemoveBtn");
+	let modalModifyBtn = $("#modalModifyBtn");
+	let modalSubmitBtn = $("#modalSubmitBtn");
+	let modalInputContent = modal.find("textarea[name='content']");
+	let modalInputWriter = modal.find("input[name='writer']");
+	let modalInputPassword = modal.find("input[name='password']");
+	
+	$("#removeBoard").on("click", function (e) {
+		if(confirm("정말로 삭제하시겠습니까?")){
+			modalInputContent.val("").hide();
+			modalInputWriter.val("").hide();
+			modalInputPassword.val("");
+			modal.data("bno", bnoValue);
+			
+			modal.find("button[id != 'modalCloseBtn']").hide();
+			modalSubmitBtn.show();
+			modal.modal("show");
+		} else{
+			alert("삭제를 취소하였습니다.");
 		}
 	});
 	
@@ -276,6 +296,11 @@ $(function(){
 		}, function(error) {
 			alert("삭제에 실패하였습니다. 비밀번호를 확인하세요")
 		});	
+	});
+	
+	modalSubmitBtn.click(function(e) {
+		
+        alert(message);
 	});
 	
 	$('#modalCloseBtn').click(function(e) {

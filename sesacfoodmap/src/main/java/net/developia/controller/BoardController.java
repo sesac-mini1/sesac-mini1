@@ -1,5 +1,7 @@
 package net.developia.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -82,12 +84,29 @@ public class BoardController {
 	
 
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) throws Exception {
+	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr, HttpServletRequest request) throws Exception {
 		log.info("remove... " + bno);
 		if(service.remove(bno)) {
 			rttr.addFlashAttribute("result", "success");
+		} else {
+			rttr.addFlashAttribute("message", "fail to remove");
 		}
-		return "redirect:/board/list";
+		String referer = request.getHeader("Referer");
+		String redirectUrl;
+        if (referer != null) {
+            if (referer.contains("/board/get")) {
+                redirectUrl = "/board/get";
+            } else if (referer.contains("/board/modify")) {
+                redirectUrl = "/board/modify";
+            } else {
+                redirectUrl = "/board/list";
+            }
+        } else {
+            redirectUrl = "/"; // Referer가 없을 경우 기본 경로
+        }
+
+        // 리다이렉션 처리
+        return "redirect:" + redirectUrl;
 	}
 
 	@PostMapping(value = "/likeup", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
