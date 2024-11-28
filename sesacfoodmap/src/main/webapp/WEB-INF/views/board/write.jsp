@@ -71,48 +71,47 @@
 								<input class="form-control" name='rname'>
 							</div>
 							<!-- 분류 select box 추가 -->
-							<div class="form-group">
-								<label>분류</label> 
-								<select class="form-control" name="type">
-									<option value="한식">한식</option>
-									<option value="일식">일식</option>
-									<option value="중식">중식</option>
-									<option value="양식">양식</option>
-									<option value="아시안">아시안푸드</option>
-									<option value="카페">카페</option>
-									<option value="분식">분식</option>
-									<option value="기타">기타</option>
-								</select>
-							</div>
-							<!-- 식권대장 -->
-							<div class="form-group">
-								<label id="ticket_flex"> 
-								<input type="checkbox" name="ticket" value="yes"> 
-								<img id="ticketImg"
-									src="/resources/assets/ticket-image.png" height="30px" />
-								</label>
-							</div>
-							
-						<!-- 별점 추가 -->
-							<div class="form-group">
-								<label>별점</label>
-								<div class=" d-flex justify-content-center mt-5">
-									<div class=" text-center mb-5">
-										<div class="rating">
-											<input type="radio" name="stars" value="5" id="5">
-											<label for="5">☆</label> 
-											<input type="radio" name="stars" value="4" id="4">
-											<label for="4">☆</label> 
-											<input type="radio" name="stars" value="3" id="3">
-											<label for="3">☆</label> 
-											<input type="radio" name="stars" value="2" id="2">
-											<label for="2">☆</label> 
-											<input type="radio" name="stars" value="1" id="1">
-											<label for="1">☆</label>
-										</div>
-									</div>
-								</div>
-							</div>
+					<div class="form-group flex-container">
+				    <!-- 분류 -->
+				    <div class="custom-item">
+				        <label>분류</label>
+				        <select class="form-control" name="type">
+				            <option value="한식">한식</option>
+				            <option value="일식">일식</option>
+				            <option value="중식">중식</option>
+				            <option value="양식">양식</option>
+				            <option value="아시안">아시안푸드</option>
+				            <option value="카페">카페</option>
+				            <option value="분식">분식</option>
+				            <option value="기타">기타</option>
+				        </select>
+				    </div>
+				
+				    <!-- 식권대장 -->
+				    <div class="custom-item">
+				        <label id="ticket_flex">
+				            <input type="checkbox" name="ticket" value="yes">
+				            <img id="ticketImg" src="/resources/assets/ticket-image.png" alt="식권대장" />
+				        </label>
+				    </div>
+				
+				    <!-- 별점 -->
+				    <div class="custom-item">
+				        <label>별점</label>
+				        <div class="rating">
+				            <input type="radio" name="stars" value="5" id="5">
+				            <label for="5">☆</label>
+				            <input type="radio" name="stars" value="4" id="4">
+				            <label for="4">☆</label>
+				            <input type="radio" name="stars" value="3" id="3">
+				            <label for="3">☆</label>
+				            <input type="radio" name="stars" value="2" id="2">
+				            <label for="2">☆</label>
+				            <input type="radio" name="stars" value="1" id="1">
+				            <label for="1">☆</label>
+				        </div>
+				    </div>
+				</div>
 							<div class="form-group">
 								<label>글 제목</label> 
 								<input class="form-control" name='title'>
