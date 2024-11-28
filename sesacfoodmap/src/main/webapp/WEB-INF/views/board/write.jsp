@@ -131,7 +131,7 @@
 
 							<div class="form-group">
 								<label>파일 업로드</label> 
-								<input type="file" class="form-control" name="file">
+								<input type="file" class="form-control" name="file" accept="image/*">
 							</div>
 
 
