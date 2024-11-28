@@ -45,7 +45,6 @@ public class BoardController {
 	}
 
 	@GetMapping("/list")
-
 	public void list(Criteria cri, Model model) throws Exception {
 		log.info("list: " + cri);
 		model.addAttribute("list", service.getList(cri));

@@ -13,8 +13,11 @@ public class Criteria {
 	private int pageNum;
 	private int amount;
 	
-	private String type;
+	private String searchType;
 	private String keyword;
+	
+	private boolean ticket;
+	private String type;
 	
 	public Criteria() {
 		this(1, 10);
@@ -25,16 +28,18 @@ public class Criteria {
 		this.amount = amount;
 	}
 	
-	public String[] getTypeArr() { 
-		return type == null ? new String[] {} : type.split(""); 
+	public String[] getSearchTypeArr() {
+		return searchType == null ? new String[] {} : searchType.split("");
 	}
 	
 	public String getListLink() {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
 				.queryParam("pageNum", this.getPageNum())
 				.queryParam("amount", this.getAmount())
-				.queryParam("type", this.getType())
-				.queryParam("keyword", this.getKeyword());
+				.queryParam("searchType", this.getSearchType())
+				.queryParam("keyword", this.getKeyword())
+				.queryParam("ticket", this.isTicket())
+				.queryParam("type", this.getType());
 		return builder.toUriString();
 	}
 }
