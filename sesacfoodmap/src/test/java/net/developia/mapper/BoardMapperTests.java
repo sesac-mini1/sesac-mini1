@@ -1,5 +1,7 @@
 package net.developia.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import lombok.extern.log4j.Log4j;
+import net.developia.domain.BoardVO;
 import net.developia.domain.Criteria;
 
 @WebAppConfiguration
@@ -44,19 +47,43 @@ public class BoardMapperTests {
 
 	@Test
 	public void testGetListWithPaging() throws Exception {
-		mapper.getListWithPaging(new Criteria(2, 50)).forEach(board -> log.info(board));
+		Criteria cri = new Criteria(1, 50);
+		cri.setSearchType("TW");
+		cri.setKeyword("123");
+		cri.setTicket(true);
+		cri.setType("한식");
+		mapper.getListWithPaging(cri).forEach(board -> log.info(board));
 	}
-
 	
-//	@Test
-//	public void testPaging() {
-//		Criteria cri = new Criteria();
-//		cri.setPageNum(1);
-//		cri.setPageNum(10);
-//		
-//		List<BoardVO> list = mapper.getListWithPaging(cri);
-//		
-//	}
+	@Test
+	public void testPaging() {
+		Criteria cri = new Criteria();
+		cri.setPageNum(1);
+		cri.setPageNum(10);
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		log.info(list);
+	}
+	
+	@Test
+	public void testGetTotalCount() {
+		Criteria cri = new Criteria();
+		cri.setPageNum(1);
+		cri.setPageNum(10);
+		
+		log.info(mapper.getTotalCount(cri));
+	}
+	
+	@Test
+	public void testGetTotalCountWithSearch() {
+		Criteria cri = new Criteria();
+		cri.setPageNum(1);
+		cri.setPageNum(10);
+		cri.setSearchType("T");
+		cri.setKeyword("123");
+		
+		log.info(mapper.getTotalCount(cri));
+	}
 	
 //	@Test
 //	public void testDelete() {

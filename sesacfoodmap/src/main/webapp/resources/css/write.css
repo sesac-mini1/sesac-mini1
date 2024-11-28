@@ -1,14 +1,33 @@
+/* Flex 컨테이너 */
+.flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px; /* 각 요소 간의 간격 */
+    margin-bottom: 15px;
+}
+
+/* Custom item 기본 스타일 */
+.custom-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* #ticket_flex 체크박스와 이미지 */
 #ticket_flex {
-  display: flex; /* Flexbox �솢�꽦�솕 */
-  align-items: center; /* �꽭濡� 以묒븰 �젙�젹 */
+    display: flex;
+    align-items: center;
 }
 
 #ticketImg {
-  margin-left: -5px; /* 泥댄겕諛뺤뒪�� �씠誘몄� 媛� 媛꾧꺽 */
-  height: 30px; /* �씠誘몄� �넂�씠 �쑀吏� */
-  width: auto; /* �씠誘몄� 鍮꾩쑉 �쑀吏� */
+    margin-left: 5px;
+    height: 30px;
+    width: auto;
 }
 
+/* 별점 스타일 */
 .rate {
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px

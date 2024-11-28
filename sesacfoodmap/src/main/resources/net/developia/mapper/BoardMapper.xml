@@ -3,6 +3,33 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="net.developia.mapper.BoardMapper">
+
+	<sql id="criteria">
+		<if test="ticket == true">
+			ticket = 1 AND
+		</if>
+		<if test="type != null and type != ''">
+			type = #{type} AND 
+		</if>
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+	    	<foreach item='searchType' collection="searchTypeArr">
+	    		<trim prefix="OR">
+	    			<choose>
+	    				<when test="searchType == 'T'.toString()">
+	    					title LIKE '%'||#{keyword}||'%'
+	    				</when>
+	    				<when test="searchType == 'R'.toString()">
+	    					rname LIKE '%'||#{keyword}||'%'
+	    				</when>
+	    				<when test="searchType == 'W'.toString()">
+	    					writer LIKE '%'||#{keyword}||'%'
+	    				</when>
+	    			</choose>
+	    		</trim>
+	    	</foreach>
+	    </trim>
+	</sql>
+
 	<select id="getList" resultType="BoardVO">
 		<![CDATA[
 		SELECT * FROM board where bno > 0
@@ -47,54 +74,27 @@
 	
 	<select id="getListWithPaging" resultType="BoardVO">
 	<![CDATA[
-		select 
-    			bno, title, content,
-   				writer, regdate, type, stars
-		from (
-			select /*+INDEX_DESC(board pk_board_bno) */
-    			rownum rn, bno, title, content,	writer, regdate, type, stars
-			from board
-			where rownum <= #{pageNum} * #{amount}
-		)
-		where rn > (#{pageNum} - 1) * #{amount}
+	select bno, title, content, writer, regdate, ticket, type, stars, rname
+	from (
+	    select /*+INDEX_DESC(board pk_board_bno) */
+    			rownum rn, bno, title, content,	writer, regdate, ticket, type, stars, rname
+	    from board
+	    where
 	]]>
-	</select> 
+	<include refid="criteria"></include>
+	<![CDATA[
+		rownum <= #{pageNum} * #{amount})
+	WHERE rn > (#{pageNum} - 1) * #{amount}
+	]]>
+	</select>
 	
 	<select id="getTotalCount" resultType="int">
 		select count(*) from board where
-		<!-- <include refid="criteria"></include> -->
+		<include refid="criteria"></include>
+		<![CDATA[
 		bno > 0
-	</select> 
-	<!--  <include refid="criteria"></include>
-	<![CDATA[ 
-			rownum <= #{pageNum} * #{amount}
-		)
-		where rn > (#{pageNum} - 1) * #{amount}
-	]]> -->
+		]]>
+	</select>
 	
-	
-	<!-- <sql id="criteria">
-		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-			<foreach item='type' collection="typeArr">
-				<trim prefix="OR">
-					<choose>
-						<when test="type == 'T'.toString()">
-							title like '%'||#{keyword}||'%'
-						</when>
-						<when test="type == 'C'.toString()">
-							content like '%'||#{keyword}||'%'
-						</when>
-						<when test="type == 'W'.toString()">
-							writer like '%'||#{keyword}||'%'
-						</when>
-					</choose>
-				</trim>
-			</foreach>
-		</trim>
-	</sql>
-	
-	
-	
-	-->
 </mapper>
 <!-- CDATA 사용하여 >가 태그가 아닌 부등호임을 알림 -->
