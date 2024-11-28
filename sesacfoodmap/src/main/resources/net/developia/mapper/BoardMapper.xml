@@ -32,10 +32,12 @@
 	<update id="update">
 		update	board
 		set 	title = #{title},
-				content = #{content}
-				filename = #{filename}
+				content = #{content},
+				filename = #{filename},
+				stars = #{stars}
 		where 	bno = #{bno}
 	</update>
+	
 	
 	<update id="likeUp">
 		update	board

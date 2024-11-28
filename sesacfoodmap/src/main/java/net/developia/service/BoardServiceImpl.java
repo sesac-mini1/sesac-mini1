@@ -63,9 +63,8 @@ public class BoardServiceImpl implements BoardService {
 	
 		log.info("bno: " + board.getBno());
 		mapper.insert(board);
-    }
-		    
-	
+	}
+
 	@Override
 	public BoardVO get(Long bno) throws Exception {
 			log.info("get........" + bno);
