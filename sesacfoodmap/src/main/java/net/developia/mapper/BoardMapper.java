@@ -17,4 +17,6 @@ public interface BoardMapper {
 	public List<BoardVO> getListWithPaging(Criteria cri);
 	public int getTotalCount(Criteria cri);
 	public int likeUp(Long bno);
+    public int getStars(Long bno); // 별점 가져오기
+	public void updateStars(Long bno, int stars);
 }

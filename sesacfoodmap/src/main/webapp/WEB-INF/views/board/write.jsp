@@ -70,31 +70,16 @@
 								<label>음식점 이름</label> 
 								<input class="form-control" name='rname'>
 							</div>
-
-							<div class="form-group">
-								<label>글 제목</label> 
-								<input class="form-control" name='title'>
-							</div>
-
-							<div class="form-group">
-								<label>내용</label>
-								<textarea class="form-control" rows="3" name='content'></textarea>
-							</div>
-
-							<div class="form-group">
+							
+						<div class="form-group">
 								<label id="ticket_flex"> 
 								<input type="checkbox" name="ticket" value="yes"> 
 								<img id="ticketImg"
 									src="/resources/assets/ticket-image.png" height="30px" />
 								</label>
-							</div>
-
-							<div class="form-group">
-								<label>작성자</label>
-								<input class="form-control" name='writer'>
-							</div>
-
-							<!-- 분류 select box 추가 -->
+						</div>
+						
+						<!-- 분류 select box 추가 -->
 							<div class="form-group">
 								<label>분류</label> 
 								<select class="form-control" name="type">
@@ -108,6 +93,43 @@
 									<option value="기타">기타</option>
 								</select>
 							</div>
+							
+						<!-- 별점 추가 -->
+						<input type="hidden" id="bno" name="bno" value="${board.bno}" />
+						    <div class="form-group">
+						        <label>별점</label>
+						        <div class="rating">
+						            <input type="radio" name="stars" value="5" id="5">
+						            <label for="5">☆</label>
+						            <input type="radio" name="stars" value="4" id="4">
+						            <label for="4">☆</label>
+						            <input type="radio" name="stars" value="3" id="3">
+						            <label for="3">☆</label>
+						            <input type="radio" name="stars" value="2" id="2">
+						            <label for="2">☆</label>
+						            <input type="radio" name="stars" value="1" id="1">
+						            <label for="1">☆</label>
+						        </div>
+						    </div>
+													
+							
+							<div class="form-group">
+								<label>글 제목</label> 
+								<input class="form-control" name='title'>
+							</div>
+
+							<div class="form-group">
+								<label>내용</label>
+								<textarea class="form-control" rows="3" name='content'></textarea>
+							</div>
+
+							
+
+							<div class="form-group">
+								<label>작성자</label>
+								<input class="form-control" name='writer'>
+							</div>
+
 
 							<!-- 파일 업로드 -->
 
@@ -137,6 +159,32 @@
 	</div>
 	<!-- /.row -->
 	<%@ include file="../includes/footer.jsp"%>
+	
+	<script>
+	
+        document.querySelectorAll('input[name="rating"]').forEach((star) => {
+            star.addEventListener('change', (event) => {
+                const stars = event.target.value; // 선택된 별점 값
+                const bno = document.querySelector('#bno').value; // 게시글 번호
+
+                fetch(`/board/${bno}/stars`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `stars=${stars}`,
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            alert('별점이 저장되었습니다.');
+                        } else {
+                            alert('별점 저장 실패');
+                        }
+                    })
+                    .catch((error) => console.error('Error:', error));
+            });
+        });
+    </script>
 </body>
 
 </html>

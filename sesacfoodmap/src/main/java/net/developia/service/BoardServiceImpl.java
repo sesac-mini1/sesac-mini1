@@ -73,7 +73,6 @@ public class BoardServiceImpl implements BoardService {
 		mapper.insert(board);
 				
 	}
-		    
 	
 	@Override
 	public BoardVO get(Long bno) throws Exception {
