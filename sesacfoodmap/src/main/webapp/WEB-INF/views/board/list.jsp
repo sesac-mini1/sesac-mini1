@@ -119,7 +119,7 @@
                 	<div class="col-lg-12">
                 	
                 		<form id='searchForm' action="/board/list" method='get'>
-                			<select name='type'>
+                			<select name='searchType'>
                 				<option value=""
                 					<c:out value="${pageMaker.cri.type == null ? 'selected':'' }" />>--</option>
                 				<option value="T"
@@ -170,8 +170,8 @@
     <form id='actionForm' action="/board/list" method='get'>
 		<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'>
 		<input type='hidden' name='amount' value='${pageMaker.cri.amount }'>
-		<input type='hidden' name='type'
-			value='<c:out value="${pageMaker.cri.type }"/>'> <input
+		<input type='hidden' name='searchType'
+			value='<c:out value="${pageMaker.cri.searchType }"/>'> <input
 			type='hidden' name='keyword'
 			value='<c:out value="${pageMaker.cri.keyword }"/>'>
 	</form>
