@@ -236,13 +236,7 @@ $(document).ready(function() {	<!-- $(document).ready(function())을  -->
 	var result = '<c:out value="${result}"/>';
 	
 	console.log("Result value: ", result);
-
-	console.log($("#myModal"));
-	console.log("Triggering modal...");
-    $("#myModal").on("show.bs.modal", function () {
-        console.log("Modal is about to be shown!");
-    });
-    
+	
 	checkModal(result);
 	
 	history.replaceState({},null,null);
@@ -267,7 +261,7 @@ $(document).ready(function() {	<!-- $(document).ready(function())을  -->
 			$(".modal-body").html("수정되었습니다.");
 		}
 		
-		$(".modal").modal("show");
+		$("#myModal").modal("show");
 	}
 	
 	$("#regBtn").on("click", function() {
