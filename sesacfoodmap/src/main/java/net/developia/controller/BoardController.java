@@ -34,7 +34,6 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 
-
 	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("bno") Long bno, Model model) {
 		try {
@@ -69,8 +68,6 @@ public class BoardController {
 	public String register(BoardVO board, MultipartFile upfile, RedirectAttributes rttr) {
 		try {
 			log.info("register:" + board);
-//			String filename = upfile.getOriginalFilename();
-			log.info(board.getFile());
 			board.setFilename(board.getFile().getOriginalFilename());
 			log.info(board.getFilename());
 			service.register(board);
@@ -81,7 +78,6 @@ public class BoardController {
 			return null;
 		}
 	}
-
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, @RequestParam("password") String password,
 			RedirectAttributes rttr, HttpServletRequest request) throws Exception {
@@ -120,6 +116,4 @@ public class BoardController {
 	}
     return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-	
 }

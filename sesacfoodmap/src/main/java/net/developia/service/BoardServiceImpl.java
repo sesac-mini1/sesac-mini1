@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -20,59 +20,50 @@ import net.developia.mapper.BoardMapper;
 public class BoardServiceImpl implements BoardService {
 	private BoardMapper mapper;
 	
-//	   private static final String BASE_UPLOAD_PATH = "C:/dev/sesac-mini1/sesacfoodmap/src/main/webapp/resources/uploadimg";
-	   private final ServletContext servletContext; // ServletContext 주입
-	    
-	   private String getFolder(BoardVO bvo) {
-	    	
-		    String basePath = servletContext.getRealPath("/resources/uploadimg");
-		   
-	    	// 게시글 번호로 폴더 생성
-	    	String bnoFolder = String.valueOf(bvo.getBno());
-	        String folderPath = basePath + File.separator + bnoFolder;
-	        
-	        // 폴더가 존재하지 않으면 생성
-	        File folder = new File(folderPath);
-	        if (!folder.exists()) {
-	            folder.mkdirs();
-	        }
-	        
-	        return folderPath;
-	    }
-	    
-		   
-		    // 게시글 등록
-		    @Override
-			public void register(BoardVO board) throws Exception {
-				log.info("register....." + board);
-				board.setBno(mapper.getNextBno());
-			
-			// 게시글 번호 기반 폴더 생성
-	        String savefile = getFolder(board);
-			
-	        String uploadFolder =getFolder(board);
-	        log.info("Upload Folder: " + uploadFolder);
-//			String uploadFolder = "C:/dev/sesac-mini1/sesacfoodmap/src/main/webapp/resources/uploadimg/"  + board.getBno();
-			System.out.println("------------------------"+uploadFolder+"----------------------");
-			System.out.println("-------------------------------------");
-			System.out.println("Upload File getName: " + board.getFile().getOriginalFilename());
-			System.out.println("Upload File getSize: " + board.getFile().getSize());
-			
-			File saveFile = new File(uploadFolder, board.getFile().getOriginalFilename());
-			
-			 try {
-                board.getFile().transferTo(saveFile);
-     
-	         } catch (Exception e) {
-	            log.error(e.getMessage());
-	            throw new RuntimeException("File save failed");
-	         }
-				
-			log.info(board.getBno());
-			log.info("==========================================");
+	@Autowired
+	private final ServletContext servletContext; // ServletContext 주입
+   
+	private String getFolder(BoardVO bvo) {
+    	
+	    String basePath = servletContext.getRealPath("/resources/uploadImg");
+	   
+    	// 게시글 번호로 폴더 생성
+    	String bnoFolder = String.valueOf(bvo.getBno());
+        String folderPath = basePath + File.separator + bnoFolder;
+        
+        // 폴더가 존재하지 않으면 생성
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        
+        return folderPath;
+    }
+    
+    // 게시글 등록
+    @Override
+	public void register(BoardVO board) throws Exception {
+		log.info("register....." + board);
+		board.setBno(mapper.getNextBno());
+		
+        String uploadFolder = getFolder(board);
+        log.info("Upload Folder: " + uploadFolder);
+        log.info("-------------------------------------");
+        log.info("Upload File getName: " + board.getFile().getOriginalFilename());
+        log.info("Upload File getSize: " + board.getFile().getSize());
+		
+		File saveFile = new File(uploadFolder, board.getFile().getOriginalFilename());
+		
+		try {
+			board.getFile().transferTo(saveFile);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new RuntimeException("File save failed");
+		}
+	
+		log.info("bno: " + board.getBno());
 		mapper.insert(board);
-				
-	}
+    }
 		    
 	
 	@Override
