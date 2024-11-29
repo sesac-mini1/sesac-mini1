@@ -91,11 +91,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public boolean modify(BoardVO board) throws Exception {
+	public int modify(BoardVO board) throws Exception {
 			log.info("modify........."+board);
-			if (mapper.update(board) == 2)
-				throw new RuntimeException(board.getBno() + "번 게시물이 수정되지 않음");
-			return true;
+			return mapper.update(board);
 	}
 
 	@Override
@@ -114,6 +112,13 @@ public class BoardServiceImpl implements BoardService {
 				
 				return true;
 			}
+	}
+	
+
+	public boolean checkPassword(Long bno, String password) throws Exception {
+		log.info("checkPassword........"+bno);
+
+		return mapper.checkPassword(bno, password) == 1 ? true : false;
 	}
 	
 	@Override
