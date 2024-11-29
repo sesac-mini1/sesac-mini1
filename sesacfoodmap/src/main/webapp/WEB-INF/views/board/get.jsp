@@ -201,12 +201,6 @@ $(function(){
 			console.log("replyCnt: " + replyCnt);
 			console.log("list: " + list);
 			
-			if (page == -1) {
-				pageNum = Math.ceil(replyCnt/10.0);
-				showList(pageNum);
-				return;
-			}
-			
 			let str = "";
 			if (list == null || list.length == 0) {
 				return;
