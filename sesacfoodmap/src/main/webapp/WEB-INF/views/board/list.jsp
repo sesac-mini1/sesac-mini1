@@ -90,28 +90,28 @@
 	                <table width="100%" class="table table-striped table-bordered table-hover">
 	                    <thead>
 	                        <tr>
-	                            <th>추천</th>
-	                            <th>음식 종류</th>
-	                            <th>음식점</th>
-	                            <th>별점</th>
-	                            <th>제목</th>
-	                            <th>작성자</th>
-	                            <th>작성일</th>
+	                        	<th class="col-1 text-center">음식 종류</th>
+	                        	<th class="col-5 text-center">제목</th>
+	                            <th class="col-1 text-center">음식점</th>
+	                            <th class="col-2 text-center">별점</th>
+	                            <th class="col-1 text-center">추천</th>
+	                            <th class="col-1 text-center">작성자</th>
+	                            <th class="col-1 text-center">작성일</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
 	                    	<c:forEach items="${list}" var="board">
 	                    	<tr>
-	                    		<td><c:out value="${board.recommend}" /></td>
 	                    		<td><c:out value="${board.type}" /></td>
+	                    		<td><a class='move' href='<c:out value="${board.bno}" />'>
+	                    			<c:out value="${board.title}" /></a></td>
 	                    		<td><c:out value="${board.rname}" /></td>
 	                    		<td>
 		                    		<c:forEach var="i" begin="1" end="${board.stars}">
 									    ⭐
 									</c:forEach>
 								</td>
-	                    		<td><a class='move' href='<c:out value="${board.bno}" />'>
-	                    			<c:out value="${board.title}" /></a></td>
+	                    		<td><c:out value="${board.recommend}" /></td>
 	                    		<td><c:out value="${board.writer}" /></td>
 	                    		<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regDate}" /></td>
 	                    	</tr>

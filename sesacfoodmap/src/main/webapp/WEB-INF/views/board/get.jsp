@@ -40,7 +40,13 @@
 	                        <span class="fst-italic"><c:out value="${board.regDate}" /></span>
 			                <span class="float-end ms-4"><c:out value="${board.writer}" /></span>
 			                <span class="float-end ms-4" id="likeSpan">❤️ <span id="likeNumber"><c:out value="${board.recommend}" /></span></span>
-	                        <span class="float-end">⭐ <c:out value="${board.stars}" /></span>
+	                        <span class="float-end">
+	                        	<span>별점은</span>
+	                        	<c:forEach var="i" begin="1" end="${board.stars}">
+								    ⭐
+								</c:forEach>								
+								<span>(${board.stars}/5)</span>
+							</span>
                         </div>
                         <!-- Post categories-->
                         <a class="badge bg-sesac text-decoration-none link-light"><c:out value="${board.type}" /></a>

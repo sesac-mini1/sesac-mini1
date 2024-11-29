@@ -4,7 +4,7 @@
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-<nav id="header_color" class="navbar navbar-expand-lg navbar-dark">
+<nav id="header_color" class="navbar navbar-expand-lg navbar-dark" style="background-color: #57bb6d;">
     <div class="container">
         <a id="navbar-brand" href="/">
             <img id="navbar-logo" src="https://sesac.seoul.kr/static/common/images/www/temp/thumbnail.png" alt="로고" />
