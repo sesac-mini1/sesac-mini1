@@ -139,7 +139,7 @@
 	                				<option value="TWR"
 	                					<c:out value="${pageMaker.cri.searchType == 'TWR' ? 'selected':'' }" />>제목 or 음식점 or 작성자</option>
 	                			</select>
-	                			<input type="text" name="keyword" value='<c:out value="${pageMaker.cri.keyword }"/>'>
+	                			<input type="text" name="keyword" id="keyword" value='<c:out value="${pageMaker.cri.keyword }"/>'>
 	                			<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum }"/>'>
 	                			<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount }"/>'>
 								<input type='hidden' name='ticket' value='${pageMaker.cri.ticket }'>

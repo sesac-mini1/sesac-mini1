@@ -44,4 +44,6 @@ img#ticketImg {
 	vertical-align: middle;
 }
 
-
+#keyword {
+	border-radius: 30px;
+}
