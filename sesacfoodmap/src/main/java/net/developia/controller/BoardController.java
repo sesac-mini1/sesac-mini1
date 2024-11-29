@@ -125,7 +125,7 @@ public class BoardController {
 		
 		int result = service.modify(board);
 		if(result == 1) {
-			rttr.addFlashAttribute("result", "success");
+			rttr.addFlashAttribute("result", "modify");
 		}
 		
 		log.info("redirect");

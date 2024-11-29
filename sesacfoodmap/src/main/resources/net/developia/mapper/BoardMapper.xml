@@ -69,7 +69,6 @@
 				content = #{content},
 				ticket = #{ticket},
 				type = #{type},
-				filename = '',
 				stars = #{stars},
 				rname = #{rname}
 		where 	bno = #{bno}
