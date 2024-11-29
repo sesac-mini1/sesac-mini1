@@ -128,29 +128,32 @@
     </div>
     <!-- end reply modal -->
     <!-- Password Modal -->
-    <div class="modal" id="passwordModal" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">비밀번호 확인</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label>비밀번호</label>
-						<input type="password" class="form-control" name="password" id="pwOnly">
+    <form id="modalForm" action="/board/remove" method="">
+	    <div class="modal" id="passwordModal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">비밀번호 확인</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
 					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>비밀번호</label>
+							<input type="password" class="form-control" name="password" id="pwOnly">
+						</div>
+						<input type="hidden" name="bno" value="${board.bno}">
+					</div>
+					<div class="modal-footer">
+						<button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
+		             	<button type="button" class="btn btn-default modalCloseBtn" data-bs-dismiss="modal">취소</button>
+		          	</div>
 				</div>
-				<div class="modal-footer">
-					<button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
-	             	<button type="button" class="btn btn-default modalCloseBtn" data-bs-dismiss="modal">취소</button>
-	          	</div>
-			</div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
+	            <!-- /.modal-content -->
+	        </div>
+	        <!-- /.modal-dialog -->
+	    </div>
+	</form>
     <!-- /.end password modal -->
 <%@ include file="../includes/footer.jsp" %>
 </body>
@@ -334,42 +337,16 @@ $(function(){ //이지윤
 		});	
 	});
 	
-	$("#modalSubmitBtn").on("click", function() {
-	    let password = $("#pwOnly").val();
-	    let bno = bnoValue;
-
-	   	console.log("password = " + password);
-	   	console.log("bno = " + bno);
-
-	    if (!password || !bno) {
-	        alert("비밀번호 또는 게시물 번호가 없습니다.");
-	        return;
-	    }
-	    
-	    // AJAX 요청 보내기
-	    $.ajax({
-	        url: "/board/remove",  // 요청할 URL
-	        type: "POST",  // POST 방식
-	        data: {
-	            password: password,
-	            bno: bno
-	        },
-	        success: function(result) {
-	            // 서버 응답에 따라 처리
-	            if (result.includes("remove")) {
-	                alert("게시물이 성공적으로 삭제되었습니다.");
-	                window.location.href = "/board/list";  // 성공 시 목록 페이지로 리다이렉트
-	            } else {
-	                alert("비밀번호가 틀렸습니다.");
-	                $('#passwordModal').modal('show');  // 실패 시 모달 다시 띄우기
-	            }
-	        },
-	        error: function(xhr, status, error) {
-	            // 오류 발생 시 처리
-	            alert("서버와의 통신 오류가 발생했습니다.");
-	        }
-	    });
+	let modalForm = $("#modalForm");
+	modalSubmitBtn.click(function(e) {
+		modalForm.attr("action", "/board/remove");  // 삭제 경로 설정
+		modalForm.attr("method", "post");  // 삭제 경로 설정
+		modalForm.submit();  // 폼 전송
 	});
+	let msg = '${result}';
+    if(msg === 'fail') {
+        alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
+    }
 	
 	$('.modalCloseBtn').click(function(e) {
 		modal.modal("hide");
