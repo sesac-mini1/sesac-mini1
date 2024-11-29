@@ -65,7 +65,7 @@
             <div class="panel-body">
             
                 <!-- Main Form -->
-                <form id="mainForm" role="form" action="/board/modify" method="post">
+                <form id="mainForm">
                     <!-- Hidden Fields -->
                     <input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum}'/>">
                     <input type="hidden" name="amount" value="<c:out value='${cri.amount}'/>">
@@ -105,7 +105,7 @@
                     <!-- 식권대장 -->
 				    <div class="custom-item">
 				        <label id="ticket_flex">
-				            <input type="checkbox" name="ticket" value="yes" ${board.ticket ? 'checked' : ''}>
+				            <input type="checkbox" name="ticket" ${board.ticket ? 'checked' : ''}>
 				            <img id="ticketImg" src="/resources/assets/ticket-image.png" alt="식권대장" />
 				        </label>
 				    </div>
@@ -147,9 +147,10 @@
 					</div>
                     
                     <!-- 버튼 -->
-                    <button id="modifyBoard" type="submit" data-oper="modify" class="btn btn-default">수정하기</button>
+                    <button id="modifyBoard" type="button" data-bno="${board.bno}" class="btn btn-default">수정하기</button>
                     <button id="removeBoard" type="button" data-bno="${board.bno}" class="btn btn-default">삭제하기</button>
                     <button id="listBoard" type="submit" data-oper="list" class="btn btn-default">글 목록</button>
+                    
                 </form>
 
             </div>
@@ -161,8 +162,7 @@
 </div>
 <!-- /.row -->
 
-    
-    <div class="modal" tabindex="-1">
+<div class="modal" tabindex="-1">
          <div class="modal-dialog">
             <div class="modal-content">
                <div class="modal-header">
@@ -170,22 +170,24 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal"
                      aria-label="Close"></button>
                </div>
-               
+				<form id="modalForm">
 	                <div class="modal-body">
 						<div class="form-group">
 							<label>비밀번호</label>
-							<input id="modalPassword" type="password" class="form-control" name="password">
+							<input type="password" class="form-control" name="password">
 						</div>
 						<input type="hidden" name="bno" value="${board.bno}">
-						
 					</div>
 	                <div class="modal-footer">
 	                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
-	                    <button type="button" class="btn btn-default modalCloseBtn" data-dismiss="modal">취소</button>
+	                    <button type="button" class="btn btn-default modalCloseBtn" data-bs-dismiss="modal">취소</button>
 	                </div>
+				</form>
             </div>
          </div>
       </div>
+
+    
       
 <%@ include file="../includes/footer.jsp" %>
 </body>
@@ -195,17 +197,25 @@ $(document).ready(function () {
     let pmodal = $(".modal");
     let modalInputPassword = pmodal.find("input[name='password']");
     let bnoValue = `<c:out value="${board.bno}" />`;
+ 
     let modalSubmitBtn = $("#modalSubmitBtn");
 
     // 수정하기 버튼 클릭 시
     $("#modifyBoard").on("click", function (e) {
-        e.preventDefault();
+    	e.preventDefault();  // 기본 동작 방지
+       /* e.preventDefault();
 
         modalInputPassword.val(""); // 비밀번호 초기화
         pmodal.data("bno", bnoValue);
         
         pmodal.data("operation", "modify"); // 작업 설정
-        pmodal.show();
+        pmodal.show();  */
+        console.log("터버튼누름");
+        console.log($("#mainForm").serialize());
+
+        $("#mainForm").attr("action", "/board/modify");
+        $("#mainForm").attr("method", "post");
+        //$("#mainForm").submit(); 
     });
 
     // 삭제하기 버튼 클릭 시
@@ -218,35 +228,44 @@ $(document).ready(function () {
         pmodal.show();
     });
 
-    // 모달 확인 버튼 클릭 시
     modalSubmitBtn.click(function (e) {
-    	 e.preventDefault();
+        
         let operation = pmodal.data("operation");
         let modalForm = $("#modalForm");
         let mainForm = $("#mainForm");
 
         if (operation === "modify") {
-        	mainForm.attr("action", "/board/modify");
-        	mainForm.attr("method", "post");
-        	$("#boardPassword").val($("#modalPassword").val());
-        	$("#password").val($("#modalPassword").val());
-        	
-        	
-            console.log("수정 !!! 자바스크립트 !!!!!!");
-            mainForm.submit();
-            console.log("제출!");
+        	// 모달에서 비밀번호 값 가져오기
+            var password = $('#password').val();
+            
+            // mainForm에 hidden input으로 modal 데이터 추가
+            var hiddenPasswordInput = $('<input>')
+                .attr('type', 'hidden')
+                .attr('name', 'password')
+                .val(password);
+
+            // mainForm에 modal 데이터 추가
+            $('#mainForm').append(hiddenPasswordInput);
+
+            // 폼 제출
+            $('#mainForm').submit();  // 폼 전송
+            modalForm.attr("action", "/board/modify");
+            modalForm.attr("method", "post");
+            console.log("modify submitted!");
+            modalForm.submit(); 
+            
         } else if (operation === "remove") {
             modalForm.attr("action", "/board/remove");
             modalForm.attr("method", "post");
-            console.log("삭제 !!자바스크립트 !!!!!!");
-            modalForm.submit();
+
+            modalForm.submit();  
         }
-		
         
     });
+
     let msg = '${result}';
     if(msg === 'fail') {
-        alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
+        alert("비밀번호를 다시 확인하세요.");
     }
 
     // 모달 닫기 버튼 클릭 시

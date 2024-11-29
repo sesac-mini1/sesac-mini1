@@ -108,7 +108,7 @@ public class BoardController {
 	            if (referer.contains("/board/get")) {
 	                redirectUrl = "/board/get?bno="+bno;
 	            } else if (referer.contains("/board/modify")) {
-	                redirectUrl = "/board/modify";
+	                redirectUrl = "/board/modify?bno="+bno;
 	            } else {
 	                redirectUrl = "/board/list";
 	            }
@@ -120,15 +120,20 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) throws Exception {
+	public String modify(@RequestParam("bno") Long bno, BoardVO board, RedirectAttributes rttr) throws Exception {
 		log.info("컨트롤ㄹ러 !!!!!! ");
 		log.info("컨트롤ㄹ러 !!!!!! ");
 		log.info("modify: " + board);
 		
+					
 		if(service.modify(board)) {
 			rttr.addFlashAttribute("result", "success");
+			return "redirect:/board/list";
+		} else {
+			rttr.addFlashAttribute("result", "fail");
+			return "/board/modify?bno="+bno;
 		}
-		return "redirect:/board/list";
+		
 	}
 
 	@PostMapping(value = "/likeup", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})

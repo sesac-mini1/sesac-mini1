@@ -64,7 +64,7 @@
 				stars = #{stars},
 				title = #{title},
 				content = #{content},
-				filename = #{filename}			
+				filename = ''			
 		where 	bno = #{bno}
 	</update>
 	
