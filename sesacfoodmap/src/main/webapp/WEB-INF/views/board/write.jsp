@@ -94,7 +94,7 @@
 				    <!-- 식권대장 -->
 				    <div class="custom-item">
 				        <label id="ticket_flex">
-				            <input type="checkbox" name="ticket" value="yes">
+				            <input type="checkbox" name="ticket">
 				            <img id="ticketImg" src="/resources/assets/ticket-image.png" alt="식권대장" />
 				        </label>
 				    </div>
