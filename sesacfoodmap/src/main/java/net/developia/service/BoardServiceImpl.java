@@ -93,7 +93,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean modify(BoardVO board) throws Exception {
 			log.info("modify........."+board);
-			if (mapper.update(board) == 0)
+			if (mapper.update(board) == 2)
 				throw new RuntimeException(board.getBno() + "번 게시물이 수정되지 않음");
 			return true;
 	}

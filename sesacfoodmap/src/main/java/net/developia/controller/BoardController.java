@@ -118,6 +118,18 @@ public class BoardController {
 	        return "redirect:" + redirectUrl;
 		}
 	}
+	
+	@PostMapping("/modify")
+	public String modify(BoardVO board, RedirectAttributes rttr) throws Exception {
+		log.info("컨트롤ㄹ러 !!!!!! ");
+		log.info("컨트롤ㄹ러 !!!!!! ");
+		log.info("modify: " + board);
+		
+		if(service.modify(board)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/board/list";
+	}
 
 	@PostMapping(value = "/likeup", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<String> likeUp(@RequestBody Long bno) {
