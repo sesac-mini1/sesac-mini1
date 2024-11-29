@@ -67,17 +67,8 @@
                 <!-- Main Form -->
                 <form id="mainForm">
                     <!-- Hidden Fields -->
-                    <input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum}'/>">
-                    <input type="hidden" name="amount" value="<c:out value='${cri.amount}'/>">
-                    <input type="hidden" name="type" value="<c:out value='${cri.type}'/>">
-                    <input type="hidden" name="keyword" value="<c:out value='${cri.keyword}'/>">
                     <input type="hidden" name="bno" value="<c:out value='${board.bno}'/>">
-                    <input type="hidden" id="boardPassword" name="boardPassword" value="<c:out value='${board.password}'/>">
-                    <input type="hidden" name="writer" value="<c:out value='${board.writer}'/>">
-                    <input type="hidden" name="regDate" value="<c:out value='${board.regDate}'/>">
-                    <input type="hidden" name="recommend" value="<c:out value='${board.recommend}'/>">
-                    <input type="hidden" name="comments" value="<c:out value='${board.comments}'/>"> 
-                    
+                    <input type="hidden" id="boardPassword" name="password">
                     
                     <!-- 음식점 이름 -->
                     <div class="form-group">
@@ -146,9 +137,8 @@
 						<input type="file" class="form-control" name="fileUpload" accept="image/*">
 					</div>
                     
-                    <!-- 버튼 -->
-                    <button id="modifyBoard" type="button" data-bno="${board.bno}" class="btn btn-default">수정하기</button>
-                    <button id="removeBoard" type="button" data-bno="${board.bno}" class="btn btn-default">삭제하기</button>
+                    
+                    <button id="modifyBoard" type="button" data-oper="modify" class="btn btn-default">수정하기</button>
                     <button id="listBoard" type="submit" data-oper="list" class="btn btn-default">글 목록</button>
                     
                 </form>
@@ -199,11 +189,36 @@ $(document).ready(function () {
     let bnoValue = `<c:out value="${board.bno}" />`;
  
     let modalSubmitBtn = $("#modalSubmitBtn");
+    
+    // 비밀번호 확인 ajax
+    function checkPassword(callback) {
+    	let password = $("#modalPassword").val();
+    	$.ajax({
+    		type: 'post',
+    		url: `/board/checkpassword`,
+    		data: JSON.stringify({bno: '<c:out value="${board.bno}" />', password: password}),
+    		contentType: "application/json; charset=utf-8",
+    		success: function (result, status, xhr) {
+    			if (result == "success"){
+					callback();
+    			}
+    			else {
+    				alert("비밀번호가 올바르지 않습니다!");
+    			}
+    		},
+    		error: function (xhr, status, err) {
+    			if (err) {
+    				error(err);
+    			}
+    		}
+    	});
+    }
 
     // 수정하기 버튼 클릭 시
     $("#modifyBoard").on("click", function (e) {
-    	e.preventDefault();  // 기본 동작 방지
-       /* e.preventDefault();
+
+    	console.log("click");
+        e.preventDefault();
 
         modalInputPassword.val(""); // 비밀번호 초기화
         pmodal.data("bno", bnoValue);
@@ -218,55 +233,28 @@ $(document).ready(function () {
         //$("#mainForm").submit(); 
     });
 
-    // 삭제하기 버튼 클릭 시
-    $("#removeBoard").on("click", function (e) {
-        e.preventDefault();
-
-        modalInputPassword.val(""); // 비밀번호 초기화
-        pmodal.data("bno", bnoValue);
-        pmodal.data("operation", "remove"); // 작업 설정
-        pmodal.show();
-    });
-
+    // 모달 확인 버튼 클릭 시
     modalSubmitBtn.click(function (e) {
-        
+    	e.preventDefault();
+
         let operation = pmodal.data("operation");
         let modalForm = $("#modalForm");
         let mainForm = $("#mainForm");
 
         if (operation === "modify") {
-        	// 모달에서 비밀번호 값 가져오기
-            var password = $('#password').val();
-            
-            // mainForm에 hidden input으로 modal 데이터 추가
-            var hiddenPasswordInput = $('<input>')
-                .attr('type', 'hidden')
-                .attr('name', 'password')
-                .val(password);
 
-            // mainForm에 modal 데이터 추가
-            $('#mainForm').append(hiddenPasswordInput);
-
-            // 폼 제출
-            $('#mainForm').submit();  // 폼 전송
-            modalForm.attr("action", "/board/modify");
-            modalForm.attr("method", "post");
-            console.log("modify submitted!");
-            modalForm.submit(); 
-            
-        } else if (operation === "remove") {
-            modalForm.attr("action", "/board/remove");
-            modalForm.attr("method", "post");
-
-            modalForm.submit();  
+			checkPassword(()=> {
+	        	mainForm.attr("action", "/board/modify");
+	        	mainForm.attr("method", "post");
+	        	$("#boardPassword").val($("#modalPassword").val());
+	        	$("#password").val($("#modalPassword").val());
+	        	
+	            mainForm.submit();
+			});
         }
-        
+		
     });
 
-    let msg = '${result}';
-    if(msg === 'fail') {
-        alert("비밀번호를 다시 확인하세요.");
-    }
 
     // 모달 닫기 버튼 클릭 시
     $(".modalCloseBtn").click(function (e) {

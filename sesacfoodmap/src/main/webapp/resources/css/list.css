@@ -44,6 +44,13 @@ img#ticketImg {
 	vertical-align: middle;
 }
 
-#keyword {
-	border-radius: 30px;
+.truncate {
+        max-width: 70px !important; /* 열의 너비 */
+        white-space: nowrap !important; /* 줄 바꿈 방지 */
+        overflow: hidden !important; /* 넘친 텍스트 숨기기 */
+        text-overflow: ellipsis !important; /* 넘친 텍스트를 ...으로 표시 */
+    }
+
+#keyword { /* 이지윤 */
+	border-radius: 15px;
 }

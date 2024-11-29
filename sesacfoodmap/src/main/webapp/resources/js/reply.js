@@ -2,6 +2,7 @@
  * reply module
  */
  
+ // 이지윤
 let replyService = (function(){
  	function add(reply, callback, error) {
  		console.log("add reply.........");
@@ -30,8 +31,7 @@ let replyService = (function(){
  		$.getJSON(`/replies/pages/${bno}/${page}.json`,
  			function(data) {
  				if (callback) {
- 					//callback(data); 댓글 목록만 가져오는 경우
- 					callback(data.replyCnt, data.list); // 댓글 숫자와 목록을 가져오는 경우
+ 					callback(data.replyCnt, data.list); // 댓글 숫자와 목록을 가져옴
  				}
  			}
  		).fail(function(xhr, status, err) {

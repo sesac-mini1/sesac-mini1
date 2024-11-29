@@ -6,11 +6,9 @@ import java.nio.file.Files;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +24,7 @@ import lombok.extern.log4j.Log4j;
 import net.developia.domain.BoardVO;
 import net.developia.domain.Criteria;
 import net.developia.domain.PageDTO;
+import net.developia.domain.PasswordCheckDTO;
 import net.developia.service.BoardService;
 
 @Controller
@@ -93,7 +92,7 @@ public class BoardController {
 		}
 	}
 	
-	@PostMapping("/remove")
+	@PostMapping("/remove") // 이지윤
 	public String remove(@RequestParam("bno") Long bno, @RequestParam("password") String password,
 			RedirectAttributes rttr, HttpServletRequest request) throws Exception {
 		log.info("remove... " + bno + password);
@@ -122,30 +121,36 @@ public class BoardController {
 	@PostMapping("/modify")
 	public String modify(@RequestParam("bno") Long bno, BoardVO board, RedirectAttributes rttr) throws Exception {
 		log.info("컨트롤ㄹ러 !!!!!! ");
-		log.info("컨트롤ㄹ러 !!!!!! ");
 		log.info("modify: " + board);
 		
-					
-		if(service.modify(board)) {
-			rttr.addFlashAttribute("result", "success");
-			return "redirect:/board/list";
-		} else {
-			rttr.addFlashAttribute("result", "fail");
-			return "/board/modify?bno="+bno;
+		int result = service.modify(board);
+		if(result == 1) {
+			rttr.addFlashAttribute("result", "modify");
 		}
 		
+		log.info("redirect");
+		return "redirect:/board/list";
+
 	}
+
+	@PostMapping(value = "/checkpassword", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+    public ResponseEntity<String> checkPassword(@RequestBody PasswordCheckDTO request) throws Exception {
+	    Long bno = request.getBno();
+	    String password = request.getPassword();
+
+	    return service.checkPassword(bno, password) ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>("invalid", HttpStatus.OK) ;
+    }
 
 	@PostMapping(value = "/likeup", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<String> likeUp(@RequestBody Long bno) {
-	log.info("likeup: " + bno);
-	int result;
-	try {
-		result = service.likeUp(bno);
-	} catch (Exception e) {
-		e.printStackTrace();
-		result = -1;
-	}
-    return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		log.info("likeup: " + bno);
+		int result;
+		try {
+			result = service.likeUp(bno);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = -1;
+		}
+	    return result == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

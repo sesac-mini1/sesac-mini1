@@ -8,12 +8,3 @@
 #removeBoard {
 	cursor: pointer;
 }
-.w-85 {
-  width: 85% !important;
-}
-.h-85 {
-  height: 35px !important;
-}
-.br-10 {
-  border-radius: 10px;
-}

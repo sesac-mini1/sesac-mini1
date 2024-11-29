@@ -44,6 +44,23 @@ public class BoardMapperTests {
 //				.andReturn().getModelAndView().getModelMap());
 //
 //	}
+	
+	@Test
+	public void testInsert() throws Exception {
+		BoardVO board = new BoardVO();
+		board.setBno(46L);
+		board.setTitle("제목");
+		board.setContent("내용");
+		board.setWriter("작성123");
+		board.setPassword("1234");
+		board.setTicket(false);
+		board.setType("한식");
+		board.setStars(5);
+		board.setRname("식1234");
+		board.setFilename("");
+		
+		mapper.insert(board);
+	}
 
 	@Test
 	public void testGetListWithPaging() throws Exception {
@@ -83,6 +100,17 @@ public class BoardMapperTests {
 		cri.setKeyword("123");
 		
 		log.info(mapper.getTotalCount(cri));
+	}
+
+	@Test
+	public void testUpdate() {
+		BoardVO board = new BoardVO();
+		board = mapper.get(42L);
+		board.setTitle("수정된 제목");
+		board.setContent("수정된 내용");
+		board.setTicket(true);
+		board.setType("한식");
+		log.info(mapper.update(board));
 	}
 	
 //	@Test

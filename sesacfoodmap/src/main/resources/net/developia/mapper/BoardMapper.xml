@@ -56,16 +56,23 @@
 		and	  password = #{password}
 	</delete>
 	
+	<select id="checkPassword">
+		select count(*)
+		from  board 
+		where bno = #{bno}
+		and	  password = #{password}
+	</select>
+	
 	<update id="update">
 		update	board
-		set 	rname = #{rname},
-				type = #{type},
-				ticket = #{ticket},
-				stars = #{stars},
-				title = #{title},
+		set 	title = #{title},
 				content = #{content},
-				filename = ''			
+				ticket = #{ticket},
+				type = #{type},
+				stars = #{stars},
+				rname = #{rname}
 		where 	bno = #{bno}
+		and		password = #{password}
 	</update>
 	
 	<update id="likeUp">
