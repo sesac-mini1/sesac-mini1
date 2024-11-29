@@ -70,20 +70,20 @@ public class BoardController {
 	public String register(BoardVO board, MultipartFile upfile, RedirectAttributes rttr) {
 		try {
 			log.info("register:" + board);
-			board.setFilename(board.getFile().getOriginalFilename());
 			
-			File f = new File(board.getFilename());
-			String mimetype = Files.probeContentType(f.toPath());
+			// 파일이 업로드 될 때만 실행
+			board.setFilename(board.getFile().getOriginalFilename());
+			if(board.getFilename() != "") {
+				File f = new File(board.getFilename());
+				String mimetype = Files.probeContentType(f.toPath());
 
-			if (mimetype != null && mimetype.split("/")[0].equals("image")) {
-			    System.out.println("it is an image");
+				if (mimetype == null || !(mimetype.split("/")[0].equals("image"))) {
+					log.info("it is not an image!");
+					return "redirect:/board/list";
+				}
+				log.info(board.getFilename());
 			}
-			else {
-			    System.out.println("it is not an image");
-				return "redirect:/board/list";
-			}
-	        
-			log.info(board.getFilename());
+
 			service.register(board);
 			rttr.addFlashAttribute("result", board.getBno());
 			return "redirect:/board/list";
@@ -92,6 +92,7 @@ public class BoardController {
 			return null;
 		}
 	}
+	
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, @RequestParam("password") String password,
 			RedirectAttributes rttr, HttpServletRequest request) throws Exception {
