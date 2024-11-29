@@ -2,7 +2,7 @@ package net.developia.domain;
 
 import lombok.Getter;
 import lombok.ToString;
-
+// 이지윤
 @Getter
 @ToString
 public class PageDTO {

@@ -23,7 +23,7 @@
     </div>
 </nav>
 
-<script>
+<script> // 이지윤
     $(document).ready(function () {
         // 현재 URL 경로 가져오기
         const currentPath = window.location.pathname;

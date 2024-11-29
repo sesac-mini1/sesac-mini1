@@ -93,7 +93,7 @@ public class BoardController {
 		}
 	}
 	
-	@PostMapping("/remove")
+	@PostMapping("/remove") // 이지윤
 	public String remove(@RequestParam("bno") Long bno, @RequestParam("password") String password,
 			RedirectAttributes rttr, HttpServletRequest request) throws Exception {
 		log.info("remove... " + bno + password);

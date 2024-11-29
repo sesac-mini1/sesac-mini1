@@ -51,6 +51,6 @@ img#ticketImg {
         text-overflow: ellipsis !important; /* 넘친 텍스트를 ...으로 표시 */
     }
 
-#keyword {
-	border-radius: 30px;
+#keyword { /* 이지윤 */
+	border-radius: 15px;
 }

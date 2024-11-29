@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import net.developia.domain.Criteria;
 import net.developia.domain.ReplyVO;
-
+// 이지윤
 public interface ReplyMapper {
 	public int delete(@Param("cno") Long cno, @Param("password") String password);
 	public int update(ReplyVO reply);

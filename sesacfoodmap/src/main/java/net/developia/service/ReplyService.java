@@ -5,7 +5,7 @@ import java.util.List;
 import net.developia.domain.Criteria;
 import net.developia.domain.ReplyPageDTO;
 import net.developia.domain.ReplyVO;
-
+// 이지윤
 public interface ReplyService {
 	public int register(ReplyVO vo);
 	public ReplyVO get(Long cno);

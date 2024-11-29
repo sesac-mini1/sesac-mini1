@@ -3,7 +3,7 @@ package net.developia.domain;
 import java.util.Date;
 
 import lombok.Data;
-
+//이지윤
 @Data
 public class ReplyVO {
 	private Long cno;
