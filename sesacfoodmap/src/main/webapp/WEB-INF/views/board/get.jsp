@@ -82,10 +82,10 @@
                             	</span>
                             </form>
                             <div class="reply">
-                            	<!-- comments 위치 -->
+                            	<!-- 댓글 위치 -->
 	                   		</div>
 	                   		<div class="panel-footer">
-	                   			<!-- 페이징 자리 -->
+	                   			<!-- 페이징 숫자 자리 -->
 	                   		</div>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">비밀번호 확인</h5>
+						<h5 class="modal-title">비밀번호 확인 모달</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
 					</div>

@@ -120,7 +120,6 @@ public class BoardController {
 	
 	@PostMapping("/modify")
 	public String modify(BoardVO board, RedirectAttributes rttr) throws Exception {
-		log.info("컨트롤ㄹ러 !!!!!! ");
 		log.info("modify: " + board);
 		
 		int result = service.modify(board);

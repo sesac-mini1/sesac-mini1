@@ -28,7 +28,7 @@ let replyService = (function(){
  		let bno = param.bno;
  		let page = param.page || 1;
  		
- 		$.getJSON(`/replies/pages/${bno}/${page}.json`,
+ 		$.getJSON(`/replies/pages/${bno}/${page}.json`, // requestMapping을 통해 replyController로 연결
  			function(data) {
  				if (callback) {
  					callback(data.replyCnt, data.list); // 댓글 숫자와 목록을 가져옴
