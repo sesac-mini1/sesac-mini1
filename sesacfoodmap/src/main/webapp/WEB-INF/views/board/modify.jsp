@@ -67,17 +67,8 @@
                 <!-- Main Form -->
                 <form id="mainForm" role="form" action="/board/modify" method="post">
                     <!-- Hidden Fields -->
-                    <input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum}'/>">
-                    <input type="hidden" name="amount" value="<c:out value='${cri.amount}'/>">
-                    <input type="hidden" name="type" value="<c:out value='${cri.type}'/>">
-                    <input type="hidden" name="keyword" value="<c:out value='${cri.keyword}'/>">
                     <input type="hidden" name="bno" value="<c:out value='${board.bno}'/>">
-                    <input type="hidden" id="boardPassword" name="boardPassword" value="<c:out value='${board.password}'/>">
-                    <input type="hidden" name="writer" value="<c:out value='${board.writer}'/>">
-                    <input type="hidden" name="regDate" value="<c:out value='${board.regDate}'/>">
-                    <input type="hidden" name="recommend" value="<c:out value='${board.recommend}'/>">
-                    <input type="hidden" name="comments" value="<c:out value='${board.comments}'/>"> 
-                    
+                    <input type="hidden" id="boardPassword" name="password">
                     
                     <!-- 음식점 이름 -->
                     <div class="form-group">
@@ -147,7 +138,7 @@
 					</div>
                     
                     <!-- 버튼 -->
-                    <button id="modifyBoard" type="submit" data-oper="modify" class="btn btn-default">수정하기</button>
+                    <button id="modifyBoard" type="button" data-oper="modify" class="btn btn-default">수정하기</button>
                     <button id="removeBoard" type="button" data-bno="${board.bno}" class="btn btn-default">삭제하기</button>
                     <button id="listBoard" type="submit" data-oper="list" class="btn btn-default">글 목록</button>
                 </form>
@@ -196,9 +187,31 @@ $(document).ready(function () {
     let modalInputPassword = pmodal.find("input[name='password']");
     let bnoValue = `<c:out value="${board.bno}" />`;
     let modalSubmitBtn = $("#modalSubmitBtn");
+    
+    // 비밀번호 확인 ajax
+    function checkPassword(callback) {
+    	let password = $("#modalPassword").val();
+    	$.ajax({
+    		type: 'post',
+    		url: `/board/checkpassword`,
+    		data: JSON.stringify({bno: '<c:out value="${board.bno}" />', password: password}),
+    		contentType: "application/json; charset=utf-8",
+    		success: function (result, status, xhr) {
+    			if (result = "success"){
+					callback();
+    			}
+    		},
+    		error: function (xhr, status, err) {
+    			if (err) {
+    				error(err);
+    			}
+    		}
+    	});
+    }
 
     // 수정하기 버튼 클릭 시
     $("#modifyBoard").on("click", function (e) {
+    	console.log("click");
         e.preventDefault();
 
         modalInputPassword.val(""); // 비밀번호 초기화
@@ -220,21 +233,21 @@ $(document).ready(function () {
 
     // 모달 확인 버튼 클릭 시
     modalSubmitBtn.click(function (e) {
-    	 e.preventDefault();
+    	e.preventDefault();
         let operation = pmodal.data("operation");
         let modalForm = $("#modalForm");
         let mainForm = $("#mainForm");
 
         if (operation === "modify") {
-        	mainForm.attr("action", "/board/modify");
-        	mainForm.attr("method", "post");
-        	$("#boardPassword").val($("#modalPassword").val());
-        	$("#password").val($("#modalPassword").val());
-        	
-        	
-            console.log("수정 !!! 자바스크립트 !!!!!!");
-            mainForm.submit();
-            console.log("제출!");
+			checkPassword(()=> {
+	        	mainForm.attr("action", "/board/modify");
+	        	mainForm.attr("method", "post");
+	        	$("#boardPassword").val($("#modalPassword").val());
+	        	$("#password").val($("#modalPassword").val());
+	        	
+
+	            mainForm.submit();
+			});
         } else if (operation === "remove") {
             modalForm.attr("action", "/board/remove");
             modalForm.attr("method", "post");

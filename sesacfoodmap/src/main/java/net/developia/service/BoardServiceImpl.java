@@ -91,30 +91,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public boolean modify(BoardVO board) throws Exception {
-		log.info("modify........."+board);
-		
-		// 파일이 선택됐을 때만 업로드
-		if(board.getFilename() != "") {
-	        String uploadFolder = getFolder(board);
-	        log.info("Upload Folder: " + uploadFolder);
-	        log.info("-------------------------------------");
-	        log.info("Upload File getName: " + board.getFile().getOriginalFilename());
-	        log.info("Upload File getSize: " + board.getFile().getSize());
-			
-			File saveFile = new File(uploadFolder, board.getFile().getOriginalFilename());
-			
-			try {
-				board.getFile().transferTo(saveFile);
-			} catch (Exception e) {
-				log.error(e.getMessage());
-				throw new RuntimeException("File save failed");
-			}
-		}
-
-		if (mapper.update(board) == 0)
-			throw new RuntimeException(board.getBno() + "번 게시물이 수정되지 않음");
-		return true;
+	public int modify(BoardVO board) throws Exception {
+			log.info("modify........."+board);
+			return mapper.update(board);
 	}
 
 	@Override
@@ -133,6 +112,13 @@ public class BoardServiceImpl implements BoardService {
 				
 				return true;
 			}
+	}
+	
+
+	public boolean checkPassword(Long bno, String password) throws Exception {
+		log.info("checkPassword........"+bno);
+
+		return mapper.checkPassword(bno, password) == 1 ? true : false;
 	}
 	
 	@Override

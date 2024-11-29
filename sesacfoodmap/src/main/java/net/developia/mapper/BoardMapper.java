@@ -13,6 +13,7 @@ public interface BoardMapper {
 	public void insert(BoardVO board);
 	public BoardVO get(Long bno);
 	public int delete(@Param("bno") Long bno, @Param("password") String password);
+	public int checkPassword(@Param("bno") Long bno, @Param("password") String password);
 	public int update(BoardVO board);
 	public List<BoardVO> getListWithPaging(Criteria cri);
 	public int getTotalCount(Criteria cri);
