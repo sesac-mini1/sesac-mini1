@@ -132,10 +132,10 @@
                     </div>
                     
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
 						<label>파일 업로드</label> 
 						<input type="file" class="form-control" name="fileUpload" accept="image/*">
-					</div>
+					</div> -->
                     
                     
                     <button id="modifyBoard" type="button" data-oper="modify" class="btn btn-default">수정하기</button>
