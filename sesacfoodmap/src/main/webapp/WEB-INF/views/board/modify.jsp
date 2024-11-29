@@ -54,7 +54,7 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-</div>
+
 
 <div class="row">
     <div class="col-lg-12">
@@ -65,7 +65,7 @@
             <div class="panel-body">
             
                 <!-- Main Form -->
-                <form role="form" action="/board/modify" method="post">
+                <form id="mainForm" role="form" action="/board/modify" method="post">
                     <!-- Hidden Fields -->
                     <input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum}'/>">
                     <input type="hidden" name="amount" value="<c:out value='${cri.amount}'/>">
@@ -73,11 +73,16 @@
                     <input type="hidden" name="keyword" value="<c:out value='${cri.keyword}'/>">
                     <input type="hidden" name="bno" value="<c:out value='${board.bno}'/>">
                     <input type="hidden" id="boardPassword" name="boardPassword" value="<c:out value='${board.password}'/>">
+                    <input type="hidden" name="writer" value="<c:out value='${board.writer}'/>">
+                    <input type="hidden" name="regDate" value="<c:out value='${board.regDate}'/>">
+                    <input type="hidden" name="recommend" value="<c:out value='${board.recommend}'/>">
+                    <input type="hidden" name="comments" value="<c:out value='${board.comments}'/>"> 
+                    
                     
                     <!-- 음식점 이름 -->
                     <div class="form-group">
                         <label>음식점 이름</label>
-                        <input class="form-control" name="rname" value="<c:out value='${board.rname}'/>">
+                        <input class="form-control" id="rname" name="rname" value="<c:out value='${board.rname}'/>">
                     </div>
                     
                     <div class="form-group flex-container">
@@ -86,14 +91,14 @@
                     <div class="custom-item">
                         <label>분류</label>
                         <select class="form-control" name="type">
-                            <option value="koreanfood" <c:if test="${board.type == '한식'}">selected</c:if>>한식</option>
-                            <option value="japanessfood" <c:if test="${board.type == '일식'}">selected</c:if>>일식</option>
-                            <option value="chinesefood" <c:if test="${board.type == '중식'}">selected</c:if>>중식</option>
-                            <option value="westernfood" <c:if test="${board.type == '양식'}">selected</c:if>>양식</option>
-                            <option value="asianfood" <c:if test="${board.type == '아시안'}">selected</c:if>>아시안푸드</option>
-                            <option value="cafefood" <c:if test="${board.type == '카페'}">selected</c:if>>카페</option>
-                            <option value="snackfood" <c:if test="${board.type == '분식'}">selected</c:if>>분식</option>
-                            <option value="etc" <c:if test="${board.type == '기타'}">selected</c:if>>기타</option>
+                            <option value="한식" <c:if test="${board.type == '한식'}">selected</c:if>>한식</option>
+                            <option value="일식" <c:if test="${board.type == '일식'}">selected</c:if>>일식</option>
+                            <option value="중식" <c:if test="${board.type == '중식'}">selected</c:if>>중식</option>
+                            <option value="양식" <c:if test="${board.type == '양식'}">selected</c:if>>양식</option>
+                            <option value="아시안" <c:if test="${board.type == '아시안'}">selected</c:if>>아시안푸드</option>
+                            <option value="카페" <c:if test="${board.type == '카페'}">selected</c:if>>카페</option>
+                            <option value="분식" <c:if test="${board.type == '분식'}">selected</c:if>>분식</option>
+                            <option value="기타" <c:if test="${board.type == '기타'}">selected</c:if>>기타</option>
                         </select>
                     </div>
                     
@@ -122,8 +127,6 @@
 				        </div>
 				    </div>
 				    </div>
-				    
-		
 							
 					<!-- 글 제목 -->
                     <div class="form-group">
@@ -140,11 +143,11 @@
 
                     <div class="form-group">
 						<label>파일 업로드</label> 
-						<input type="file" class="form-control" name="fileUpload" multiple>
+						<input type="file" class="form-control" name="fileUpload" accept="image/*">
 					</div>
                     
                     <!-- 버튼 -->
-                    <button type="submit" data-oper="modify" class="btn btn-default">수정하기</button>
+                    <button id="modifyBoard" type="submit" data-oper="modify" class="btn btn-default">수정하기</button>
                     <button id="removeBoard" type="button" data-bno="${board.bno}" class="btn btn-default">삭제하기</button>
                     <button id="listBoard" type="submit" data-oper="list" class="btn btn-default">글 목록</button>
                 </form>
@@ -155,7 +158,7 @@
         <!-- /.panel -->
     </div>
 </div>
-
+</div>
 <!-- /.row -->
 
     
@@ -167,19 +170,19 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal"
                      aria-label="Close"></button>
                </div>
-               <form id="modalForm">
+               
 	                <div class="modal-body">
 						<div class="form-group">
 							<label>비밀번호</label>
-							<input type="password" class="form-control" name="password">
+							<input id="modalPassword" type="password" class="form-control" name="password">
 						</div>
 						<input type="hidden" name="bno" value="${board.bno}">
+						
 					</div>
 	                <div class="modal-footer">
 	                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
 	                    <button type="button" class="btn btn-default modalCloseBtn" data-dismiss="modal">취소</button>
 	                </div>
-                </form>
             </div>
          </div>
       </div>
@@ -188,54 +191,77 @@
 </body>
 
 <script type="text/javascript">
-$(document).ready(function() {
-	let pmodal = $(".modal");
-	let modalInputPassword = pmodal.find("input[name='password']");
-	let bnoValue = `<c:out value="${board.bno}" />`;
-	let modalSubmitBtn = $("#modalSubmitBtn");
-	
-	$("#removeBoard").on("click", function (e) {
-		e.preventDefault(); // 기본 동작 방지
+$(document).ready(function () {
+    let pmodal = $(".modal");
+    let modalInputPassword = pmodal.find("input[name='password']");
+    let bnoValue = `<c:out value="${board.bno}" />`;
+    let modalSubmitBtn = $("#modalSubmitBtn");
+
+    // 수정하기 버튼 클릭 시
+    $("#modifyBoard").on("click", function (e) {
+        e.preventDefault();
+
+        modalInputPassword.val(""); // 비밀번호 초기화
+        pmodal.data("bno", bnoValue);
+        
+        pmodal.data("operation", "modify"); // 작업 설정
+        pmodal.show();
+    });
+
+    // 삭제하기 버튼 클릭 시
+    $("#removeBoard").on("click", function (e) {
+        e.preventDefault();
+
+        modalInputPassword.val(""); // 비밀번호 초기화
+        pmodal.data("bno", bnoValue);
+        pmodal.data("operation", "remove"); // 작업 설정
+        pmodal.show();
+    });
+
+    // 모달 확인 버튼 클릭 시
+    modalSubmitBtn.click(function (e) {
+    	 e.preventDefault();
+        let operation = pmodal.data("operation");
+        let modalForm = $("#modalForm");
+        let mainForm = $("#mainForm");
+
+        if (operation === "modify") {
+        	mainForm.attr("action", "/board/modify");
+        	mainForm.attr("method", "post");
+        	$("#boardPassword").val($("#modalPassword").val());
+        	$("#password").val($("#modalPassword").val());
+        	
+        	
+            console.log("수정 !!! 자바스크립트 !!!!!!");
+            mainForm.submit();
+            console.log("제출!");
+        } else if (operation === "remove") {
+            modalForm.attr("action", "/board/remove");
+            modalForm.attr("method", "post");
+            console.log("삭제 !!자바스크립트 !!!!!!");
+            modalForm.submit();
+        }
 		
-			// 초기화 작업
-			modalInputPassword.val(""); // 비밀번호 초기화
-			pmodal.data("bno", bnoValue); // 데이터 설정
-			
-			// 로그 확인
-			console.log("BNO value:", pmodal.data("bno"));
-			
-			// 모달 열기
-			pmodal.show();
-		    console.log("Modal opened.");
-	
-	});
+        
+    });
+    let msg = '${result}';
+    if(msg === 'fail') {
+        alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
+    }
 
-    
-	let modalForm = $("#modalForm");
-	modalSubmitBtn.click(function(e) {
-		modalForm.attr("action", "/board/remove");  // 삭제 경로 설정
-		modalForm.attr("method", "post");  // 삭제 경로 설정
-		modalForm.submit();  // 폼 전송
-		let msg = '${result}';
-	    if(msg === 'fail') {
-	        alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
-	    }
-	});
-   
+    // 모달 닫기 버튼 클릭 시
+    $(".modalCloseBtn").click(function (e) {
+        modalInputPassword.val("");
+        pmodal.hide();
+    });
 
-	$('.modalCloseBtn').click(function(e) {
-	
-		modalInputPassword.val("");
-		pmodal.hide();
-		console.log("Modal closed.");
-	})
-    
-    //글 목록 
+    // 글 목록으로 이동
     $("#listBoard").on("click", function (e) {
-    	 self.location = "/board/list";  // 목록 페이지로 이동
-         return;
+        self.location = "/board/list";
+        return;
     });
 });
+
 
 </script>
 
