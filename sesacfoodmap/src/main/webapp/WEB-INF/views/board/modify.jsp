@@ -164,7 +164,7 @@
 	                <div class="modal-body">
 						<div class="form-group">
 							<label>비밀번호</label>
-							<input type="password" class="form-control" name="password">
+							<input id="modalPassword" type="password" class="form-control" name="password">
 						</div>
 						<input type="hidden" name="bno" value="${board.bno}">
 					</div>
@@ -224,7 +224,7 @@ $(document).ready(function () {
         pmodal.data("bno", bnoValue);
         
         pmodal.data("operation", "modify"); // 작업 설정
-        pmodal.show();  */
+        pmodal.show();
         console.log("터버튼누름");
         console.log($("#mainForm").serialize());
 
