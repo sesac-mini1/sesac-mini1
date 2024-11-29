@@ -46,21 +46,24 @@ public class BoardServiceImpl implements BoardService {
 		log.info("register....." + board);
 		board.setBno(mapper.getNextBno());
 		
-        String uploadFolder = getFolder(board);
-        log.info("Upload Folder: " + uploadFolder);
-        log.info("-------------------------------------");
-        log.info("Upload File getName: " + board.getFile().getOriginalFilename());
-        log.info("Upload File getSize: " + board.getFile().getSize());
-		
-		File saveFile = new File(uploadFolder, board.getFile().getOriginalFilename());
-		
-		try {
-			board.getFile().transferTo(saveFile);
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			throw new RuntimeException("File save failed");
+		// 파일이 선택됐을 때만 업로드
+		if(board.getFilename() != "") {
+	        String uploadFolder = getFolder(board);
+	        log.info("Upload Folder: " + uploadFolder);
+	        log.info("-------------------------------------");
+	        log.info("Upload File getName: " + board.getFile().getOriginalFilename());
+	        log.info("Upload File getSize: " + board.getFile().getSize());
+			
+			File saveFile = new File(uploadFolder, board.getFile().getOriginalFilename());
+			
+			try {
+				board.getFile().transferTo(saveFile);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+				throw new RuntimeException("File save failed");
+			}
 		}
-	
+
 		log.info("bno: " + board.getBno());
 		mapper.insert(board);
     }
