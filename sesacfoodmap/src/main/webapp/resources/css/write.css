@@ -15,6 +15,15 @@
     text-align: center;
 }
 
+.me-3 {
+    display: flex;
+    align-items: center;
+}
+
+.label-top {
+	width:100px;
+}
+
 /* #ticket_flex 체크박스와 이미지 */
 #ticket_flex {
     display: flex;

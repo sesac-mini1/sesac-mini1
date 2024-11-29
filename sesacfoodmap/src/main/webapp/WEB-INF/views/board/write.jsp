@@ -41,8 +41,9 @@
 <link href="/resources/vendor/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
 
-
 <link href="/resources/css/write.css" rel="stylesheet">
+
+<script type="text/javascript" src="/resources/js/write.js"></script>
 </head>
 
 <body>
@@ -60,12 +61,12 @@
 			<div class="col-lg-12">
 				<div class="panel panel-default">
 
-					<div class="panel-heading">Board Register</div>
+					<div class="panel-heading">글 쓰기</div>
 					<!-- /.panel-heading -->
 					<div class="panel-body">
 
 						<form role="form" action="/board/write" method="post"
-							enctype="multipart/form-data">
+							enctype="multipart/form-data" onsubmit="return validateForm()">
 							<div class="form-group">
 								<label>음식점 이름</label> 
 								<input class="form-control" name='rname'>
@@ -74,17 +75,20 @@
 					<div class="form-group flex-container">
 				    <!-- 분류 -->
 				    <div class="custom-item">
-				        <label>분류</label>
-				        <select class="form-control" name="type">
-				            <option value="한식">한식</option>
-				            <option value="일식">일식</option>
-				            <option value="중식">중식</option>
-				            <option value="양식">양식</option>
-				            <option value="아시안">아시안푸드</option>
-				            <option value="카페">카페</option>
-				            <option value="분식">분식</option>
-				            <option value="기타">기타</option>
-				        </select>
+				        <label class="me-3" for="type">
+				        	<span class="label-top">분류</span>
+					        <select class="form-control" name="type">
+					            <option value="한식">한식</option>
+					            <option value="일식">일식</option>
+					            <option value="중식">중식</option>
+					            <option value="양식">양식</option>
+					            <option value="아시안">아시안푸드</option>
+					            <option value="카페">카페</option>
+					            <option value="분식">분식</option>
+					            <option value="기타">기타</option>
+					        </select>
+				        </label>
+				        
 				    </div>
 				
 				    <!-- 식권대장 -->
@@ -97,24 +101,26 @@
 				
 				    <!-- 별점 -->
 				    <div class="custom-item">
-				        <label>별점</label>
-				        <div class="rating">
-				            <input type="radio" name="stars" value="5" id="5">
-				            <label for="5">☆</label>
-				            <input type="radio" name="stars" value="4" id="4">
-				            <label for="4">☆</label>
-				            <input type="radio" name="stars" value="3" id="3">
-				            <label for="3">☆</label>
-				            <input type="radio" name="stars" value="2" id="2">
-				            <label for="2">☆</label>
-				            <input type="radio" name="stars" value="1" id="1">
-				            <label for="1">☆</label>
-				        </div>
+				        <label  class="me-3">
+					        <span class="label-top">별점</span>
+					        <div class="rating">
+					            <input type="radio" name="stars" value="5" id="5">
+					            <label for="5">☆</label>
+					            <input type="radio" name="stars" value="4" id="4">
+					            <label for="4">☆</label>
+					            <input type="radio" name="stars" value="3" id="3">
+					            <label for="3">☆</label>
+					            <input type="radio" name="stars" value="2" id="2">
+					            <label for="2">☆</label>
+					            <input type="radio" name="stars" value="1" id="1">
+					            <label for="1">☆</label>
+					        </div>
+				        </label>
 				    </div>
 				</div>
 							<div class="form-group">
 								<label>글 제목</label> 
-								<input class="form-control" name='title'>
+								<input class="form-control" name='title' id='title'>
 							</div>
 
 							<div class="form-group">
@@ -131,7 +137,7 @@
 
 							<div class="form-group">
 								<label>파일 업로드</label> 
-								<input type="file" class="form-control" name="file" accept="image/*">
+								<input type="file" class="form-control" id="file-name" name="file" accept="image/*">
 							</div>
 
 
@@ -139,9 +145,8 @@
 							<div class="form-group">
 								<label>비밀번호 입력</label>
 								<input type="password" class="form-control" 
-								name="password" placeholder="비밀번호를 입력하세요">
+								name="password" id="password" placeholder="비밀번호를 입력하세요">
 							</div>
-
 							<button type="submit" class="btn btn-default">등록하기</button>
 							<button type="reset" class="btn btn-default">되돌리기</button>
 						</form>
