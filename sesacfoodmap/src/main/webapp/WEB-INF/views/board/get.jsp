@@ -158,8 +158,8 @@
 <%@ include file="../includes/footer.jsp" %>
 </body>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
-<script type="text/javascript">
-function clickLike() { //이재혁
+<script type="text/javascript"> //이재혁
+function clickLike() { 
 	let bnoValue = `<c:out value="${board.bno}" />`;
 	// like 버튼 중간 검증 과정이 있으면 좋음
 	$.ajax({
@@ -185,8 +185,8 @@ $(document).ready(()=>{
 	document.getElementById("likeSpan").addEventListener("click", clickLike);
 });
 </script>
-<script type="text/javascript">
-$(function(){ //이지윤
+<script type="text/javascript">  //이지윤
+$(function(){
 	let bnoValue = `<c:out value="${board.bno}" />`;
 	let replyUL = $(".reply");
 	
