@@ -58,13 +58,13 @@
 	
 	<update id="update">
 		update	board
-		set 	rname = #{rname},
-				type = #{type},
-				ticket = #{ticket},
-				stars = #{stars},
-				title = #{title},
+		set 	title = #{title},
 				content = #{content},
-				filename = #{filename}			
+				ticket = #{ticket},
+				type = #{type},
+				filename = #{filename},
+				stars = #{stars},
+				rname = #{rname}
 		where 	bno = #{bno}
 	</update>
 	
