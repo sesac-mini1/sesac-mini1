@@ -12,6 +12,10 @@
     <link rel="icon" type="image/x-icon" href="/resources/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/resources/css/styles.css" rel="stylesheet" />
+   
+   	<!-- Bootstrap Core CSS -->
+	<link href="/resources/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
     <link href="/resources/css/sesac.css" rel="stylesheet" />
     <link href="/resources/css/get.css" rel="stylesheet" />
     <title>글 읽기 페이지</title>
@@ -90,14 +94,15 @@
         </div>
     </div>
     <!-- Reply Modal -->
-    <div class="modal fade" id="replyModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="replyModalLabel">Reply Modal</h4>
-                </div>
-                <div class="modal-body">
+	<div class="modal" id="replyModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">댓글 모달</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
 					<div class="form-group">
 						<label>작성자</label>
 						<input type="text" class="form-control" name="writer">
@@ -111,43 +116,45 @@
 						<input type="password" class="form-control" name="password">
 					</div>
 				</div>
-                <div class="modal-footer">
-                    <button id="modalModifyBtn" type="button" class="btn btn-danger">수정</button>
+				<div class="modal-footer">
+					<button id="modalModifyBtn" type="button" class="btn btn-danger">수정</button>
                     <button id="modalRemoveBtn" type="button" class="btn btn-danger">삭제</button>
                     <button id="modalCloseBtn" type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
+				</div>
+			</div>
+          	<!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
     </div>
     <!-- end reply modal -->
     <!-- Password Modal -->
-    <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" id="passwordModalLabel">비밀번호 확인</h4>
-                </div>
-                <form id="modalForm">
-	                <div class="modal-body">
+    <form id="modalForm" action="/board/remove" method="">
+	    <div class="modal" id="passwordModal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">비밀번호 확인</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
 						<div class="form-group">
 							<label>비밀번호</label>
-							<input type="password" class="form-control" name="password">
+							<input type="password" class="form-control" name="password" id="pwOnly">
 						</div>
 						<input type="hidden" name="bno" value="${board.bno}">
 					</div>
-	                <div class="modal-footer">
-	                    <button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
-	                    <button type="button" class="btn btn-default modalCloseBtn" data-bs-dismiss="modal">취소</button>
-	                </div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
+					<div class="modal-footer">
+						<button id="modalSubmitBtn" type="button" class="btn btn-primary">확인</button>
+		             	<button type="button" class="btn btn-default modalCloseBtn" data-bs-dismiss="modal">취소</button>
+		          	</div>
+				</div>
+	            <!-- /.modal-content -->
+	        </div>
+	        <!-- /.modal-dialog -->
+	    </div>
+	</form>
+    <!-- /.end password modal -->
 <%@ include file="../includes/footer.jsp" %>
 </body>
 <script type="text/javascript" src="/resources/js/reply.js"></script>

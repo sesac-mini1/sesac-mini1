@@ -50,3 +50,7 @@ img#ticketImg {
         overflow: hidden !important; /* 넘친 텍스트 숨기기 */
         text-overflow: ellipsis !important; /* 넘친 텍스트를 ...으로 표시 */
     }
+
+#keyword {
+	border-radius: 30px;
+}
