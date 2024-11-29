@@ -24,16 +24,6 @@
 <link href="/resources/vendor/metisMenu/metisMenu.min.css"
 	rel="stylesheet">
 
-<!-- DataTables CSS -->
-<link
-	href="/resources/vendor/datatables-plugins/dataTables.bootstrap.css"
-	rel="stylesheet">
-
-<!-- DataTables Responsive CSS -->
-<link
-	href="/resources/vendor/datatables-responsive/dataTables.responsive.css"
-	rel="stylesheet">
-
 <!-- Custom CSS -->
 <link href="/resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
