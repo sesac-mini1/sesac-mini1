@@ -1,6 +1,7 @@
 package net.developia.service;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -39,6 +40,18 @@ public class BoardServiceImpl implements BoardService {
         
         return folderPath;
     }
+	
+	private void deleteDir(File file) {
+	    File[] contents = file.listFiles();
+	    if (contents != null) {
+	        for (File f : contents) {
+	            if (!Files.isSymbolicLink(f.toPath())) {
+	                deleteDir(f);
+	            }
+	        }
+	    }
+	    file.delete();
+	}
     
     // 게시글 등록
     @Override
@@ -88,10 +101,19 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean remove(Long bno, String password) throws Exception {
 			log.info("remove........"+bno);
-			if (mapper.delete(bno, password) == 0)
+		    
+			if (mapper.delete(bno, password) == 0) {
 				return false;
-			else
+			}
+			else {
+				// 게시글 삭제에 성공하면 게시글의 이미지 파일도 삭제
+			    String basePath = servletContext.getRealPath("/resources/uploadImg");
+				String folderPath = basePath + File.separator + String.valueOf(bno);
+				File pathToRemove = new File(folderPath);
+				deleteDir(pathToRemove);
+				
 				return true;
+			}
 	}
 	
 	@Override
