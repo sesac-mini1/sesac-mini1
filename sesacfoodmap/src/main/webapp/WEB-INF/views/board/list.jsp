@@ -45,15 +45,6 @@
 
 <!-- List page CSS -->
 <link href="/resources/css/list.css" rel="stylesheet">
-
-<style>
-.modal-dialog {
-	position: fixed;
-	top: 50% !important;
-	left: 50% !important;
-	transform: translate(-50%, -50%) !important;
-}
-</style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">

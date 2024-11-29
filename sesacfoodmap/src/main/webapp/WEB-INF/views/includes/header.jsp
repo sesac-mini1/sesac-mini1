@@ -15,11 +15,31 @@
             aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li id="navbar-menu" class="nav-item"><a class="nav-link" href="/">홈</a></li>
-                <li id="navbar-menu" class="nav-item"><a class="nav-link active" aria-current="page" href="/board/list">게시판</a></li>
+                <li id="navbar-menu" class="nav-item"><a id="home-link" class="nav-link active" href="/">홈</a></li>
+                <li id="navbar-menu" class="nav-item"><a id="board-link" class="nav-link active" aria-current="page" href="/board/list">게시판</a></li>
+                <li id="navbar-menu" class="nav-item"><a id="write-link" class="nav-link active" href="/board/write">게시하기</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
+<script>
+    $(document).ready(function () {
+        // 현재 URL 경로 가져오기
+        const currentPath = window.location.pathname;
+
+        // 모든 nav-link에서 active 클래스 제거
+        $('.nav-link').removeClass('active');
+
+        if (currentPath === '/') {
+            $('#home-link').addClass('active');
+        }
+        else if (currentPath === '/board/list') {
+            $('#board-link').addClass('active');
+        } 
+        else if (currentPath === '/board/write') {
+            $('#write-link').addClass('active');
+        } 
+    });
+</script>
 

@@ -12,6 +12,10 @@
     <link rel="icon" type="image/x-icon" href="/resources/assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/resources/css/styles.css" rel="stylesheet" />
+   
+   	<!-- Bootstrap Core CSS -->
+	<link href="/resources/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
     <link href="/resources/css/sesac.css" rel="stylesheet" />
     <link href="/resources/css/get.css" rel="stylesheet" />
     <title>글 읽기 페이지</title>
