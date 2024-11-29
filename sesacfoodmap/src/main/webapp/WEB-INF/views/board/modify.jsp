@@ -139,7 +139,6 @@
                     
                     <!-- 버튼 -->
                     <button id="modifyBoard" type="button" data-oper="modify" class="btn btn-default">수정하기</button>
-                    <button id="removeBoard" type="button" data-bno="${board.bno}" class="btn btn-default">삭제하기</button>
                     <button id="listBoard" type="submit" data-oper="list" class="btn btn-default">글 목록</button>
                 </form>
 
@@ -197,8 +196,11 @@ $(document).ready(function () {
     		data: JSON.stringify({bno: '<c:out value="${board.bno}" />', password: password}),
     		contentType: "application/json; charset=utf-8",
     		success: function (result, status, xhr) {
-    			if (result = "success"){
+    			if (result == "success"){
 					callback();
+    			}
+    			else {
+    				alert("비밀번호가 올바르지 않습니다!");
     			}
     		},
     		error: function (xhr, status, err) {
@@ -221,16 +223,6 @@ $(document).ready(function () {
         pmodal.show();
     });
 
-    // 삭제하기 버튼 클릭 시
-    $("#removeBoard").on("click", function (e) {
-        e.preventDefault();
-
-        modalInputPassword.val(""); // 비밀번호 초기화
-        pmodal.data("bno", bnoValue);
-        pmodal.data("operation", "remove"); // 작업 설정
-        pmodal.show();
-    });
-
     // 모달 확인 버튼 클릭 시
     modalSubmitBtn.click(function (e) {
     	e.preventDefault();
@@ -245,22 +237,11 @@ $(document).ready(function () {
 	        	$("#boardPassword").val($("#modalPassword").val());
 	        	$("#password").val($("#modalPassword").val());
 	        	
-
 	            mainForm.submit();
 			});
-        } else if (operation === "remove") {
-            modalForm.attr("action", "/board/remove");
-            modalForm.attr("method", "post");
-            console.log("삭제 !!자바스크립트 !!!!!!");
-            modalForm.submit();
         }
 		
-        
     });
-    let msg = '${result}';
-    if(msg === 'fail') {
-        alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
-    }
 
     // 모달 닫기 버튼 클릭 시
     $(".modalCloseBtn").click(function (e) {
