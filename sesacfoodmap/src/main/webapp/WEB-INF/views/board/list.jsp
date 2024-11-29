@@ -87,7 +87,7 @@
 	            </div>
 	            <!-- /.panel-heading -->
 	            <div class="panel-body">
-	                <table width: 100%; class="table table-striped table-bordered table-hover">
+	                <table class="table table-striped table-bordered table-hover">
 	                    <thead>
 	                        <tr>
 	                        	<th class="col-1 text-center">음식 종류</th>
