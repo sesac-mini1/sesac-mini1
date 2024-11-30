@@ -38,6 +38,7 @@ public class HomeController {
 
 		model.addAttribute("serverTime", formattedDate );
 		
+		// 이재혁
 		List<BoardVO> list = service.getListPopular(3);
 		
 		model.addAttribute("popularList", list);

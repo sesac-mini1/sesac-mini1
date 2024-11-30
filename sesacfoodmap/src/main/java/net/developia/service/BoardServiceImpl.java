@@ -41,6 +41,7 @@ public class BoardServiceImpl implements BoardService {
         return folderPath;
     }
 	
+	// 이재혁
 	private void deleteDir(File file) {
 	    File[] contents = file.listFiles();
 	    if (contents != null) {
@@ -59,6 +60,7 @@ public class BoardServiceImpl implements BoardService {
 		log.info("register....." + board);
 		board.setBno(mapper.getNextBno());
 		
+		// 이재혁
 		// 파일이 선택됐을 때만 업로드
 		if(board.getFilename() != "") {
 	        String uploadFolder = getFolder(board);
