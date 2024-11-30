@@ -238,6 +238,8 @@ $(function(){
 		};
 		if(reply.content === null || reply.content === '') {
 			alert("댓글 내용이 없습니다. 댓글을 작성한 뒤 등록 버튼을 눌러주세요.")
+		} else if(reply.password === null || reply.password === '') {
+			alert("비밀번호를 입력해주세요!")
 		} else {
 			replyService.add(reply, function(result) {
 				alert("성공적으로 댓글이 등록되었습니다.");
