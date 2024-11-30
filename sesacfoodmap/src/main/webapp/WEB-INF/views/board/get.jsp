@@ -71,9 +71,9 @@
                             <!-- Comment form-->
                             <form class="addReply flex-wrap d-flex mb-4">
                             	<div class="flex-shrink-0"><img class="rounded-circle"
-                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                        src="/resources/img/sesac.png" /></div>
                             	<span class="ms-3 w-85">
-                            	<input class="h-85 br-10" placeholder="작성자 이름" name="writer" value="익명이" type="text"/>
+                            	<input class="h-85 br-10" placeholder="작성자 이름" name="writer" value="새싹이" type="text"/>
                             	<input class="h-85 br-10" placeholder="비밀번호" name="password" type="password"/>
                                 <input value="등록" type="button" id="addReplyBtn" class="h-85 mb-1 me-auto btn btn-sesac" />
                                 <input type="hidden" name='bno' value="${board.bno}" />  
@@ -187,14 +187,11 @@ $(document).ready(()=>{
 </script>
 <script type="text/javascript">  //이지윤
 $(function(){
-	let bnoValue = `<c:out value="${board.bno}" />`;
-	let replyUL = $(".reply");
-	
 	let pageNum = 1;
 	let replyPageFooter = $(".panel-footer");
-	
+	let replyUL = $(".reply");
+	let bnoValue = `<c:out value="${board.bno}" />`;
 	showList(1);
-	
 	function showList(page) {
 		console.log("show list: " + page);
 		replyService.getList({bno:bnoValue,page:page||1}, function(replyCnt, list) {
@@ -208,7 +205,7 @@ $(function(){
 			for (let i = 0, len = list.length || 0; i < len; i++) {
 				str += `<div class="cnoCLass d-flex mb-4" data-cno='\${list[i].cno}'>
                     		<div class="flex-shrink-0"><img class="rounded-circle"
-                    		src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                    		src="/resources/img/sesac.png" /></div>
             				<div class="ms-3">
                 				<div class="fw-bold">
                 					\${list[i].writer}
