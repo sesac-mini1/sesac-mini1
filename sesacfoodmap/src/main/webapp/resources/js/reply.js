@@ -42,8 +42,6 @@ let replyService = (function(){
  	}
 
  	function remove(param, callback, error) {
- 		let cno = param.cno;
- 		console.log(cno + " " + param.password);
  		$.ajax({
  			type : 'delete',
  			url : '/replies/' + cno,
@@ -63,8 +61,6 @@ let replyService = (function(){
  	}
  	
  	function update(reply, callback, error) {
- 		console.log("cno: " + reply.cno);
- 		
  		$.ajax({
  			type : 'put',
  			url : '/replies/' + reply.cno,

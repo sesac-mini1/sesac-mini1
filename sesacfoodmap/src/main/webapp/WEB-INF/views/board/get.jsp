@@ -242,7 +242,7 @@ $(function(){
 			replyService.add(reply, function(result) {
 				alert("성공적으로 댓글이 등록되었습니다.");
 				inputContent.val("");
-				inputWriter.val("익명이");
+				inputWriter.val("새싹이");
 				inputPassword.val("");
 				showList(1);
 			});
@@ -252,9 +252,6 @@ $(function(){
 	let modal = $(".modal");
 	let rmodal = $("#replyModal");
 	let pmodal = $("#passwordModal");
-	let modalRemoveBtn = $("#modalRemoveBtn");
-	let modalModifyBtn = $("#modalModifyBtn");
-	let modalSubmitBtn = $("#modalSubmitBtn");
 	let modalInputContent = modal.find("textarea[name='content']");
 	let modalInputWriter = modal.find("input[name='writer']");
 	let modalInputPassword = modal.find("input[name='password']");
@@ -270,6 +267,21 @@ $(function(){
 		}
 	});
 	
+	let modalForm = $("#modalForm");
+	modalSubmitBtn.click(function(e) {
+		modalForm.attr("action", "/board/remove");  // 삭제 경로 설정
+		modalForm.attr("method", "post");  // 삭제 경로 설정
+		modalForm.submit();  // 폼 전송
+	});
+	let msg = '${result}';
+    if(msg === 'fail') {
+        alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
+    }
+    
+    let modalRemoveBtn = $("#modalRemoveBtn");
+	let modalModifyBtn = $("#modalModifyBtn");
+	let modalSubmitBtn = $("#modalSubmitBtn");
+	
 	$(document).on("click", ".updateReplyBtn", function (e) {
 		let cno = $(this).closest(".cnoCLass").data("cno");
 		//console.log(`log:\${cno}`);
@@ -283,6 +295,18 @@ $(function(){
 			modalModifyBtn.show();
 			rmodal.modal("show");
 		});
+	});
+	
+	modalModifyBtn.click(function(e) {
+		let reply = {cno: modal.data("cno"), content: modalInputContent.val(), 
+				password: modalInputPassword.val()};
+		replyService.update(reply, function(result) {
+            alert('성공적으로 댓글을 수정하였습니다.'); // 성공 시 알림
+            rmodal.modal("hide");
+            showList(pageNum);
+	    }, function(error) {
+	    	alert('댓글 수정에 실패하였습니다. 비밀번호를 다시 확인하세요.')
+	    });
 	});
 	
 	$(document).on("click", ".removeReplyBtn", function (e) {
@@ -304,17 +328,6 @@ $(function(){
 		}
 	});
 	
-	modalModifyBtn.click(function(e) {
-		let reply = {cno: modal.data("cno"), content: modalInputContent.val(), 
-				password: modalInputPassword.val()};
-		replyService.update(reply, function(result) {
-            alert('성공적으로 댓글을 수정하였습니다.'); // 성공 시 알림
-            rmodal.modal("hide");
-            showList(pageNum);
-	    }, function(error) {
-	    	alert('댓글 수정에 실패하였습니다. 비밀번호를 다시 확인하세요.')
-	    });
-	});
 	
 	modalRemoveBtn.click(function(e) {
 		let param = {cno:modal.data("cno"),password:modalInputPassword.val()};
@@ -328,16 +341,6 @@ $(function(){
 		});	
 	});
 	
-	let modalForm = $("#modalForm");
-	modalSubmitBtn.click(function(e) {
-		modalForm.attr("action", "/board/remove");  // 삭제 경로 설정
-		modalForm.attr("method", "post");  // 삭제 경로 설정
-		modalForm.submit();  // 폼 전송
-	});
-	let msg = '${result}';
-    if(msg === 'fail') {
-        alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
-    }
 	
 	$('.modalCloseBtn').click(function(e) {
 		modal.modal("hide");
