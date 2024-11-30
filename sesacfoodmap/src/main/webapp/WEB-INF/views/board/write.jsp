@@ -43,7 +43,8 @@
 			<div class="col-lg-12">
 				<h1 class="page-header">게시글 작성</h1>
 			</div>
-			<!-- /.col-lg-12 -->
+			<!-- /.col-lg-12 --> 
+			<!-- write.jsp 화면: 조용기 -->
 		</div>
 		<!-- /.row -->
 
