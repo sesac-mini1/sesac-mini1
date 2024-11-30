@@ -17,6 +17,7 @@
     <title>홈 페이지</title>
 </head>
 
+<!-- 이유진 -->
 <body class="d-flex flex-column min-vh-100">
 	<%@ include file="includes/header.jsp" %>
     <!-- Page Content-->

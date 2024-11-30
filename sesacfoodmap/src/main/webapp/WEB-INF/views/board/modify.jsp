@@ -55,7 +55,7 @@
 </div>
 <!-- /.row -->
 
-
+<!-- modify.jsp 페이지  담당: 이유진 (이재혁: 추가 수정) -->
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">

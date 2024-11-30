@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
     <link href="../resources/css/footer.css" rel="stylesheet" />
+<!-- 디자인: 이유진 -->
 <!-- Footer-->
 <footer id="footer_color" class="py-5 mt-auto">
     <div class="container">

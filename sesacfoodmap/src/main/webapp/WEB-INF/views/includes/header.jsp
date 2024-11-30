@@ -4,6 +4,7 @@
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+<!-- 디자인: 이유진 -->
 <nav id="header_color" class="navbar navbar-expand-lg navbar-dark" style="background-color: #57bb6d;">
     <div class="container">
         <a id="navbar-brand" href="/">

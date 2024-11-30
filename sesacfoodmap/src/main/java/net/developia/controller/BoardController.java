@@ -46,6 +46,7 @@ public class BoardController {
 		}
 	}
 
+	// 이유진
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) throws Exception {
 		log.info("list: " + cri);
@@ -118,6 +119,7 @@ public class BoardController {
 		}
 	}
 	
+	// 이유진
 	@PostMapping("/modify")
 	public String modify(BoardVO board, RedirectAttributes rttr) throws Exception {
 		log.info("컨트롤ㄹ러 !!!!!! ");
