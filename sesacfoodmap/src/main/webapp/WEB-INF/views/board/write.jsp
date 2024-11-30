@@ -36,6 +36,7 @@
 <script type="text/javascript" src="/resources/js/write.js"></script>
 </head>
 
+<!-- 조용기 -->
 <body>
 	<%@ include file="../includes/header.jsp"%>
 	<div class="container px-4 px-lg-5">

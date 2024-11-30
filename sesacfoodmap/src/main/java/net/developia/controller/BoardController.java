@@ -66,6 +66,7 @@ public class BoardController {
 
 	}
 	
+	// 조용기
 	@PostMapping("/write")
 	public String register(BoardVO board, MultipartFile upfile, RedirectAttributes rttr) {
 		try {

@@ -24,6 +24,7 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private final ServletContext servletContext; // ServletContext 주입
    
+	// 조용기
 	private String getFolder(BoardVO bvo) {
     	
 	    String basePath = servletContext.getRealPath("/resources/uploadImg");
@@ -54,7 +55,7 @@ public class BoardServiceImpl implements BoardService {
 	    file.delete();
 	}
     
-    // 게시글 등록
+    // 조용기
     @Override
 	public void register(BoardVO board) throws Exception {
 		log.info("register....." + board);
