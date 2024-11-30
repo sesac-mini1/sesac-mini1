@@ -249,6 +249,9 @@ $(function(){
 		}
 	});
 	
+    let modalRemoveBtn = $("#modalRemoveBtn");
+	let modalModifyBtn = $("#modalModifyBtn");
+	let modalSubmitBtn = $("#modalSubmitBtn");
 	let modal = $(".modal");
 	let rmodal = $("#replyModal");
 	let pmodal = $("#passwordModal");
@@ -278,10 +281,6 @@ $(function(){
         alert("글 삭제에 실패했습니다. 비밀번호를 다시 확인하세요.");
     }
     
-    let modalRemoveBtn = $("#modalRemoveBtn");
-	let modalModifyBtn = $("#modalModifyBtn");
-	let modalSubmitBtn = $("#modalSubmitBtn");
-	
 	$(document).on("click", ".updateReplyBtn", function (e) {
 		let cno = $(this).closest(".cnoCLass").data("cno");
 		//console.log(`log:\${cno}`);
