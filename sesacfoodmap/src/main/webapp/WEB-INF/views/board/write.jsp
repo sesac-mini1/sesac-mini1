@@ -36,7 +36,7 @@
 <script type="text/javascript" src="/resources/js/write.js"></script>
 </head>
 
-<!-- 조용기 -->
+<!-- write.jsp 화면: 조용기 -->
 <body>
 	<%@ include file="../includes/header.jsp"%>
 	<div class="container px-4 px-lg-5">
@@ -45,7 +45,6 @@
 				<h1 class="page-header">게시글 작성</h1>
 			</div>
 			<!-- /.col-lg-12 --> 
-			<!-- write.jsp 화면: 조용기 -->
 		</div>
 		<!-- /.row -->
 
