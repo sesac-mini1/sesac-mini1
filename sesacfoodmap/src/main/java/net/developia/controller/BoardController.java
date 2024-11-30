@@ -46,6 +46,7 @@ public class BoardController {
 		}
 	}
 
+	// 이유진
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) throws Exception {
 		log.info("list: " + cri);
@@ -65,6 +66,7 @@ public class BoardController {
 
 	}
 	
+	// 조용기
 	@PostMapping("/write")
 	public String register(BoardVO board, MultipartFile upfile, RedirectAttributes rttr) {
 		try {
@@ -118,6 +120,7 @@ public class BoardController {
 		}
 	}
 	
+	// 이유진
 	@PostMapping("/modify")
 	public String modify(@RequestParam("bno") Long bno, BoardVO board, RedirectAttributes rttr) throws Exception {
 		log.info("컨트롤ㄹ러 !!!!!! ");
@@ -133,6 +136,7 @@ public class BoardController {
 
 	}
 
+	// 이재혁
 	@PostMapping(value = "/checkpassword", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<String> checkPassword(@RequestBody PasswordCheckDTO request) throws Exception {
 	    Long bno = request.getBno();
@@ -141,6 +145,7 @@ public class BoardController {
 	    return service.checkPassword(bno, password) ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>("invalid", HttpStatus.OK) ;
     }
 
+	// 이재혁
 	@PostMapping(value = "/likeup", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<String> likeUp(@RequestBody Long bno) {
 		log.info("likeup: " + bno);

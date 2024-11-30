@@ -24,6 +24,7 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private final ServletContext servletContext; // ServletContext 주입
    
+	// 조용기
 	private String getFolder(BoardVO bvo) {
     	
 	    String basePath = servletContext.getRealPath("/resources/uploadImg");
@@ -41,6 +42,7 @@ public class BoardServiceImpl implements BoardService {
         return folderPath;
     }
 	
+	// 이재혁
 	private void deleteDir(File file) {
 	    File[] contents = file.listFiles();
 	    if (contents != null) {
@@ -53,12 +55,13 @@ public class BoardServiceImpl implements BoardService {
 	    file.delete();
 	}
     
-    // 게시글 등록
+    // 조용기
     @Override
 	public void register(BoardVO board) throws Exception {
 		log.info("register....." + board);
 		board.setBno(mapper.getNextBno());
 		
+		// 이재혁
 		// 파일이 선택됐을 때만 업로드
 		if(board.getFilename() != "") {
 	        String uploadFolder = getFolder(board);
@@ -104,6 +107,7 @@ public class BoardServiceImpl implements BoardService {
 				return false;
 			}
 			else {
+				// 이재혁
 				// 게시글 삭제에 성공하면 게시글의 이미지 파일도 삭제
 			    String basePath = servletContext.getRealPath("/resources/uploadImg");
 				String folderPath = basePath + File.separator + String.valueOf(bno);
@@ -114,7 +118,8 @@ public class BoardServiceImpl implements BoardService {
 			}
 	}
 	
-
+	// 이재혁
+	@Override
 	public boolean checkPassword(Long bno, String password) throws Exception {
 		log.info("checkPassword........"+bno);
 
@@ -133,6 +138,7 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getTotalCount(cri);
 	}
 
+	// 이재혁
 	@Override
 	public int likeUp(Long bno) throws Exception {
 		log.info("like up");

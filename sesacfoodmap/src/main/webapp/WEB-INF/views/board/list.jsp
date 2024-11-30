@@ -47,6 +47,7 @@
 <link href="/resources/css/list.css" rel="stylesheet">
 </head>
 
+<!-- list.jsp 페이지 담당: 이재혁 -->
 <body class="d-flex flex-column min-vh-100">
 <%@ include file="../includes/header.jsp"%>
 <div class="container px-4 px-lg-5">

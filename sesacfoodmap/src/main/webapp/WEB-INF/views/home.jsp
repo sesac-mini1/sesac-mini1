@@ -17,6 +17,7 @@
     <title>홈 페이지</title>
 </head>
 
+<!-- 이유진 -->
 <body class="d-flex flex-column min-vh-100">
 	<%@ include file="includes/header.jsp" %>
     <!-- Page Content-->
@@ -33,8 +34,10 @@
         </div>  
         <!-- Call to Action-->
        <div class="highlight_box">
+        
+    <!-- 이재혁 -->
     새싹이 PICK한 인기 맛집 (최근 1일)
-  </div> <!-- Content Row-->
+    </div> <!-- Content Row-->
         <div class="row gx-4 gx-lg-5">
         	<c:forEach items="${popularList }" var="popularBoard">
    	            <div class="col-md-4 mb-5">
