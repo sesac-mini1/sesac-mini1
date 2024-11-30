@@ -2,8 +2,6 @@
  <!-- write.js : 조용기 --> 
  */
 
-
-// 조용기
 function validateForm() {
     const titleInput = document.getElementById("title").value.trim(); // 제목 값 가져오기 (공백 제거)
 	const starsSelected = document.querySelector('input[name="stars"]:checked'); // 별점 예외처리
