@@ -132,6 +132,7 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 
+	// 이재혁
 	@PostMapping(value = "/checkpassword", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<String> checkPassword(@RequestBody PasswordCheckDTO request) throws Exception {
 	    Long bno = request.getBno();
@@ -140,6 +141,7 @@ public class BoardController {
 	    return service.checkPassword(bno, password) ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>("invalid", HttpStatus.OK) ;
     }
 
+	// 이재혁
 	@PostMapping(value = "/likeup", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<String> likeUp(@RequestBody Long bno) {
 		log.info("likeup: " + bno);

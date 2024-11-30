@@ -106,6 +106,7 @@ public class BoardServiceImpl implements BoardService {
 				return false;
 			}
 			else {
+				// 이재혁
 				// 게시글 삭제에 성공하면 게시글의 이미지 파일도 삭제
 			    String basePath = servletContext.getRealPath("/resources/uploadImg");
 				String folderPath = basePath + File.separator + String.valueOf(bno);
@@ -116,7 +117,8 @@ public class BoardServiceImpl implements BoardService {
 			}
 	}
 	
-
+	// 이재혁
+	@Override
 	public boolean checkPassword(Long bno, String password) throws Exception {
 		log.info("checkPassword........"+bno);
 
@@ -135,6 +137,7 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getTotalCount(cri);
 	}
 
+	// 이재혁
 	@Override
 	public int likeUp(Long bno) throws Exception {
 		log.info("like up");

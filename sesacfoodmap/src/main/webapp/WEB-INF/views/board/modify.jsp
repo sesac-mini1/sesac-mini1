@@ -187,6 +187,7 @@ $(document).ready(function () {
     let bnoValue = `<c:out value="${board.bno}" />`;
     let modalSubmitBtn = $("#modalSubmitBtn");
     
+    // 이재혁
     // 비밀번호 확인 ajax
     function checkPassword(callback) {
     	let password = $("#modalPassword").val();

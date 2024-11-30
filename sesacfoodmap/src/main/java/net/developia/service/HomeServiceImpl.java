@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j;
 import net.developia.domain.BoardVO;
 import net.developia.mapper.HomeMapper;
 
+// 이재혁
 @Service
 @Log4j
 @AllArgsConstructor
