@@ -44,6 +44,10 @@ img#ticketImg {
 	vertical-align: middle;
 }
 
+.col-star {
+	width: 12%;
+}
+
 .truncate {
         max-width: 70px !important; /* 열의 너비 */
         white-space: nowrap !important; /* 줄 바꿈 방지 */

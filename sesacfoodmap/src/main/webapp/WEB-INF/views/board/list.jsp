@@ -94,7 +94,7 @@
 	                        	<th class="col-1 text-center">음식 종류</th>
 	                        	<th class="col-5 text-center">제목</th>
 	                            <th class="col-1 text-center">음식점</th>
-	                            <th class="col-2 text-center">별점</th>
+	                            <th class="col-star text-center">별점</th>
 	                            <th class="col-1 text-center">추천</th>
 	                            <th class="col-1 text-center">작성자</th>
 	                            <th class="col-2 text-center">작성일</th>
