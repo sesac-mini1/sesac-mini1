@@ -312,7 +312,7 @@ $(function(){
 	
 	$(document).on("click", ".removeReplyBtn", function (e) {
 		let cno = $(this).closest(".cnoCLass").data("cno");
-		//console.log(`log:\${cno}`);
+		console.log(`log:\${cno}`);
 		if(confirm("정말로 댓글을 삭제하시겠습니까?")){
 			replyService.get(cno, function(reply){
 				modalInputContent.val(reply.content).attr("readonly", "readonly");

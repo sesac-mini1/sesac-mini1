@@ -44,7 +44,7 @@ let replyService = (function(){
  	function remove(param, callback, error) {
  		$.ajax({
  			type : 'delete',
- 			url : '/replies/' + cno,
+ 			url : '/replies/' + param.cno,
  			data : JSON.stringify(param),
  			contentType : "application/json; charset=utf-8",
  			success : function(deleteResult, status, xhr) {
